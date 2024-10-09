@@ -1,0 +1,75 @@
+﻿<div class="page-layout carded fullwidth">
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h3>{{'general.user'|translate}}s</h3>
+        </div>
+        <div class="w-50-p text-right pr-8">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <span class="secondary-text">{{ 'general.usertitle' | translate }}</span>
+        </div>
+    </div>
+    <div class="content  m-24 p-4 mat-card">
+
+        <button mat-flat-button color="primary" class="my-16 mx-8" (click)="addUser();">
+            <mat-icon>add</mat-icon>&nbsp;{{ 'general.new' | translate }}
+        </button>
+        <mat-form-field appearance="outline" class="w-100-p m-4">
+            <mat-label>{{'general.search'|translate}}</mat-label>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'general.search'|translate}}">
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+                <!-- ID Column -->
+                <ng-container matColumnDef="picureURL">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.name'|translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <img src="{{row.pictureUrl}}" width="30" height="30"
+                             class="img-rounded cursor-pointer" />
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.name'|translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name}} {{row.lastName}} {{row.secondLastName}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.email'|translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="role">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.role'|translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.role}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.status'|translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-slide-toggle [color]="accent"
+                                          [checked]="row.isActive"
+                                          (change)="updateStatus(row.id, row.isActive);">
+                        </mat-slide-toggle>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.actions'|translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-icon-button color="primary" (click)="updateUser(row.id);">
+                            <mat-icon aria-hidden="false">edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" (click)="confirmDelete(row.id);">
+                            <mat-icon aria-hidden="false">delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

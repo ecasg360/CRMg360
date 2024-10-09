@@ -1,0 +1,114 @@
+{
+    "mainLayout.title": "Main Layout",
+    "general": {
+        "email": "Email",
+        "password": "Password",
+        "new": "New",
+        "search": "Buscar",
+        "name": "Name",
+        "phone": "Phone",
+        "status": "Estatus",
+        "create": "Create",
+        "edit": "Edit",
+        "save": "Guardar",
+        "delete": "Delete",
+        "deleteQ": "Delete?",
+        "home": "Home",
+        "back": "Back",
+        "next": "Next",
+        "uploadImage": "Upload image",
+        "language": "Language",
+        "errors": {
+            "serverError": "An error occurred on the server"
+        },
+        "paginator": {
+            "itemsPerPageLabel": "Items per page"
+        }
+    },
+    "auth": {
+        "logIn": {
+            "title": "Log In",
+            "subTitle": "Log in with your email",
+            "messages": {
+                "default": "You have successfully logged in",
+                "rememberMe": "Remember me",
+                "forgotPassword": "Forgot your password?",
+                "doNotHaveAnAccount": "You do not have an account?"
+            },
+            "errors": {
+                "default": "The email or password is incorrect",
+                "requiredEmail": "Email required",
+                "invalidEmail": "Invalid e-mail",
+                "requiredPassword": "Password required",
+                "invalidMinLengthPassword": "The password must be greater than or equal to {{minLength}} characters",
+                "invalidMaxLengthPassword": "The password must be less than or equal to {{maxLength}} characters"
+            }
+        }
+    },
+    "artist": {
+        "admin": {
+            "title": "Artists",
+            "artist": "Artist",
+            "generalData": "General Data",
+            "addArtist": "Add Artist",
+            "editArtist": "Edit Artist",
+            "enterId": "typed id",
+            "messages": {
+                "deleteQuestion": "are you sure you want to delete the artist id {{artistid}}?",
+                "deleteSuccess": "The artist has been removed correctly",
+                "statusChanged": "The status of the artist has been changed correctly",
+                "addArtistSuccess": "The artist was added correctly"
+            },
+            "errors": {
+                "idRequired": "Id is required",
+                "nameRequired": "Name is required",
+                "lastNameRequired": "last Name is required",
+                "birthdayRequired": "Birthday is required",
+                "genderRequired": "Gender is required",
+                "artistTypeRequired": "Artist type is required",
+                "musicalGenreRequired": "Musical genre is required",
+                "incorrectFormat": "Incorrect format"
+            }
+        },
+        "type": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        },
+        "musicalgenre": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        },
+        "trippreference": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        },
+        "group": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        },
+        "contactssponsor": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        }
+    }
+}

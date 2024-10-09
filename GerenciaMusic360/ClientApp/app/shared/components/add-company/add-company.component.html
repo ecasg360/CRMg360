@@ -1,0 +1,91 @@
+﻿<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{action}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">business</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<form class="p-4 w-100-p" [formGroup]="CompanyForm">
+    <mat-dialog-content>
+        <hr>
+        <mat-horizontal-stepper [linear]="false" #stepper>
+            <mat-step>
+                <ng-template matStepLabel>{{ 'general.generalData' | translate }}</ng-template>
+                <div class="row">
+                    <mat-form-field appearance="outline" class="col-xs-6">
+                        <mat-label>{{ 'general.businessName' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                        <input matInput placeholder="{{ 'formField.messages.enterBusinessName' | translate }}"
+                            formControlName="businessName">
+                        <mat-error *ngIf="f.businessName?.errors?.required">
+                            {{ 'validations.errors.businessNameRequired' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="col-xs-6">
+                        <mat-label>{{ 'general.legalName' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'formField.messages.enterLegalName' | translate }}"
+                            formControlName="legalName">
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field appearance="outline" class="col-xs-6">
+                        <mat-label>{{ 'general.businessShortName' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                        <input matInput placeholder="{{ 'formField.messages.enterBusinessShortName' | translate }}"
+                            formControlName="businessShortName">
+                        <mat-error *ngIf="f.businessShortName?.errors?.required">
+                            {{ 'validations.errors.businessShortNameRequired' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="col-xs-6">
+                        <mat-label>{{ 'general.taxId' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'formField.messages.enterTaxId' | translate }}"
+                            formControlName="taxId">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <input type="text" aria-label="Number" hidden="hidden" formControlName="representativeLegalId">
+
+                    <mat-form-field appearance="outline" class="col-xs-12">
+                        <mat-label>{{ 'general.legalRepresentative' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                        <input type="text" placeholder="{{ 'general.select' | translate }}" aria-label="Number" matInput
+                            formControlName="representativeLegalName" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="legalRepSelected($event)">
+                            <mat-option *ngFor="let option of personFiltered | async" [id]="option.value"
+                                [value]="option.viewValue">
+                                <small>{{option.viewValue}}</small>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <br>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>{{ 'general.address' | translate }}</ng-template>
+                <app-address-form [data]="address" (formReady)="bindExternalForm('address',$event)">
+                </app-address-form>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="row">
+        <div class="col-xs-4">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="col-xs-8 text-right">
+            <button mat-stroked-button color="primary" [disabled]="isWorking" type="button" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button [disabled]="!CompanyForm.valid || isWorking" color="primary"
+                (click)="saveCompany()">
+                <mat-icon>save</mat-icon> {{action}}
+            </button>
+        </div>
+    </mat-dialog-actions>
+</form>

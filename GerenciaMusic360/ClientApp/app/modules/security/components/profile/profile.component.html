@@ -1,0 +1,151 @@
+<div class="page-layout carded fullwidth">
+    <!-- HEADER -->
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h4>{{ 'general.profile' | translate }}</h4>
+        </div>
+        <div class="w-50-p text-right pr-8">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <span class="secondary-text">{{ 'general.profile' | translate }}</span>
+        </div>
+    </div>
+    <div class="content mat-card tab-body">
+        <div class="row betwend-xs">
+            <div class="col-xs-6" [formGroup]="profileForm">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>{{ 'general.generalData' | translate }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-xs-12 col-lg-3 col-md-4 col-sm-4">
+                                <app-upload-image [image]="currentUser.pictureUrl"
+                                    errorImage="assets/images/avatars/defaultProfile4.jpg"
+                                    (selectImage)="selectAvatarImage($event)"></app-upload-image>
+                            </div>
+                            <div class="col-xs-12 col-lg-9 col-md-8 col-sm-8">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'general.name'|translate}}&nbsp;<span class="red-required">*</span>
+                                    </mat-label>
+                                    <input matInput placeholder="Ingresa Nombre(s)" formControlName="name">
+                                    <mat-error *ngIf="f.name?.errors?.required">
+                                        {{'general.required'|translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'general.lastName'|translate}}&nbsp;<span class="red-required">*</span>
+                                    </mat-label>
+                                    <input matInput placeholder="{{'general.lastName'|translate}}"
+                                        formControlName="lastName">
+                                    <mat-error *ngIf="f.lastName?.errors?.required">
+                                        {{'validations.errors'|translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'general.secondLastName'|translate}}</mat-label>
+                                    <input matInput placeholder="{{'general.secondLastName'|translate}}"
+                                        formControlName="secondLastName">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'general.phone'|translate}}&nbsp;<span class="red-required">*</span>
+                                    </mat-label>
+                                    <input matInput placeholder="{{'general.phone'|translate}}"
+                                        formControlName="phoneOne">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'general.birthdate'|translate}}</mat-label>
+                                    <input matInput [matDatepicker]="picker"
+                                        placeholder="{{'general.birthdate'|translate}}" formControlName="birthdate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-error *ngIf="f.birthdate?.errors?.required">
+                                        {{'general.'}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'general.genre'|translate}}&nbsp;<span class="red-required">*</span>
+                                    </mat-label>
+                                    <mat-select placeholder="{{'general.genre'|translate}}" formControlName="gender">
+                                        <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                            {{gender.viewValue | translate}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="f.gender?.errors?.required">
+                                        {{'general.required'|translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions class="text-right">
+                        <button mat-flat-button color="primary" (click)="confirmUpdateProfile();"
+                            [disabled]="!profileForm.valid">
+                            <mat-icon>save</mat-icon> {{'general.save'|translate}}
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+            <div class="col-xs-6">
+                <fuse-widget class="clear-widget">
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div>{{ 'general.backgroundLogin' | translate }}</div>
+
+                            <button mat-icon-button fuseWidgetToggle aria-label="more">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="pt-8 pb-12" fxLayout="column" fxLayoutAlign="center center">
+                            <div class="row">
+                                <div class="col-xs-4 mb-8 p-4 text-center {{item.cssClass}}"
+                                    *ngFor="let item of configurationImages" matTooltip="{{item.name}}"
+                                    (click)="selectImage(item)">
+                                    <img width="300" height="300" src="{{item.pictureUrl}}"
+                                        onerror="this.src='assets/images/logos/360-circle.png';" /><br>
+                                    <small>{{item.name}}&nbsp; <mat-icon class="cursor-pointer" (click)="deleteImage(item.id)">delete</mat-icon> </small>
+                                </div>
+                            </div>
+                            <div class="row w-100-p mt-8">
+                                <div class="col-xs-12 text-right">
+                                    <button mat-flat-button color="primary" (click)="saveDefaultImage()">
+                                        <mat-icon aria-label="save">save</mat-icon>&nbsp; {{'general.save'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+
+                    <!-- Back -->
+                    <div class="fuse-widget-back p-16 pt-32 mat-elevation-z2" style="min-height:300px">
+                        <button mat-icon-button fuseWidgetToggle (click)="showBackgroundList()"
+                            class="fuse-widget-flip-button" aria-label="Flip widget">
+                            <mat-icon class="s-16">close</mat-icon>
+                        </button>
+                        <div>
+                            <app-background-image></app-background-image>
+                        </div>
+                    </div>
+                    <!-- / Back -->
+                </fuse-widget>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<form [formGroup]="projectForm">
+    <div mat-dialog-title>
+        {{ 'general.addProject' | translate }}
+        <span *ngIf="projectTypeDesc?.length"><strong>-{{projectTypeDesc}}</strong></span>
+    </div>
+    <div mat-dialog-content>
+        <h3>&nbsp;</h3>
+        <app-project-data [showProjectType]="projectType == 0" [menuModuleFilter]="moduleFilter"
+            [projectType]="projectType" [showUploadImage]="true" (sendProjectType)="receiveProjectType($event)"
+            (formReady)="bindExternalForm('generalData',$event)">
+        </app-project-data>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="col-xs-8 text-right">
+            <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" [disabled]="!projectForm.valid || isWorking"
+                (click)="saveProject()">
+                <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+            </button>
+        </div>
+    </div>
+
+</form>

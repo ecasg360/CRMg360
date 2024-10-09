@@ -1,0 +1,27 @@
+<h2 class="assets-title">Assets&nbsp;
+  <mat-icon
+    (click)="modalAsset()"
+    *ngIf="permisions.MarketingAsset && permisions.MarketingAsset.Post"
+    class="cursor-pointer"
+  >add</mat-icon>
+</h2>
+<mat-list>
+  <mat-list-item *ngFor="let asset of assetsList">
+    <p mat-line>{{asset.description}}
+      &nbsp;<mat-icon
+        mat-list-icon
+        (click)="modalAsset(asset)"
+        *ngIf="permisions.MarketingAsset && permisions.MarketingAsset.Put"
+        class="cursor-pointer"
+      >edit</mat-icon>
+      &nbsp;
+      <mat-icon
+        mat-list-icon
+        (click)="deleteAsset(asset)"
+        *ngIf="permisions.MarketingAsset && permisions.MarketingAsset.Delete"
+        class="cursor-pointer"
+      >delete</mat-icon>
+    </p>
+    <p mat-line> <a href="{{asset.url}}" target="_blank">{{asset.url}}</a> </p>
+  </mat-list-item>
+</mat-list>

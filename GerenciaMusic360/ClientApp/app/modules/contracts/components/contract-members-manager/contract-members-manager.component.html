@@ -1,0 +1,9 @@
+<hr>
+<button mat-flat-button color="accent" [disabled]="contractMembers.length > 0" (click)="openDialogForAddContractMember()">
+  {{ 'general.add' | translate }}&nbsp;<mat-icon>add</mat-icon>                  
+</button>
+
+<div>
+  <app-contract-members-image [selectedMembersList]="person"></app-contract-members-image>
+</div>
+

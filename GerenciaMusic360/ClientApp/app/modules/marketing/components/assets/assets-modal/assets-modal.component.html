@@ -1,0 +1,32 @@
+<div [formGroup]="formAssets">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <input type="text" placeholder="{{'general.description' | translate}}" matInput formControlName="description">
+      <mat-error *ngIf="f.description?.errors?.required">
+        {{ 'validations.errors.fieldRequired' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input type="text" placeholder="{{'general.url' | translate}}" matInput formControlName="url">
+      <mat-error *ngIf="f.url?.errors?.required">
+        {{ 'validations.errors.fieldRequired' | translate }}
+      </mat-error>
+      <mat-error *ngIf="f.url?.errors?.pattern">
+        {{ 'validations.errors.invalidUrl' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions class="row">
+    <div class="col-xs-5">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-7 text-right">
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!formAssets.valid || isWorking" (click)="save()">
+        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

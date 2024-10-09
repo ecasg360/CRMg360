@@ -1,0 +1,115 @@
+<fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+
+  <!-- Front -->
+  <div class="fuse-widget-front">
+    <div class="pl-16 pr-8 py-16 h-52 header" fxLayout="row" fxLayoutAlign="space-between center">
+      <div>{{'general.demographicFocus' | translate}}</div>
+
+      <button mat-icon-button fuseWidgetToggle aria-label="more">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <div class="pt-8 pb-32 h-400" fxLayout="column">
+      <ngx-charts-pie-chart *ngIf="basePieChart.data.length > 0" [scheme]="basePieChart.scheme"
+        [results]="basePieChart.data" [legend]="true" [legendPosition]="basePieChart.legendPosition"
+        [explodeSlices]="basePieChart.explodeSlices" [legendTitle]="basePieChart.legendTitle"
+        [labels]="basePieChart.labels" [doughnut]="basePieChart.doughnut" [gradient]="basePieChart.gradient">
+        <ng-template #tooltipTemplate let-model="model">
+          <p class="tooltip-p">{{ model.name }}</p>
+          <strong>{{ model.value | number:'1.0-2' }}%</strong>
+        </ng-template>
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+  <!-- / Front -->
+
+  <!-- Back -->
+  <div class="fuse-widget-back p-16">
+    <div class="row">
+      <div class="col-xs-10">{{'general.demographicFocus' | translate}}</div>
+      <div class="col-xs-1">
+      </div>
+      <div class="col-xs-1">
+        <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="pt-8 pb-28 px-12" fxLayout="column">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      <div class="row between-lg between-md between-sm between-xs">
+        <!-- Agregar Demografia -->
+        <div class="col-xs-6 pr-24">
+          <div [formGroup]="demographicForm">
+            <mat-form-field class="mb-12">
+              <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+              <input matInput formControlName="name" placeholder="{{'formField.messages.enterName' | translate}}">
+              <mat-error *ngIf="f.name?.errors?.required">
+                {{ 'validations.errors.nameRequired' | translate }}
+              </mat-error>
+              <mat-error *ngIf="f.name?.errors?.minLength">
+                {{ 'validations.errors.fieldMinLength' | translate:{minLength:3} }}
+              </mat-error>
+              <mat-error *ngIf="f.name?.errors?.maxLength">
+                {{ 'validations.errors.fieldMaxLength' | translate:{maxLength:250} }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="mb-12">
+              <mat-label>{{ 'general.percentage' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+              <input matInput type="number" min="0" formControlName="percentage"
+                placeholder="{{'formField.messages.enterField' | translate}}">
+              <span matSuffix>%</span>
+              <mat-error *ngIf="f.percentage?.errors?.required">
+                {{ 'validations.errors.fieldRequired' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <button mat-flat-button color="primary" [disabled]="isWorking" (click)="demographicForm.reset()">
+              <mat-icon>cancel</mat-icon>&nbsp;{{ 'general.cancel' | translate}}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" (click)="setFocus()"
+              [disabled]="!demographicForm.valid || isWorking">
+              {{ 'general.save' | translate}}&nbsp;<mat-icon>save</mat-icon>
+            </button>
+          </div>
+        </div>
+        <!-- Editar/Eliminar Demografia -->
+        <div class="col-xs-6 pl-8">
+          <table mat-table [dataSource]="dataSource" class="w-100-p">
+            <!-- Position Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> {{ 'general.name' | translate }} </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="percentage">
+              <th mat-header-cell *matHeaderCellDef> {{ 'general.percentage' | translate }} </th>
+              <td mat-cell *matCellDef="let element"> {{element.percentage}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> {{'general.action' | translate}} </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="edit(element)">
+                  <mat-icon>edit</mat-icon>
+                </button>&nbsp;
+                <button mat-icon-button (click)="delete(element.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- / Back -->
+
+</fuse-widget>

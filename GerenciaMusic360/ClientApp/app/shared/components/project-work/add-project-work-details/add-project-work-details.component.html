@@ -1,0 +1,153 @@
+<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{ 'general.addInfo' | translate }} {{ title }}
+            </td>
+            <td class="end-xs">
+                <!-- <mat-icon aria-hidden="false">file_copy</mat-icon> -->
+            </td>
+        </tr>
+    </table>
+</div>
+<form class="p-4 w-100-p" [formGroup]="form">
+    <mat-dialog-content>
+        <hr>
+        <!-- Isrc Field -->
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.ISRC' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'formField.messages.enterIsrc' | translate }}" formControlName="ISRC"
+                [value]="f.ISRC.value.toUpperCase()">
+        </mat-form-field>
+
+        <!-- <mat-checkbox formControlName="isCompanyInternal">{{ 'general.companyInternal' | translate }}
+        </mat-checkbox> -->
+
+        <button mat-stroked-button color="primary" type="button" (click)="addPublisher()">
+            <mat-icon>add</mat-icon> {{ 'general.addPublisher' | translate }}
+        </button>&nbsp;
+        <!-- Editor List -->
+        <div style="display: flex; flex-direction: row;">
+            <div style="width: 80%;">
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'general.publisher' | translate }}</mat-label>
+                    <mat-select formControlName="personPublisherId" (selectionChange)="changePublisher($event)"
+                        placeholder="{{ 'formField.messages.selectEditors'  | translate }}">
+                        <mat-option *ngFor="let item of publishers" [value]="item.value">
+                            {{item.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div style="width: 20%;padding-left: 5px;padding-top: 5px;">
+                <button
+                    mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="addPub();"
+                >
+                    <mat-icon>add</mat-icon> {{ 'general.add' | translate }}
+                </button>
+            </div>
+        </div>
+        
+
+        <mat-list *ngIf="publishersList.length > 0">
+            <mat-list-item>
+                {{ 'projectWork.publishers'  | translate }}
+            </mat-list-item>
+            <mat-list-item *ngFor="let publisher of publishersList">
+                {{publisher.name}}
+            </mat-list-item>
+        </mat-list>
+
+        <!-- Association List -->
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.association' | translate }}</mat-label>
+            <mat-select formControlName="associationId"
+                placeholder="{{ 'formField.messages.selectAssociation'  | translate }}">
+                <mat-option *ngFor="let item of associations" [value]="item.value">
+                    {{item.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="primary" type="button" (click)="openDialogForAddProducer()">
+            <mat-icon>add</mat-icon> {{ 'general.addProducer' | translate }}
+        </button>&nbsp;
+        <!-- Productor List -->
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.producer' | translate }}</mat-label>
+            <mat-select formControlName="personProducerId"
+                placeholder="{{ 'formField.messages.selectAssociation'  | translate }}">
+                <mat-option *ngFor="let item of productors" [value]="item.value">
+                    {{item.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="primary" type="button" (click)="openDialogForAddRemix()">
+            <mat-icon>add</mat-icon> {{ 'general.addRemix' | translate }}
+        </button>&nbsp;
+        <!-- Remix List -->
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.remixCreator' | translate }}</mat-label>
+            <mat-select formControlName="personRemixId"
+                placeholder="{{ 'formField.messages.selectAssociation'  | translate }}">
+                <mat-option *ngFor="let item of remixes" [value]="item.value">
+                    {{item.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="primary" type="button" (click)="openDialogForAddComposer();">
+            <mat-icon>add</mat-icon> {{ 'general.addComposer' | translate }}
+        </button>&nbsp;
+        <!-- Composer List -->
+        <div style="display: flex; flex-direction: row;">
+            <div style="width: 80%;">
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'general.composer' | translate }}</mat-label>
+                    <mat-select formControlName="personComposerId"
+                        placeholder="{{ 'formField.messages.selectComposer'  | translate }}">
+                        <mat-option *ngFor="let item of composers" [value]="item.value">
+                            {{item.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div style="width: 20%;padding-left: 5px;padding-top: 5px;">
+                <button
+                    mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="addComposer();"
+                >
+                    <mat-icon>add</mat-icon> {{ 'general.add' | translate }}
+                </button>
+            </div>
+        </div>
+        
+        <mat-list *ngIf="composersList.length > 0">
+            <mat-list-item>
+                {{ 'general.composers'  | translate }}
+            </mat-list-item>
+            <mat-list-item *ngFor="let composer of composersList">
+                {{composer.name}} {{composer.lastname}}
+            </mat-list-item>
+        </mat-list>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="w-40-p text-right">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="w-60-p text-right">
+            <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="set()">
+                <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+            </button> &nbsp;
+        </div>
+    </mat-dialog-actions>
+</form>

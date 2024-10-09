@@ -1,0 +1,114 @@
+<div id="timeline" class="row m-4">
+  <div class="timeline-content" class="col-xs-12">
+    <div class="timeline-item blue-grey-50-bg py-8">
+      <div class="row mb-12 comment-count">
+        <div class="col-xs h3">
+          {{ commentCount }} {{ 'general.comments' | translate }}
+          <mat-icon class="s-16">mode_comment</mat-icon>
+        </div>
+      </div>
+      <div [ngClass]="{'manageScroll': UseScroll}">
+        <div class="comment row between-xs" *ngFor="let item of commentList;trackBy:trackFunc">
+          <div class="col-xs-1">
+            <img [src]="item.pictureUrl" matTooltip="{{item.userName}}" onerror="this.src='assets/images/logos/360-circle.png';" class="avatar" />
+            <small>{{item.userName}}</small>
+          </div>
+          <div class="col-xs">
+            <div>
+              <span class="date">{{item.created | date:'short' }}</span>&nbsp; 
+              <mat-icon class="ml-4 s-16">calendar_today</mat-icon>
+              <mat-icon class="ml-4 s-16 cursor-pointer" matTooltip="{{'general.edit' | translate}}" 
+                *ngIf="user.userId == item.creator && !isEdit && !isWorking"
+                (click)="editComment('comment', item)">edit</mat-icon>
+            </div>
+            <div class="message" [innerHTML]="item.commentary"></div>
+            <!-- reply container -->
+            <div *ngIf="item.replyList.length > 0">
+              <div class="reply-message  row between-xs" *ngFor="let reply of item.replyList;trackBy:trackFuncReply">
+                <div class="col-xs-1">
+                  <img [src]="reply.pictureUrl" matTooltip="{{reply.userName}}" onerror="this.src='assets/images/logos/360-circle.png';" class="avatar" />
+                  <small>{{reply.userName}}</small>
+                </div>
+                <div class="col-xs">
+                  <div>
+                    <span class="date">{{reply.created | date:'short' }}</span>&nbsp; 
+                    <mat-icon class="ml-4 s-16">calendar_today</mat-icon>
+                    <mat-icon class="ml-4 s-16 cursor-pointer" matTooltip="{{'general.edit' | translate}}" 
+                    *ngIf="user.userId == item.creator && !isEdit && !isWorking"
+                    (click)="editComment('reply', reply)">edit</mat-icon>
+                  </div>
+                  <div class="message" [innerHTML]="reply.commentary"></div>
+                </div>
+              </div>
+            </div>
+            <!-- / reply container -->
+
+            <!-- action reply -->
+            <div class="actions">
+              <a class="reply-button" (click)="replyAction(item)">Reply&nbsp;
+                <mat-icon class="s-16">reply</mat-icon>
+              </a>
+              <div class="col-xs reply" *ngIf="item.replyActive" [formGroup]="commentReplyForm">
+                  <mat-label>{{'formField.messages.addComment' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <mat-form-field>
+                  <textarea matInput class="p-8 mb-8" rows="6" [mentions]="mentionItemsReply"
+                    placeholder="{{'formField.messages.addComment' | translate}}..."
+                    formControlName="comment"></textarea>
+                  <mat-icon matSuffix>mode_edit</mat-icon>
+                  <mat-error *ngIf="fReply.comment?.errors?.minLength">
+                    {{ 'validations.errors.fieldMinLength' | translate:{minLength:3} }}
+                  </mat-error>
+                  <mat-error *ngIf="fReply.comment?.errors?.maxLength">
+                    {{ 'validations.errors.fieldMaxLength' | translate:{maxLength:450} }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-spinner *ngIf="isWorking" diameter="15"></mat-spinner>
+                <button mat-raised-button color="accent" [disabled]="!commentReplyForm.valid || isWorking"
+                  class="post-comment-button" (click)="addComment(item.id)">
+                  {{'formField.messages.addComment' | translate}}&nbsp;<mat-icon class="s-14">add_comment</mat-icon>
+                </button>
+              </div>
+            </div>
+            <!-- / action reply -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-1">
+          <img [src]="user.pictureUrl" onerror="this.src='assets/images/logos/360-circle.png';" class="avatar" />
+        </div>
+        <div class="col-xs reply" [formGroup]="commentForm">
+          <mat-spinner *ngIf="isWorking" diameter="15"></mat-spinner>
+          <mat-form-field>
+            <textarea matInput class="p-8 mb-8" rows="6" [mentions]="mentionItems"
+              placeholder="{{'formField.messages.addComment' | translate}}..." formControlName="comment"></textarea>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-error *ngIf="f.comment?.errors?.minLength">
+              {{ 'validations.errors.fieldMinLength' | translate:{minLength:3} }}
+            </mat-error>
+            <mat-error *ngIf="f.comment?.errors?.maxLength">
+              {{ 'validations.errors.fieldMaxLength' | translate:{maxLength:450} }}
+            </mat-error>
+          </mat-form-field>
+          <ng-container *ngIf="isEdit; then editTemplate; else createTemplate"></ng-container>
+          <ng-template #editTemplate>
+              <button mat-raised-button color="accent" [disabled]="!commentForm.valid || isWorking"img
+              class="post-comment-button" (click)="saveEditComment()">
+              {{'general.editComment' | translate}}&nbsp;<mat-icon class="s-14">add_comment</mat-icon>
+            </button>&nbsp;&nbsp;
+            <button mat-raised-button color="accent" [disabled]="isWorking"
+            class="post-comment-button" (click)="cancelEdit()">
+            {{'general.cancel' | translate}}&nbsp;<mat-icon class="s-14">cancel</mat-icon>
+          </button>
+          </ng-template>
+          <ng-template #createTemplate>
+              <button mat-raised-button color="accent" [disabled]="!commentForm.valid || isWorking"
+              class="post-comment-button" (click)="addComment()">
+              {{'formField.messages.addComment' | translate}}&nbsp;<mat-icon class="s-14">add_comment</mat-icon>
+            </button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

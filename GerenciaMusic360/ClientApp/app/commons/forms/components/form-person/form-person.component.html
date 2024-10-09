@@ -1,0 +1,334 @@
+<ng-container *ngIf="!isComposer && !isContractMember">
+  <div [formGroup]="personForm">
+      <h3 class="mat-title m-8">{{title}}</h3>
+      <div class="row">
+          <div [className]="manageImage ? 'col-xs-12 col-sm-8 col-md-10  col-lg-2' : ''">
+              <div>
+                  <!-- <app-upload-image *ngIf="manageImage" errorImage="assets/images/avatars/defaultProfile4.jpg"
+                      [image]="pictureURL" (selectImage)="selectImage($event)">
+                  </app-upload-image> -->
+              </div>
+          </div>
+          <div [className]="manageImage ? 'col-xs-10' : 'col-xs-12'">
+              <div class="row">
+                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                      <mat-label>{{ 'general.names' | translate }}&nbsp;<span class="red-required">*</span>
+                      </mat-label>
+                      <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}"
+                          formControlName="name">
+                      <mat-error *ngIf="f.name?.errors?.required">
+                          {{ 'validations.errors.nameRequired' | translate }}
+                      </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                      <mat-label>{{ 'general.lastName' | translate }}&nbsp;<span class="red-required">*</span>
+                      </mat-label>
+                      <input matInput placeholder="{{ 'formField.messages.enterSurname' | translate }}"
+                          formControlName="lastName">
+                      <mat-error *ngIf="f.lastName?.errors?.required">
+                          {{ 'validations.errors.lastNameRequired' | translate }}
+                      </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" *ngIf="isContact" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                      <mat-label>{{ 'general.secondLastName' | translate }}</mat-label>
+                      <input matInput placeholder="{{ 'formField.messages.enterSecondSurname' | translate }}"
+                          formControlName="secondLastName">
+                  </mat-form-field>
+              </div>
+              <div class="row">
+                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                      <mat-label>{{ 'general.gender' | translate }}&nbsp;<span class="red-required">*</span>
+                      </mat-label>
+                      <mat-select placeholder="{{ 'formField.messages.selectGender' | translate }}"
+                          formControlName="gender">
+                          <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                              {{gender.viewValue | translate }}
+                          </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="f.gender?.errors?.required">
+                          {{ 'validations.errors.genderRequired' | translate }}
+                      </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                      <mat-label>{{ 'general.birthdate' | translate }}</mat-label>
+                      <input matInput [matDatepicker]="picker"
+                          placeholder="{{ 'formField.messages.selectBirthday' | translate }}"
+                          formControlName="birthDateString">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-error *ngIf="f.birthDateString?.errors?.required">
+                          {{ 'validations.errors.birthdayRequired' | translate }}
+                      </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                      <mat-label>{{ 'general.email' | translate }}</mat-label>
+                      <input matInput placeholder="{{ 'formField.messages.enterEmail' | translate }}"
+                          formControlName="email">
+                  </mat-form-field>
+              </div>
+              <div class="row">
+                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                      <mat-label>{{ 'general.officePhone' | translate }}</mat-label>
+                      <input matInput placeholder="Ingresa Teléfono Uno" formControlName="officePhone">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                      <mat-label>{{ 'general.cellPhone' | translate }}</mat-label>
+                      <input matInput placeholder="Ingresa Teléfono Tres" formControlName="cellPhone">
+                  </mat-form-field>
+                  <ng-template [ngIf]="projectId || isInternal === false" [ngIfElse]="canIsInternal">
+                      <mat-checkbox hidden="hidden" class="col-xs-12 col-sm-8 col-md-6 col-lg-4" (click)="sample()"
+                          formControlName="isInternal">{{'general.isinternal'|translate}}</mat-checkbox>
+                  </ng-template>
+                  <ng-template #canIsInternal>
+                      <mat-checkbox class="col-xs-12 col-sm-8 col-md-6 col-lg-4" (click)="sample()"
+                          formControlName="isInternal">{{'general.isinternal'|translate}}</mat-checkbox>
+                  </ng-template>
+              </div>
+          </div>
+      </div>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="isComposer">
+  <div mat-dialog-title>
+      <table>
+          <tr>
+              <td>
+                  {{ 'general.composer' | translate }}
+              </td>
+              <td class="end-xs">
+                  <mat-icon aria-hidden="false" aria-label="Example home icon">people</mat-icon>
+              </td>
+          </tr>
+      </table>
+  </div>
+
+  <div mat-dialog-content>
+      <hr />
+      <div [formGroup]="personForm">
+          <h3 class="mat-title m-8"></h3>
+          <div class="row">
+              <div [className]="manageImage ? 'col-xs-12 col-sm-8 col-md-10  col-lg-2' : ''">
+                  <div>
+                      <!-- <app-upload-image *ngIf="manageImage" errorImage="assets/images/avatars/defaultProfile4.jpg"
+                          [image]="pictureURL" (selectImage)="selectImage($event)">
+                      </app-upload-image> -->
+                  </div>
+              </div>
+              <div [className]="manageImage ? 'col-xs-10' : 'col-xs-12'">
+                  <div class="row">
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.names' | translate }}</mat-label>
+                          <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}"
+                              formControlName="name">
+                          <mat-error *ngIf="f.name?.errors?.required">
+                              {{ 'validations.errors.nameRequired' | translate }}
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field *ngIf="!isContact" appearance="outline"
+                          class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.lastName' | translate }}</mat-label>
+                          <input matInput placeholder="{{ 'formField.messages.enterSurname' | translate }}"
+                              formControlName="lastName">
+                          <mat-error *ngIf="f.lastName?.errors?.required">
+                              {{ 'validations.errors.lastNameRequired' | translate }}
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.secondLastName' | translate }}</mat-label>
+                          <input matInput placeholder="{{ 'formField.messages.enterSecondSurname' | translate }}"
+                              formControlName="secondLastName">
+                      </mat-form-field>
+                  </div>
+                  <div class="row">
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.gender' | translate }}</mat-label>
+                          <mat-select placeholder="{{ 'formField.messages.selectGender' | translate }}"
+                              formControlName="gender">
+                              <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                  {{gender.viewValue | translate }}
+                              </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="f.gender?.errors?.required">
+                              {{ 'validations.errors.genderRequired' | translate }}
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.birthdate' | translate }}</mat-label>
+                          <input matInput [matDatepicker]="picker"
+                              placeholder="{{ 'formField.messages.selectBirthday' | translate }}"
+                              formControlName="birthDateString">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                          <mat-error *ngIf="f.birthDateString?.errors?.required">
+                              {{ 'validations.errors.birthdayRequired' | translate }}
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.email' | translate }}</mat-label>
+                          <input matInput placeholder="{{ 'formField.messages.enterEmail' | translate }}"
+                              formControlName="email">
+                      </mat-form-field>
+                  </div>
+                  <div class="row">
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.officePhone' | translate }}</mat-label>
+                          <input matInput placeholder="Ingresa Teléfono Uno" formControlName="officePhone">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.cellPhone' | translate }}</mat-label>
+                          <input matInput placeholder="Ingresa Teléfono Tres" formControlName="cellPhone">
+                      </mat-form-field>
+
+                      <ng-template [ngIf]="projectId || isInternal === false" [ngIfElse]="canIsInternal">
+                          <mat-checkbox hidden="hidden" class="col-xs-12 col-sm-8 col-md-6 col-lg-4"
+                              (click)="sample()" formControlName="isInternal">{{'general.isinternal'|translate}}
+                          </mat-checkbox>
+                      </ng-template>
+                      <ng-template #canIsInternal>
+                          <mat-checkbox class="col-xs-12 col-sm-8 col-md-6 col-lg-4" (click)="sample()"
+                              formControlName="isInternal">{{'general.isinternal'|translate}}</mat-checkbox>
+                      </ng-template>
+
+                  </div>
+              </div>
+          </div>
+          <div class="row end-xs">
+              <div class="col-xs-1">
+                  <!-- <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner> -->
+              </div>
+              <div class="col-xs-12">
+
+                  <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                      <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                  </button>&nbsp;
+                  <button mat-flat-button color="primary" [disabled]="!personForm.valid" (click)="setComposer()">
+                      {{action}}&nbsp;<mat-icon>save</mat-icon>
+                  </button> &nbsp;
+              </div>
+          </div>
+      </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isContractMember">
+  <div mat-dialog-title>
+      <table>
+          <tr>
+              <td>
+                  {{ 'general.contractor' | translate }}
+              </td>
+              <td class="end-xs">
+                  <mat-icon aria-hidden="false" aria-label="Example home icon">people</mat-icon>
+              </td>
+          </tr>
+      </table>
+  </div>
+
+  <div mat-dialog-content>
+      <hr />
+      <div [formGroup]="personForm">
+          <h3 class="mat-title m-8"></h3>
+          <div class="row">
+              <div [className]="manageImage ? 'col-xs-12 col-sm-8 col-md-10  col-lg-2' : ''">
+                  <div>
+                      <!-- <app-upload-image *ngIf="manageImage" errorImage="assets/images/avatars/defaultProfile4.jpg"
+                          [image]="pictureURL" (selectImage)="selectImage($event)">
+                      </app-upload-image> -->
+                  </div>
+              </div>
+              <div [className]="manageImage ? 'col-xs-10' : 'col-xs-12'">
+                  <div class="row">
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.names' | translate }}</mat-label>
+                          <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}"
+                              formControlName="name">
+                          <mat-error *ngIf="f.name?.errors?.required">
+                              {{ 'validations.errors.nameRequired' | translate }}
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field *ngIf="!isContact" appearance="outline"
+                          class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.lastName' | translate }}</mat-label>
+                          <input matInput placeholder="{{ 'formField.messages.enterSurname' | translate }}"
+                              formControlName="lastName">
+                          <mat-error *ngIf="f.lastName?.errors?.required">
+                              {{ 'validations.errors.lastNameRequired' | translate }}
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.secondLastName' | translate }}</mat-label>
+                          <input matInput placeholder="{{ 'formField.messages.enterSecondSurname' | translate }}"
+                              formControlName="secondLastName">
+                      </mat-form-field>
+                  </div>
+                  <div class="row">
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.gender' | translate }}</mat-label>
+                          <mat-select placeholder="{{ 'formField.messages.selectGender' | translate }}"
+                              formControlName="gender">
+                              <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                  {{gender.viewValue | translate }}
+                              </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="f.gender?.errors?.required">
+                              {{ 'validations.errors.genderRequired' | translate }}
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.birthdate' | translate }}</mat-label>
+                          <input matInput [matDatepicker]="picker"
+                              placeholder="{{ 'formField.messages.selectBirthday' | translate }}"
+                              formControlName="birthDateString">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                          <mat-error *ngIf="f.birthDateString?.errors?.required">
+                              {{ 'validations.errors.birthdayRequired' | translate }}
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.email' | translate }}</mat-label>
+                          <input matInput placeholder="{{ 'formField.messages.enterEmail' | translate }}"
+                              formControlName="email">
+                      </mat-form-field>
+                  </div>
+                  <div class="row">
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.officePhone' | translate }}</mat-label>
+                          <input matInput placeholder="Ingresa Teléfono Uno" formControlName="officePhone">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                          <mat-label>{{ 'general.cellPhone' | translate }}</mat-label>
+                          <input matInput placeholder="Ingresa Teléfono Tres" formControlName="cellPhone">
+                      </mat-form-field>
+                      <ng-template [ngIf]="projectId || isInternal === false" [ngIfElse]="canIsInternal">
+                          <mat-checkbox hidden="hidden" class="col-xs-12 col-sm-8 col-md-6 col-lg-4"
+                              (click)="sample()" formControlName="isInternal">{{'general.isinternal'|translate}}
+                          </mat-checkbox>
+                      </ng-template>
+                      <ng-template #canIsInternal>
+                          <mat-checkbox class="col-xs-12 col-sm-8 col-md-6 col-lg-4" (click)="sample()"
+                              formControlName="isInternal">{{'general.isinternal'|translate}}</mat-checkbox>
+                      </ng-template>
+                  </div>
+              </div>
+          </div>
+          <div class="row end-xs">
+              <div class="col-xs-1">
+                  <!-- <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner> -->
+              </div>
+              <div class="col-xs-12">
+
+                  <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                      <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                  </button>&nbsp;
+                  <button mat-flat-button color="primary" [disabled]="!personForm.valid"
+                      (click)="setContractMember()">
+                      {{action}}&nbsp;<mat-icon>save</mat-icon>
+                  </button> &nbsp;
+              </div>
+          </div>
+      </div>
+  </div>
+</ng-container>

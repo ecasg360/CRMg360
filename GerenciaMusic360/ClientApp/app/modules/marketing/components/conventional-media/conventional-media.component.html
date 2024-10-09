@@ -1,0 +1,49 @@
+<div>
+  <h1 mat-dialog-title>{{'general.conventionalMediaCampaign' | translate}}</h1>
+  <div mat-dialog-content>
+    <div class="social-container">
+      <div class="social-item m-8" *ngFor="let item of keysIdeasList">
+        <img src="{{item.pictureUrl}}" height="60" width="60" onerror="this.src='assets/images/logos/360-circle.png';"
+          class="{{item.cssClass}}" matTooltip="{{item.socialNetwork}}" (click)="selectKeyIdea(item)"
+          alt="{{item.socialNetwork}}"><br>
+        <small>{{item.socialNetwork}}</small>
+      </div>
+      <div class="social-item m-8">
+        <button mat-fab *ngIf="socialNetworksList.length >0" (click)="toggleSocialList()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="showSocialList">
+      <div class="social-container">
+        <div class="social-item m-8" *ngFor="let item of socialNetworksList">
+          <img src="{{item.pictureUrl}}" height="60" width="60" onerror="this.src='assets/images/logos/360-circle.png';"
+            class="{{item.cssClass}}" matTooltip="{{item.name}}" (click)="selectSocialNetwork(item)"
+            alt="{{item.name}}"><br />
+          <small>{{item.name}}</small>
+        </div>
+      </div>
+      <div class="my-8">
+        <button mat-flat-button color="primary" [disabled]="isWorking" (click)="toggleSocialList()">
+          <mat-icon>cancel</mat-icon>&nbsp;{{ 'general.cancel' | translate}}
+        </button>&nbsp;
+        <button mat-flat-button color="primary" (click)="saveSocialNetwork()" [disabled]="isWorking">
+          {{ 'general.save' | translate}}&nbsp;<mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="row">
+    <div class="col-xs-5">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-7 text-right">
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="save()">
+        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

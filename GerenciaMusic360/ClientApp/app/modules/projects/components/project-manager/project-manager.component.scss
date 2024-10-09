@@ -1,0 +1,24 @@
+.textUnder {
+    font-size: 8pt;
+}
+
+.mat-tab-list .mat-tab-labels,
+.mat-tab-list>.mat-tab-labels,
+.mat-tab-labels,
+mat-tab-labels {
+    background: #ffffff !important;
+}
+
+
+/*::ng-deep app-project-data .mat-select-custom {
+    padding: 11px 0px;
+    height: 46px;
+    line-height: 28px;
+    font-size: 12px;
+    border-radius: 8px 0 0 0;
+}
+
+::ng-deep app-project-data .mat-form-field-custom {
+    position: relative;
+    top: -14px;
+}*/

@@ -1,0 +1,106 @@
+<h3 mat-dialog-title>{{ 'travelLogistics.hotel.title' | translate }}</h3>
+
+<form [formGroup]="dataHotelForm">
+  <mat-dialog-content>
+    <div class="row">
+      <input formControlName="id" type="hidden">
+      <input formControlName="projectTravelLogisticsId" type="hidden">
+      <div class="col-xs-12">
+        <!-- Name Field -->
+        <mat-form-field appearance="outline" class="w-100-p">
+          <mat-label>{{ 'travelLogistics.hotel.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+          <input matInput placeholder="{{ 'travelLogistics.hotel.form.name' | translate }}" formControlName="name"
+            required>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-6">
+        <!-- Room Number Field -->
+        <mat-form-field appearance="outline" class="w-100-p">
+          <mat-label>{{ 'travelLogistics.hotel.roomNumber' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'travelLogistics.hotel.form.roomNumber' | translate }}"
+            formControlName="roomNumber" type="number">
+        </mat-form-field>
+      </div>
+      <div class="col-xs-6">
+        <!-- Passenger Seat Field -->
+        <mat-form-field appearance="outline" class="w-100-p">
+          <mat-label>{{ 'travelLogistics.hotel.reservationName' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'travelLogistics.hotel.form.reservationName' | translate }}"
+            formControlName="reservationName">
+        </mat-form-field>
+      </div>
+      <div class="col-xs-6">
+        <!-- Total Cost Field -->
+        <mat-form-field appearance="outline" class="w-100-p">
+          <mat-label>{{ 'travelLogistics.totalCost' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+          <input matInput placeholder="{{ 'travelLogistics.hotel.form.totalCost' | translate }}"
+            formControlName="totalCost" required type="number">
+        </mat-form-field>
+      </div>
+      <div class="col-xs-6">
+        <!-- IsInternal Field -->
+        <mat-radio-group
+          formControlName="isInternal"
+          aria-label="Select an option"
+        >
+          <mat-radio-button
+            value="0"
+            style="margin-left: 5px"
+          >
+            {{ 'general.artist'  | translate }}
+          </mat-radio-button>
+          <mat-radio-button
+            value="1"
+            style="margin-left: 5px"
+          >
+            {{ 'general.G360CompanyExpense'  | translate }}
+          </mat-radio-button>
+          <mat-radio-button
+            value="2"
+            style="margin-left: 8px"
+          >
+            {{ 'general.MOE'  | translate }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <mat-form-field appearance="outline">
+          <input type="text" placeholder="{{ 'general.budgetCategory' | translate}}" matInput [formControl]="budgetAuFC"
+            [matAutocomplete]="autoBudget">
+          <mat-autocomplete #autoBudget="matAutocomplete" (optionSelected)="budgetAutocompleteOptionSelected($event)">
+            <mat-option *ngFor="let option of filteredBudgets | async" [id]="option.id" [value]="option.name">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-6">
+        <mat-form-field appearance="outline">
+          <input type="text" placeholder="{{ 'general.budgetDetail' | translate}}" matInput [formControl]="categoryFC"
+            [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteOptionSelected($event)">
+            <mat-option *ngFor="let option of filteredOptions | async" [id]="option.id" [value]="option.name">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="w-40-p text-right">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="w-60-p text-right">
+      <button mat-stroked-button color="primary" [disabled]="isWorking" type="button" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!dataHotelForm.valid || isWorking" (click)="saveHotel()">
+        <mat-icon>save</mat-icon> {{action}}
+      </button> &nbsp;
+    </div>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,87 @@
+<div>
+  <h1 mat-dialog-title>Hi {{'general.digitalPlatformCampaign' | translate}}</h1>
+  <div mat-dialog-content>
+    <div class="social-container">
+      <div class="social-item m-8" *ngFor="let item of keysIdeasList">
+        <img src="{{item.pictureUrl}}" height="60" width="60" onerror="this.src='assets/images/logos/360-circle.png';"
+          class="{{item.cssClass}}" matTooltip="{{item.socialNetwork}}" (click)="selectKeyIdea(item)"
+          alt="{{item.socialNetwork}}"><br>
+        <small>{{item.socialNetwork}}</small>
+      </div>
+      <div class="social-item m-8">
+        <button mat-fab *ngIf="socialNetworksList.length >0" (click)="toggleSocialList()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="showSocialList">
+      <div class="social-container">
+        <div class="social-item m-8" *ngFor="let item of socialNetworksList">
+          <img src="{{item.pictureUrl}}" height="60" width="60" onerror="this.src='assets/images/logos/360-circle.png';"
+            class="{{item.cssClass}}" matTooltip="{{item.name}}" (click)="selectSocialNetwork(item)"
+            alt="{{item.name}}"><br />
+          <small>{{item.name}}</small>
+        </div>
+      </div>
+      <div class="my-8">
+        <button mat-flat-button color="primary" [disabled]="isWorking" (click)="toggleSocialList()">
+          <mat-icon>cancel</mat-icon>&nbsp;{{ 'general.cancel' | translate}}
+        </button>&nbsp;
+        <button mat-flat-button color="primary" (click)="saveSocialNetwork()" [disabled]="isWorking">
+          {{ 'general.save' | translate}}&nbsp;<mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="row p-8">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-3">{{'general.objetive' | translate}}</div>
+          <div class="col-xs-3">{{'general.percentage' | translate}}</div>
+          <div class="col-xs-3">Social Network</div>
+          <div class="col-xs-3"></div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3">
+            <mat-form-field>
+              <input type="text" id="input_objetive" [(ngModel)]="objetive" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-xs-3">
+            <mat-form-field>
+              <input type="number" id="input_percentage" [(ngModel)]="percentage" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-xs-3">
+            <mat-form-field>
+              <mat-select placeholder="{{ 'general.socialNetwork' | translate}}" [(ngModel)]="social_network">
+                <mat-option *ngFor="let socialN of allSocialNetworksList" [value]="socialN.id">
+                  {{socialN.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-xs-3">
+            <mat-icon class="cursor-pointer" (click)="addPlatformValues()">add</mat-icon>
+          </div>
+        </div>
+        <div class="row" *ngFor="let values of valuesList; let i=index">
+          <div class="col-xs-3">{{values.objetive}}</div>
+          <div class="col-xs-3">{{values.percentage}}</div>
+          <div class="col-xs-3">{{values.social_network_name}}</div>
+          <div class="col-xs-3">
+            <mat-icon class="cursor-pointer" (click)="deleteValue(i)">delete</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-4"></div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+      <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+    </button>&nbsp;
+    <button mat-flat-button color="primary" [disabled]="isWorking" (click)="save()">
+      <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+    </button>
+  </div>
+</div>

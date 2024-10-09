@@ -1,0 +1,114 @@
+<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{ 'settings.field.title' | translate }}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">text_fields</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<form [formGroup]="dataFieldForm">
+    <mat-dialog-content>
+        <hr>
+        <div class="row">
+            <input formControlName="id" type="hidden">
+            <div class="col-xs-12">
+                <!-- Field Type List -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'settings.field.fieldType' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <mat-select formControlName="fieldTypeId" placeholder="{{ 'settings.field.fieldType' | translate }}">
+                        <mat-option *ngFor="let item of fieldTypes" [value]="item.value">
+                            {{item.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12">
+                <!-- Key Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'settings.field.key' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{ 'settings.field.key' | translate }}" formControlName="key">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12">
+                <!-- Text Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'settings.field.text' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{ 'settings.field.text' | translate }}" formControlName="text">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12">
+                <!-- Value Default Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'settings.field.valueDefault' | translate }}</mat-label>
+                    <input matInput placeholder="{{ 'settings.field.valueDefault' | translate }}" formControlName="valueDefault">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12">
+                <!-- Module List -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'settings.field.module' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <mat-select formControlName="moduleId" placeholder="{{ 'settings.field.module' | translate }}" (selectionChange)="onItemSelect($event.value)">
+                        <mat-option *ngFor="let item of modules" [value]="item.value">
+                            {{item.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="moduleTypes.length > 0" class="col-xs-6">
+                <!-- Module Type List -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'settings.field.moduleType' | translate }}</mat-label>
+                    <mat-select formControlName="moduleTypeId" placeholder="{{ 'settings.field.moduleType' | translate }}">
+                        <mat-option *ngFor="let item of moduleTypes" [value]="item.value">
+                            {{item.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+                <!-- Dimension Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'settings.field.dimension' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{ 'settings.field.dimension' | translate }}" formControlName="dimension" type="number">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+                <!-- Position Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'settings.field.position' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{ 'settings.field.moduleType' | translate }}" formControlName="position" type="number">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+                <!-- Marker Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'settings.field.marker' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{ 'settings.field.marker' | translate }}" formControlName="marker">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+                <!-- Required -->
+                <mat-checkbox class="w-40-p" formControlName="required" [checked]="isRequired" (change)="changeRequired($event)">
+                    {{ 'general.required' | translate }}
+                </mat-checkbox>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="w-40-p text-right">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="w-60-p text-right">
+            <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" [disabled]="!dataFieldForm.valid" (click)="saveField()">
+                <mat-icon>save</mat-icon> {{action}}
+            </button> &nbsp;
+        </div>
+    </mat-dialog-actions>
+</form>

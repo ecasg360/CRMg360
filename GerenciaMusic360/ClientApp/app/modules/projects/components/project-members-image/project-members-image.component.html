@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="w-100-p">
+    <span class="member-wrap col-xs" *ngFor="let item of selectedMembersList">
+      <img class="img-rounded image-lg" src="{{item.pictureUrl}}" alt="avatar"
+        title="{{item.name + ' ' + item.lastName}}" onerror="this.src='assets/images/avatars/defaultProfile5.jpg'" />
+    </span>
+  </div>
+</div>

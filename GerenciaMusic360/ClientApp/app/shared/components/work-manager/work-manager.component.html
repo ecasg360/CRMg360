@@ -1,0 +1,45 @@
+  <div class="p-4">
+    <button mat-fab color="primary" class="my-16 mx-8" (click)="showModalForm()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+  <div class="row">
+    <mat-card class="col-xs-12 col-sm-5 col-md-4 col-lg-3" style="margin:2px;" *ngFor="let item of workList">
+      <mat-card-header>
+        <mat-card-title>{{item.name}}</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image src="{{item.PictureURL}}" alt="item.name"
+        onerror="this.src='assets/images/backgrounds/dark-material-bg.jpg'" />
+      <mat-card-content>
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            <strong>Creado en:</strong>&nbsp;{{ item.createdDateString | date }}
+          </mat-list-item>
+          <mat-list-item role="listitem"><strong>Numero de Registro:</strong>&nbsp;{{ item.registerNum }}
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <strong>Fecha de Registro:</strong>&nbsp;{{ item.registerDateString | date }}
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <strong>Número de licencia:</strong>&nbsp;{{ item.licenseNum}}
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <strong>{{'general.status' | translate}}:</strong>&nbsp;
+            <mat-slide-toggle [color]="accent" [checked]="item.statusRecordId==1"
+              (change)="updateStatus(item.id, item.statusRecordId)">
+            </mat-slide-toggle>
+          </mat-list-item>
+        </mat-list>
+        <hr>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="showModalForm(item.id)">
+          <mat-icon>create</mat-icon>
+        </button>
+        <button mat-button (click)="confirmDelete(item.id, item.name)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>

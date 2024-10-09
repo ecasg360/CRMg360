@@ -1,0 +1,114 @@
+
+<ng-template *ngIf="albumDetail;then albumDetailtemplate; else albums;">
+</ng-template>
+<ng-template #albums>
+    <div class="p-4">
+        <button mat-flat-button color="accent" type="button" class="p-4" (click)="showForm()">
+            {{ 'general.add' | translate }}<mat-icon class="pl-4">add</mat-icon>
+        </button>
+    </div>
+    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    <div *ngIf="albumList.length > 0 else elseTemplate">
+        <div class="mat-dialog-content">
+            <div class="row between-xs">
+
+                <div class="fuse-card boxShadown col-xs-12 col-sm-8 col-md-5 col-lg-2 p-4" *ngFor="let item of albumList">
+                    <div class="row end-xs">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openDetail(item.id)">
+                                <mat-icon>
+                                    more_horiz
+                                </mat-icon>
+                                <span>{{'general.detail'|translate}}</span>
+                            </button>
+                            <button mat-menu-item (click)="showForm(item.id)">
+                                <mat-icon>
+                                    edit
+                                </mat-icon>
+                                <span>{{'general.edit'|translate}}</span>
+                            </button>
+                            <button mat-menu-item (click)="confirmDelete(item.id,item.name)">
+                                <mat-icon>
+                                    delete
+                                </mat-icon>
+                                <span>{{'general.delete'|translate}}</span>
+                            </button>
+                            <button mat-menu-item (click)="updateStatus(item.id,item.statusRecordId)">
+                                <mat-icon>
+                                    album_off
+                                </mat-icon>
+                                <span>Disable</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 center-xs">
+                            <img src="{{item.pictureUrl}}" alt="{{item.name}}" class="col-xs-12 imageAlbum"
+                                 onerror="this.src='assets/images/albums/albumdisco.png'">
+                        </div>
+                    </div>
+                    <div class="row center-xs">
+                        <div class="col-xs-12 titleAlbum">
+                            {{item.name}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <ng-template #elseTemplate>
+        <h2 class="mat-display-1 text-center">{{'general.norecords'|translate}}</h2>
+    </ng-template>
+</ng-template>
+<ng-template #albumDetailtemplate>
+    <div>
+        <button mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="albumDetail=!albumDetail">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="row" [className]="albumDetail ? 'fadeInRight animated' : 'fadeInLeft  animated'">
+        <div class="col-xs-12 col-sm-8 col-md-5 col-lg-12">
+            <div class="row center-xs">
+                <div class="col-xs-12 col-sm-8 col-md-5 col-lg-6">
+
+                    <div class="latestalbumthumb">
+                        <img width="300" src="/assets/images/albums/defaultAlbum.jpg" />
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-5 col-lg-6">
+                    <div class="row">
+                        <mat-list role="list" *ngIf="albumWorks" class="col-xs-12 col-sm-8 col-md-5 col-lg-12 listTrack">
+                            <mat-list-item role="listitem" *ngFor="let work of albumWorks.works">
+                                <mat-icon>music_note</mat-icon> {{work.name}}
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-5 col-lg-6">
+            <div class="row">
+                <mat-list *ngIf="albumWorks" class="mat-list-item col-xs-12 col-sm-8 col-md-5 col-lg-6">
+                    <mat-list-item class="fadeInLeft  animated">
+                        <span class="release-date"><strong>{{'general.name'|translate}}:</strong> {{albumWorks.name}}</span>
+                    </mat-list-item>
+
+                    <mat-list-item class="fadeInLeft  animated">
+                        <span><strong>{{'general.totalsongs'|translate}}:</strong> {{albumWorks.numRecord}}</span>
+                    </mat-list-item>
+                    <mat-list-item class="fadeInLeft  animated">
+                        <span><strong>{{'general.reselaseDate'|translate}}:</strong> {{albumWorks.releaseDateString}}</span>
+                    </mat-list-item>
+
+                </mat-list>
+            </div>
+        </div>
+    </div>
+</ng-template>

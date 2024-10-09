@@ -1,0 +1,51 @@
+﻿<div [formGroup]="contactForm" class=" top-xs">
+    <div mat-dialog-title>
+        <table>
+            <tr>
+                <td>
+                    Contacto de Proyecto
+                </td>
+                <td class="end-xs">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">people</mat-icon>
+                </td>
+            </tr>
+        </table>
+    </div>
+   
+    <div class="mat-dialog-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <app-person-form class="persontop" (formReady)="bindExternalForm('generalData',$event)"
+                                 [image]="pictureUrl" [projectId]="projectId"  [isContact]="true" [person]="person">
+                </app-person-form>
+            </div>
+        </div>
+        <div class="personbottom">
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-xs-4 p-8">
+                    <mat-label>{{ 'general.contactType' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <mat-select placeholder="{{ 'formField.messages.selectContactType' | translate }}"
+                                formControlName="typeId" required>
+                        <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.value">
+                            {{contactType.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.typeId?.errors?.required">
+                        {{ 'validations.errors.typeRequired' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row end-xs">
+                <div class="col-xs-12">
+                    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                    <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                    </button>&nbsp;
+                    <button mat-flat-button color="primary" [disabled]="!contactForm.valid" (click)="setContact()">
+                        {{action}}&nbsp;<mat-icon>save</mat-icon>
+                    </button> &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

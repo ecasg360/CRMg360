@@ -1,0 +1,42 @@
+{
+  "exclude": ["./node_modules/"],
+  "compileOnSave": false,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "outDir": "./wwwroot/clientapp/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
+    "paths": {
+      "@services/*": ["ClientApp/app/core/services/*"],
+      "@resolve/*": ["ClientApp/app/core/resolve/*"],
+      "@core/forms/*": ["ClientApp/app/core/forms/*"],
+      "@guards/*": ["ClientApp/app/core/guards/*"],
+      "@enums/*": ["ClientApp/app/core/enums/*"],
+      "@models/*": ["ClientApp/app/shared/models/*"],
+      "@interceptors/*": ["ClientApp/app/core/interceptors/*"],
+      "@mocks/*": ["ClientApp/app/core/mocks/*"],
+      "@modules/*": ["ClientApp/app/modules/*"],
+      "@fuse/*": ["ClientApp/@fuse/*"],
+      "@i18n/*": ["ClientApp/app/core/i18n/*"],
+      "@environments/*": ["ClientApp/environments/*"],
+      "@shared/components/*": ["ClientApp/app/shared/components/*"],
+      "@shared/*": ["ClientApp/app/shared/*"],
+      "@pipes/*": ["ClientApp/app/shared/pipes/*"],
+      "@interfaces/*": ["ClientApp/app/shared/interfaces/*"],
+      "@directives/*": ["ClientApp/app/shared/directives/*"],
+      "@app/*": ["ClientApp/app/*"],
+      "@commons/*": ["ClientApp/app/commons/*"],
+      "@commons/feature/*": ["ClientApp/app/commons/feature/*"],
+      "@commons/forms/*": ["ClientApp/app/commons/forms/components/*"],
+      "@commons/modals/*": ["ClientApp/app/commons/modals/components/*"]
+    }
+  }
+}

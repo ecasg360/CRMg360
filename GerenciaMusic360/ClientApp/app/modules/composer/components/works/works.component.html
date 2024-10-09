@@ -1,0 +1,36 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>Obras</h4>
+    </div>
+    <div class="custom-breadcrum">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <a routerLink="/composer/manage" class="fuse-white-fg">{{ 'general.composer' | translate }}</a> /
+      <span class="secondary-text">Obras</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content  m-24 p-12 mat-card">
+    <div class="row">
+      <div class="col-xs-12">
+        <div>
+          <mat-form-field appearance="outline" *ngIf="isAdmin" class="col-12">
+            <mat-label>Listado de Compositores</mat-label>
+            <mat-select [(ngModel)]="personId">
+              <mat-option *ngFor="let composer of composersList" [value]="composer.id">
+                {{composer.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <app-work-manager *ngIf="personId > 0" [personId]="personId"></app-work-manager>
+      </div>
+    </div>
+  </div>
+</div>

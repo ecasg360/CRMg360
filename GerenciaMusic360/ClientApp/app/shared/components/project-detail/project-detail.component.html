@@ -1,0 +1,51 @@
+<h3 mat-dialog-title>{{ 'projectDetail.title' | translate }}</h3>
+
+<mat-dialog-content>
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- Artist Name -->
+      <span><strong>{{ 'projectDetail.artistName' | translate }}:</strong></span>&nbsp;<span>{{project.artistName}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <!-- Project Name -->
+      <span><strong>{{ 'projectDetail.projectName' | translate }}:</strong></span>&nbsp;<span>{{project.name}}</span>
+    </div>
+    <div class="col-xs-6">
+      <!-- Description -->
+      <span><strong>{{ 'projectDetail.description' | translate }}:</strong></span>&nbsp;<span>{{project.description}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <!-- Project Type Name -->
+      <span><strong>{{ 'projectDetail.projectTypeName' | translate }}:</strong></span>&nbsp;<span>{{project.projectTypeName}}</span>
+    </div>
+    <div class="col-xs-6">
+      <!-- Initial Date -->
+      <span><strong>{{ 'projectDetail.initialDate' | translate }}:</strong></span>&nbsp;<span>{{project.initialDate | date}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <!-- End Date -->
+      <span><strong>{{ 'projectDetail.endDate' | translate }}:</strong></span>&nbsp;<span>{{project.endDate | date}}</span>
+    </div>
+    <div class="col-xs-6">
+      <!-- Total Budget -->
+      <span><strong>{{ 'projectDetail.totalBudget' | translate }}:</strong></span>&nbsp;<span>{{project.totalBudget}}&nbsp;{{project.currencyCode}}</span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div class="w-40-p text-right">
+    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+  </div>
+  <div class="w-60-p text-right">
+    <button mat-stroked-button color="primary" [disabled]="isWorking" type="button" (click)="onNoClick()">
+      <mat-icon>cancel</mat-icon> {{ 'general.close' | translate }}
+    </button>
+  </div>
+</mat-dialog-actions>

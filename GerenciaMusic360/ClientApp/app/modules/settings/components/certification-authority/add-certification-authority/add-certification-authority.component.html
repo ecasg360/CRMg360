@@ -1,0 +1,70 @@
+<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{action}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false">how_to_reg</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<div mat-dialog-content [formGroup]="certAuthForm">
+    <br />
+    <div class="row">
+        <div class="col-xs-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}" formControlName="name">
+                <mat-error *ngIf="f.name?.errors?.required">
+                    {{ 'validations.errors.nameRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-xs-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.businessName' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterBusinessName' | translate }}"
+                       formControlName="businessName">
+                <mat-error *ngIf="f.name?.errors?.required">
+                    {{ 'validations.errors.businessNameRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.phone' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterPhone' | translate }}" formControlName="phone">
+            </mat-form-field>
+        </div>
+        <div class="col-xs-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.contact' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterContact' | translate }}" formControlName="contact">
+                <mat-error *ngIf="f.contact?.errors?.required">
+                    {{ 'validations.errors.contactRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <h3>
+        {{ 'general.addressData' | translate }}
+    </h3>
+    <app-address-form [data]="address" (formReady)="bindExternalForm('address',$event)"></app-address-form>
+</div>
+<div mat-dialog-actions class="row">
+    <div class="col-xs-6">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-6 p-4 text-right">
+        <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+            <mat-icon>cancel</mat-icon>&nbsp;{{ 'general.cancel' | translate }}
+        </button>&nbsp;
+        <button mat-flat-button color="primary" [disabled]="!certAuthForm.valid || isWorking" (click)="save()">
+            {{ action }}&nbsp;<mat-icon>save</mat-icon>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'general.editor' | translate }}</h4>
+    </div>
+    <div class="custom-breadcrum">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.editor' | translate }}</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content  m-8 p-8">
+    <div class="row">
+      <div class="col-xs-2">
+        <button mat-flat-button color="primary" *ngIf="perm.Editor.Post" (click)="showModalForm()">
+          {{ 'general.add' | translate }}&nbsp;<mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="col-xs-3">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      </div>
+      <div class="col-xs-7">
+        <mat-form-field>
+          <mat-label> {{ 'general.search' | translate }}</mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+
+        <ng-container matColumnDef="dba">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> dba </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.dba}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'general.name' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="company">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'general.company' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{row.localCompanyId}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="association">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'general.association' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{row.associationId}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="internal">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'general.isInternal' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-slide-toggle [color]="accent" [disabled]="true" [checked]="row.isInternal">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.action'|translate}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" *ngIf="perm.Editor.Put" (click)="showModalForm(row)">
+              <mat-icon>edit</mat-icon>
+            </button> &nbsp;
+            <button mat-icon-button color="primary" *ngIf="perm.Editor.Delete" (click)="confirmDelete(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+  <!-- / CONTENT -->
+</div>

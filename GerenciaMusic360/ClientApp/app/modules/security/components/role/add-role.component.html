@@ -1,0 +1,50 @@
+﻿<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{'general.add'|translate}} {{'general.role'|translate}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false">people</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<mat-dialog-content>
+    <form [formGroup]="addRoleForm">
+        <mat-dialog-content>
+            <br />
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-xs-12 p8">
+                    <mat-label>{{'general.name'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{'general.name'|translate}}" formControlName="name" required>
+                    <mat-error *ngIf="f.name?.errors?.required">
+                       {{'general.required'|translate}}
+                    </mat-error>
+                </mat-form-field>
+               
+            </div>
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-xs-12 p8">
+                    <mat-label>{{'general.description'|translate}}</mat-label>
+                    <textarea matInput placeholder="{{'general.description'|translate}}" rows="4" formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="pull-right">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button mat-stroked-button color="primary" type="button" (click)="onNoClick();">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                    <button *ngIf="actionBtn=='create'" mat-flat-button color="primary" type="submit" (click)="setRole();">
+                        <mat-icon>save</mat-icon>
+                    </button>
+                    <button *ngIf="actionBtn=='update'" mat-flat-button color="primary" type="submit" (click)="updateRole(id);">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>

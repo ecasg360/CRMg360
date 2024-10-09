@@ -1,0 +1,69 @@
+<h3 mat-dialog-title>{{titleAction}}</h3>
+<form class="p-4 w-100-p" [formGroup]="form">
+  <mat-dialog-content>
+    <hr>
+    <mat-form-field appearance="outline" class="w-100-p">
+      <mat-label>{{ 'general.buyerType' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+      <mat-select formControlName="buyerTypeId" required
+        placeholder="{{ 'formField.messages.selectbuyerTypeId'  | translate }}">
+        <mat-option *ngFor="let item of buyerTypes" [value]="item.value">
+          {{item.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <ng-template [ngIf]="f.buyerTypeId.value === 1">
+      <div appearance="outline" class="w-100-p">
+        <button mat-stroked-button color="primary" type="button" (click)="showModalPerson()">
+          <mat-icon>add</mat-icon> {{ 'general.buyers' | translate }}
+        </button>
+      </div>
+      <input type="text" placeholder="Seleccione" aria-label="Number" hidden="hidden" formControlName="personId">
+
+      <mat-form-field appearance="outline" class="w-100-p">
+        <mat-label>{{ 'general.buyers' | translate }}</mat-label>
+        <input type="text" placeholder="Seleccione" aria-label="Number" matInput
+          formControlName="representativeLegalName" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of personFiltered  | async" [value]="option.viewValue">
+            <small>{{option.viewValue}}</small>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </ng-template>
+
+
+    <ng-template [ngIf]="f.buyerTypeId.value === 2">
+      <div appearance="outline" class="w-100-p">
+        <button mat-stroked-button color="primary" type="button" (click)="showModalCompany()">
+          <mat-icon>add</mat-icon> {{ 'general.company' | translate }}
+        </button>
+      </div>
+      <mat-form-field appearance="outline" class="w-100-p">
+        <mat-label>{{ 'general.representativeLegalId' | translate }}</mat-label>
+        <input type="text" placeholder="Seleccione" aria-label="Number" matInput formControlName="businessName"
+          [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)"
+          [displayWith]="displayFn">
+          <mat-option *ngFor="let option of companyFiltered  | async" [value]="option">
+            <small>{{option.viewValue}}</small>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </ng-template>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="w-40-p text-right">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="w-60-p text-right">
+      <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="set()">
+        <mat-icon>save</mat-icon> {{action}}
+      </button> &nbsp;
+    </div>
+  </mat-dialog-actions>
+</form>

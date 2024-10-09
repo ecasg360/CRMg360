@@ -1,0 +1,243 @@
+﻿<h3 mat-dialog-title>{{actionLabel}} Promotor</h3>
+<form [formGroup]="addPromoterForm">
+    <mat-dialog-content>
+        <mat-horizontal-stepper [linear]="false" #stepper class="p-4 w-100-p">
+            <mat-step>
+                <ng-template matStepLabel>Datos Generales</ng-template>
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <div>
+                        <img class="avatar img-responsive" [src]="croppedImage" />
+                    </div>
+                    <div>
+                        <button mat-mini-fab color="primary" type="button"
+                            onclick="document.getElementById('fileToUpload').click()">
+                            <i class="fas fa-upload"></i>
+                        </button> <span *ngIf="croppedImage?.length == 0"> Subir imagen</span>
+                        <input id="fileToUpload" (change)="fileChangeEvent($event);" type="file" style="display:none;">
+                        <button *ngIf="croppedImage?.length > 0" mat-mini-fab (click)="removeImage();" color="warn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <hr />
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="33" class="p-8">
+                        <mat-label>Nombre(s)&nbsp;<span class="red-required">*</span></mat-label>
+                        <input matInput placeholder="Ingresa Nombre(s)" formControlName="name" required>
+                        <mat-error *ngIf="f.name?.errors?.required">
+                            Nombre es requerido
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="p-8">
+                        <mat-label>Apellido Paterno&nbsp;<span class="red-required">*</span></mat-label>
+                        <input matInput placeholder="Ingresa Apellido Paterno" formControlName="lastName" required>
+                        <mat-error *ngIf="f.lastName?.errors?.required">
+                            Apellido Paterno es requerido
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="p-8">
+                        <mat-label>Apellido Materno</mat-label>
+                        <input matInput placeholder="Ingresa Apellido Materno" formControlName="secondLastName">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-8">
+                        <mat-label>Fecha de nacimiento</mat-label>
+                        <input matInput [matDatepicker]="picker" placeholder="Elije una fecha"
+                            formControlName="birthDateString" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="f.birthDateString?.errors?.required">
+                            Fecha de nacimiento es requerida
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-8">
+                        <mat-label>Género&nbsp;<span class="red-required">*</span></mat-label>
+                        <mat-select placeholder="Selecciona un Genero" formControlName="gender" required>
+                            <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                {{gender.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="f.gender?.errors?.required">
+                            Género es requerido
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="30" class="p-8">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Ingresa Email" formControlName="email">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="30" class="p-8">
+                        <mat-label>Teléfono Uno</mat-label>
+                        <input matInput placeholder="Ingresa Teléfono Uno" formControlName="phoneOne">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="30" class="p-8">
+                        <mat-label>Teléfono Dos</mat-label>
+                        <input matInput placeholder="Ingresa Teléfono Dos" formControlName="phoneTwo">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="30" class="p-8">
+                        <mat-label>Teléfono Tres</mat-label>
+                        <input matInput placeholder="Ingresa Teléfono Tres" formControlName="phoneThree">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="30" class="p-8">
+                        <mat-label>Tipo de Promotor&nbsp;<span class="red-required">*</span></mat-label>
+                        <mat-select placeholder="Selecciona un Tipo de Promotor" formControlName="personTypeId">
+                            <mat-option *ngFor="let personType of personTypes" [value]="personType.value">
+                                {{personType.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button mat-flat-button color="primary" matStepperNext><i class="fas fa-arrow-right"></i>
+                        Siguiente</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Datos de Viaje</ng-template>
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="25" class="p-8">
+                        <mat-label>Numero de Pasaporte</mat-label>
+                        <input matInput placeholder="Ingresa Numero de Pasaporte" formControlName="passportNumber">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25" class="p-8">
+                        <mat-label>Fecha de Expiración Pasaporte</mat-label>
+                        <input matInput [matDatepicker]="pickerPassport" placeholder="Elije una fecha"
+                            formControlName="expiredPassportDateString">
+                        <mat-datepicker-toggle matSuffix [for]="pickerPassport"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerPassport></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25" class="p-8">
+                        <mat-label>Tipo de Visa</mat-label>
+                        <mat-select placeholder="Selecciona un Tipo de Visa" formControlName="visaTypeId">
+                            <mat-option *ngFor="let visaType of visaTypes" [value]="visaType.value">
+                                {{visaType.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25" class="p-8">
+                        <mat-label>Fecha de Expiración Visa</mat-label>
+                        <input matInput [matDatepicker]="pickerVisa" placeholder="Elije una fecha"
+                            formControlName="expiredVisaDateString" >
+                        <mat-datepicker-toggle matSuffix [for]="pickerVisa"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerVisa></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="30" class="p-8">
+                        <mat-label>Preferencia de Viaje</mat-label>
+                        <mat-select placeholder="Selecciona una Preferencia de Viaje"
+                            formControlName="tripPreferenceId">
+                            <mat-option *ngFor="let tripPreference of tripPreferences" [value]="tripPreference.value">
+                                {{tripPreference.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="button-row">
+                    <button mat-flat-button color="primary" matStepperPrevious><i class="fas fa-arrow-left"></i>
+                        Atrás</button>
+                    <button mat-flat-button color="primary" matStepperNext><i class="fas fa-arrow-right"></i>
+                        Siguiente</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Dirección</ng-template>
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="33" class="p-8">
+                        <mat-label>País</mat-label>
+                        <mat-select placeholder="Selecciona un País" (selectionChange)="getStates($event.value);"
+                            formControlName="countryId">
+                            <mat-option *ngFor="let country of countries" [value]="country.value">
+                                {{country.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="p-8">
+                        <mat-label>Estado</mat-label>
+                        <mat-select placeholder="Selecciona un Estado" (selectionChange)="getCities($event.value);"
+                            formControlName="stateId">
+                            <mat-option *ngFor="let state of states" [value]="state.value">
+                                {{state.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="p-8">
+                        <mat-label>Ciudad</mat-label>
+                        <mat-select placeholder="Selecciona una Ciudad" formControlName="cityId">
+                            <mat-option *ngFor="let city of cities" [value]="city.value">
+                                {{city.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="25" class="p-8">
+                        <mat-label>Calle</mat-label>
+                        <input matInput placeholder="Ingresa Calle" formControlName="street">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25" class="p-8">
+                        <mat-label>Número Exterior</mat-label>
+                        <input matInput placeholder="Ingresa Número Exterior" formControlName="exteriorNumber">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25" class="p-8">
+                        <mat-label>Número Interior</mat-label>
+                        <input matInput placeholder="Ingresa Número Interior" formControlName="interiorNumber">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25" class="p-8">
+                        <mat-label>Referencia</mat-label>
+                        <input matInput placeholder="Ingresa Referencia" formControlName="reference">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="33" class="p-8">
+                        <mat-label>Colonia/Barrio</mat-label>
+                        <input matInput placeholder="Ingresa Colonia/Barrio" formControlName="neighborhood">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="p-8">
+                        <mat-label>Condado/Municipio</mat-label>
+                        <input matInput placeholder="Ingresa Condado/Municipio" formControlName="municipality">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="p-8">
+                        <mat-label>Código Postal</mat-label>
+                        <input matInput placeholder="Ingresa Código Postal" formControlName="postalCode">
+                    </mat-form-field>
+                </div>
+                <div class="button-row">
+                    <button mat-flat-button color="primary" matStepperPrevious><i class="fas fa-arrow-left"></i>
+                        Atrás</button>
+                    <button mat-flat-button color="primary" matStepperNext><i class="fas fa-arrow-right"></i>
+                        Siguiente</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Biografía y Gustos</ng-template>
+                <div fxLayout="row" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="p-8">
+                        <mat-label>Biografía</mat-label>
+                        <textarea matInput placeholder="Ingresa Biografía" rows="8"
+                            formControlName="biography"></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="p-8">
+                        <mat-label>Gustos Generales</mat-label>
+                        <textarea matInput placeholder="Ingresa Gustos Generales" rows="8"
+                            formControlName="generalTaste"></textarea>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button mat-flat-button color="primary" matStepperPrevious><i class="fas fa-arrow-left"></i>
+                        Atrás</button>
+                    <button *ngIf="actionBtn=='create'" mat-flat-button color="primary" type="submit"
+                        (click)="setPromoter();" [disabled]="!addPromoterForm.valid">
+                        <i class="fas fa-save fa-lg"></i> Guardar
+                    </button>
+                    <button *ngIf="actionBtn=='update'" mat-flat-button color="primary" type="submit"
+                        (click)="updatePromoter(id);" [disabled]="!addPromoterForm.valid">
+                        <i class="fas fa-save fa-lg"></i> Editar
+                    </button>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-dialog-content>
+</form>

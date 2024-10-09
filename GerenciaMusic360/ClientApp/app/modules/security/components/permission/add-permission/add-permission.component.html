@@ -1,0 +1,38 @@
+<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{'general.edit'|translate}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false">lock</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<form class="p-4 w-100-p" [formGroup]="form">
+    <mat-dialog-content>
+        <hr>
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.name' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}" formControlName="name" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.description' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}" formControlName="description" required>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="w-40-p text-right">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="w-60-p text-right">
+            <button mat-stroked-button color="primary" type="button" (click)="onNoClick()" >
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="set()">
+                <mat-icon>save</mat-icon> {{'general.save'|translate}}
+            </button> &nbsp;
+        </div>
+    </mat-dialog-actions>
+</form>

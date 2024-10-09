@@ -1,0 +1,15 @@
+<div class="page-layout carded fullwidth">
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h3>{{'general.contact'|translate}}s</h3>
+        </div>
+        <div class="w-50-p text-right pr-8">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <span class="secondary-text">{{ 'general.calendar' | translate }}</span>
+        </div>
+    </div>
+    <div class="content m-4 mat-card">
+        <app-calendar-manager [create]="false" [menuProjectType]="menuProjectType"
+            [eventType]="eventType.menuProjectType"></app-calendar-manager>
+    </div>
+</div>

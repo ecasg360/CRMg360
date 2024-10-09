@@ -1,0 +1,18 @@
+    <div class="row center-xs">
+        <div class="col-xs-12">
+            <div class="card hovercard">
+                <img [src]="croppedImage" class="{{rounded ? 'rounded': ''}}" width="120" height="120" id="{{uniqueId}}"
+                    (error)="setErrorImage($event)" />
+            </div>
+        </div>
+    </div>
+    <div class="row center-xs">
+        <button mat-icon-button color="primary" (click)="uploadIconClick($event)">
+            <mat-icon aria-label="label">cloud_upload</mat-icon>
+        </button>&nbsp;
+        <button mat-icon-button color="warn" *ngIf="croppedImage?.length > 0" (click)="removeImage()">
+            <mat-icon>close</mat-icon>
+        </button>
+        <input id="fileToUpload{{uniqueId}}" (change)="fileChangeEvent($event)" type="file" accept="image/*"
+            class="hide">
+    </div>

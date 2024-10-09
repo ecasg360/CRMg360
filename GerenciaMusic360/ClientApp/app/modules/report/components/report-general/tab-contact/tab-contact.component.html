@@ -1,0 +1,200 @@
+<form [formGroup]="dataContactFilter">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+              <!-- Filter -->
+                <div class="col-xs-10" id="formFilter">
+                    <div class="row">
+                        <!-- NAME FIELD FILTER -->
+                        <div class="col-xs-4">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.contact.name' | translate }}</mat-label>
+                              <input matInput type="text" placeholder="{{ 'report.contact.form.name' | translate }}"
+                                  formControlName="name">
+                          </mat-form-field>
+                        </div>
+
+                        <!-- LAST NAME FIELD FILTER -->
+                        <div class="col-xs-4">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.contact.lastName' | translate }}</mat-label>
+                              <input matInput type="text" placeholder="{{ 'report.contact.form.lastName' | translate }}"
+                                  formControlName="lastName">
+                          </mat-form-field>
+                        </div>
+
+                        <!-- SECOND LAST NAME FIELD FILTER -->
+                        <div class="col-xs-4">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.contact.secondLastName' | translate }}</mat-label>
+                              <input matInput type="text" placeholder="{{ 'report.contact.form.secondLastName' | translate }}"
+                                  formControlName="secondLastName">
+                          </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- OFFICE PHONE FIELD FILTER -->
+                        <div class="col-xs-4">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.contact.officePhone' | translate }}</mat-label>
+                              <input matInput type="text" placeholder="{{ 'report.contact.form.officePhone' | translate }}"
+                                  formControlName="officePhone">
+                          </mat-form-field>
+                        </div>
+
+                        <!-- CELLPHONE FIELD FILTER -->
+                        <div class="col-xs-4">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.contact.cellPhone' | translate }}</mat-label>
+                              <input matInput type="text" placeholder="{{ 'report.contact.form.cellPhone' | translate }}"
+                                  formControlName="cellPhone">
+                          </mat-form-field>
+                        </div>
+
+                        <!-- EMAIL FIELD FILTER -->
+                        <div class="col-xs-4">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.contact.email' | translate }}</mat-label>
+                              <input matInput type="text" placeholder="{{ 'report.contact.form.email' | translate }}"
+                                  formControlName="email">
+                          </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                      <!-- TYPE LIST FILTER -->
+                      <div class="col-xs-4">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.contact.type' | translate }}</mat-label>
+                              <mat-select placeholder="{{ 'report.contact.form.selectTypes' | translate }}"
+                                  formControlName="typeId">
+                                  <mat-option *ngFor="let type of listTypes" [value]="type.value">
+                                      {{type.viewValue}}
+                                  </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                      </div>
+                      <!-- GENDER LIST FILTER -->
+                      <div class="col-xs-4">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.contact.gender' | translate }}</mat-label>
+                              <mat-select placeholder="{{ 'report.contact.form.selectGender' | translate }}"
+                                  formControlName="typeId">
+                                  <mat-option *ngFor="let gender of listGenders" [value]="gender.value">
+                                      {{gender.viewValue}}
+                                  </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                      </div>
+                    </div>
+                </div>
+              <!-- Button Generate -->
+                <div class="col-xs-2" id="buttonFilter">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button mat-flat-button color="primary" [disabled]="isWorking"
+                                (click)="searchByFilter()">
+                                <mat-icon>search</mat-icon> Apply Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-12">
+                    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row" *ngIf="isDataAvailable">
+  <div class="col-xs-3">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+    </mat-form-field>
+  </div>
+  <div class="col-xs-3" *ngIf="isDataAvailable">
+      <button mat-flat-button color="primary" [disabled]="isWorking"
+      (click)="downloadReportContacts()" matTooltip="{{'general.downloadReport'|translate}}">
+          <mat-icon>cloud_download</mat-icon> {{'general.downloadReport'|translate}}
+      </button>
+  </div>
+</div>
+<div class="row" *ngIf="isDataAvailable">
+  <table mat-table [dataSource]="dataSource" class="w-100-p" matSort>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'report.contact.table.name' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.name}} {{row.lastName}} {{row.secondLastName}}
+      </mat-cell>
+    </ng-container>
+    <!-- Person Type Column -->
+    <ng-container matColumnDef="personType">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'report.contact.table.personType' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.personTypeDescription}}
+      </mat-cell>
+    </ng-container>
+    <!-- OfficePhone Column -->
+    <ng-container matColumnDef="officePhone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.contact.table.officePhone' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.officePhone}}
+      </mat-cell>
+    </ng-container>
+    <!-- CellPhone Column -->
+    <ng-container matColumnDef="cellPhone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.contact.table.cellPhone' | translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.cellPhone}}
+      </mat-cell>
+    </ng-container>
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.contact.table.email' | translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> 
+        {{row.email}} 
+      </mat-cell>
+    </ng-container>
+    <!-- BirthDate Column -->
+    <ng-container matColumnDef="birthDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.contact.table.birthDate' | translate }} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.birthDate | date}} </mat-cell>
+      </ng-container>
+    <!-- Gender Column -->
+    <ng-container matColumnDef="gender">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.contact.table.gender' | translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.gender}} </mat-cell>
+    </ng-container>
+    <!-- Action Column -->
+    <!-- <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'general.action' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+
+        <mat-icon class="cursor-pointer s-32 mr-4 blue-900-fg"
+          matTooltip="{{'general.downloadLabelCopy'|translate}}" (click)="downloadReport(row.id,row.name)">cloud_download
+        </mat-icon>
+
+      </mat-cell>
+    </ng-container> -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+  <div *ngIf="!dataSource.data">
+    <h1 class="m-8 mat-display-1 text-center">{{ 'general.errors.noData' | translate }}</h1>
+  </div>
+</div>
+

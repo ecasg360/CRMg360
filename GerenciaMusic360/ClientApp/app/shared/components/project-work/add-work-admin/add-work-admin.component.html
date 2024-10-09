@@ -1,0 +1,44 @@
+<h3 mat-dialog-title>{{ 'general.editor' | translate }} - {{itemName.toUpperCase()}}</h3>
+
+<form [formGroup]="Form">
+  <mat-dialog-content>
+    <div class="row">
+      <input formControlName="id" type="hidden">
+      <input formControlName="workId" type="hidden">
+      <div class="col-xs-8">
+        <!-- Composer List -->
+        <mat-form-field appearance="outline" class="w-100-p">
+          <mat-label>{{ 'general.editor' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+          <mat-select formControlName="editorId">
+            <mat-option *ngFor="let item of editors" [value]="item.value">
+              {{item.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-4">
+        <!-- Percentage -->
+        <mat-form-field appearance="outline" class="w-100-p">
+          <mat-label>{{ 'general.percentage' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+          <input matInput placeholder="{{ 'general.percentage' | translate }}"
+            formControlName="percentage" type="number" max="100" min="0">
+            <mat-error role="alert">{{ 'composer.messages.percentage' | translate }} {{percentagePending}} %</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="w-40-p text-right">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="w-60-p text-right">
+      <button mat-stroked-button color="primary" [disabled]="isWorking" type="button" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!Form.valid || isWorking" (click)="save()">
+        <mat-icon>save</mat-icon> {{action}}
+      </button> &nbsp;
+    </div>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,39 @@
+<div [formGroup]="formSocialMedia">
+  <mat-dialog-content>
+    <div class="social-container mb-12">
+      <table class="table">
+        <tr>
+          <td class="social-item m-4" *ngFor="let item of socialNetworksList">
+            <img
+              src="{{item.pictureUrl}}"
+              height="60"
+              width="60"
+              class="{{item.id == activeSocial ? 'mat-elevation-z4 m-4': ''}}"
+              matTooltip="{{item.name}}"
+              (click)="addSocialNetwork(item)"
+              alt="{{item.name}}"
+              onerror="this.src='assets/images/socialMedia.png';"
+            >
+          </td>
+        </tr>
+      </table>
+      <mat-error *ngIf="f.social?.errors?.required">
+        {{ 'validations.errors.fieldRequired' | translate }}
+      </mat-error>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="row">
+    <div class="col-xs-6">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-6 text-right">
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!formSocialMedia.valid || isWorking" (click)="save()">
+        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

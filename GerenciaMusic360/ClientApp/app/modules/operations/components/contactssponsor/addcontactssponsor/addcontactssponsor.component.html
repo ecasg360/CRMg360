@@ -1,0 +1,203 @@
+<mat-dialog-content>
+    <form [formGroup]="addContactssponsorForm">
+        <mat-horizontal-stepper [linear]="false" #steppercontact>
+            <mat-step>
+                <ng-template matStepLabel>General Information</ng-template>
+                <div class="row">
+                    <div class="col-md-12 control">
+                        <img class="avatar img-responsive" [src]="croppedImage" />
+                    </div>
+                    <div class="col-md-12 control">
+                        <button mat-mini-fab color="primary" type="button"
+                            onclick="document.getElementById('fileToUpload').click()">
+                            <i class="fas fa-upload"></i>
+                        </button> <span *ngIf="croppedImage?.length == 0">Select image</span>
+                        <input id="fileToUpload" (change)="fileChangeEvent($event);" type="file" style="display:none;">
+                        <button *ngIf="croppedImage?.length > 0" mat-mini-fab (click)="removeImage();" color="warn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-4 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name&nbsp;<span class="red-required">*</span></mat-label>
+                            <input matInput placeholder="Name" formControlName="name" required>
+                            <mat-error *ngIf="f.name?.errors?.required">
+                                Name is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Last Name&nbsp;<span class="red-required">*</span></mat-label>
+                            <input matInput placeholder="Last Name" formControlName="lastName" required>
+                            <mat-error *ngIf="f.lastName?.errors?.required">
+                                Last Name Is Required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Second Last Name</mat-label>
+                            <input matInput placeholder="Second Last Name" formControlName="secondLastName">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Birthdate</mat-label>
+                            <input matInput [matDatepicker]="picker" placeholder="Elije una fecha"
+                                formControlName="birthDateString" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="f.birthDateString?.errors?.required">
+                                BirthDate Is Required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Gender&nbsp;<span class="red-required">*</span></mat-label>
+                            <mat-select placeholder="Select Gender" formControlName="gender" required>
+                                <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                    {{gender.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="f.gender?.errors?.required">
+                                Gender is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="Email" formControlName="email">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>First Phone</mat-label>
+                            <input matInput placeholder="First Phone" formControlName="phoneOne">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Second Phone</mat-label>
+                            <input matInput placeholder="Second Phone" formControlName="phoneTwo">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div>
+                    <button mat-flat-button color="primary" matStepperNext><i class="fas fa-arrow-right"></i>
+                        Next</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Address</ng-template>
+                <div class="row">
+                    <div class="col-md-4 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Country</mat-label>
+                            <mat-select placeholder="Select your country" (selectionChange)="getStates($event.value);"
+                                formControlName="countryId">
+                                <mat-option *ngFor="let country of countries" [value]="country.value">
+                                    {{country.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>State</mat-label>
+                            <mat-select placeholder="Select state" (selectionChange)="getCities($event.value);"
+                                formControlName="stateId">
+                                <mat-option *ngFor="let state of states" [value]="state.value">
+                                    {{state.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>City</mat-label>
+                            <mat-select placeholder="Select City" formControlName="cityId">
+                                <mat-option *ngFor="let city of cities" [value]="city.value">
+                                    {{city.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Street</mat-label>
+                            <input matInput placeholder="Street" formControlName="street">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Ext. No.</mat-label>
+                            <input matInput placeholder="Ingresa N�mero Exterior" formControlName="exteriorNumber">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>In No.</mat-label>
+                            <input matInput placeholder="Ingresa N�mero Interior" formControlName="interiorNumber">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Reference</mat-label>
+                            <input matInput placeholder="Reference" formControlName="reference">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Neighborhood</mat-label>
+                            <input matInput placeholder="Neighborhood" formControlName="neighborhood">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Municipality</mat-label>
+                            <input matInput placeholder="Municipality" formControlName="municipality">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3 control">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Z.C.</mat-label>
+                            <input matInput placeholder="ZipCode" formControlName="postalCode">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button mat-flat-button color="primary" matStepperPrevious><i class="fas fa-arrow-left"></i>
+                        Back</button>
+                    <mat-dialog-actions class="pull-right">
+                        <div class="row">
+                            <div class="col-md-12 control button-row">
+                                <button *ngIf="actionBtn=='create'" mat-flat-button color="primary" type="submit"
+                                    (click)="setContactssponsor();">
+                                    <i class="fas fa-save fa-lg"></i> Guardar
+                                </button>
+                                <button *ngIf="actionBtn=='update'" mat-flat-button color="primary" type="submit"
+                                    (click)="updateContactssponsor(id);">
+                                    <i class="fas fa-save fa-lg"></i> Editar
+                                </button>
+                            </div>
+                        </div>
+                    </mat-dialog-actions>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </form>
+</mat-dialog-content>

@@ -1,0 +1,64 @@
+.card {
+    border: 2px solid #000000;
+    border-radius: 30px;
+    width: 100%;
+    padding: 2rem;
+}
+
+.user-info {
+    border-bottom: 2px solid gray;
+}
+
+.user-picture {
+    margin: 0.5rem;
+    width: 10%;
+}
+
+.user-name {
+    margin: 0.5rem;
+    width: 40%;
+}
+
+.user-metas {
+    margin: 0.5rem;
+    width: 20%;
+}
+
+.actions {
+    margin: 0.5rem;
+    width: 20%;
+}
+
+.meta-description {
+    border-bottom: 1px solid #044A9F;
+    width: 100%;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.column-description {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+}
+
+.column-icon {
+    width: 10%;
+}
+
+.red-icon {
+    color: red;
+}
+
+.green-icon {
+    color: green;
+}
+
+.metric {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 2rem;
+}

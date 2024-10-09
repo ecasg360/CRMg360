@@ -1,0 +1,91 @@
+<div [formGroup]="artistForm">
+  <mat-horizontal-stepper [linear]="false" #stepper>
+    <mat-step>
+      <ng-template matStepLabel>{{ 'general.generalData' | translate }}</ng-template>
+      <div class="mat-dialog-content">
+        <app-person-form [person]="person" (outIsInternal)="outIsInternal($event)"
+          (formReady)="bindExternalForm('generalData',$event)" [image]="pictureUrl">
+        </app-person-form>
+        <div class="row">
+          <ng-template [ngIf]="!isBuyer">
+            <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4 p-8">
+              <mat-label>{{ 'general.stageName' | translate }}</mat-label>
+              <input matInput placeholder="{{ 'formField.messages.enterStageName' | translate }}"
+                formControlName="aliasName">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4 p-8">
+              <mat-label>{{ 'general.artistType' | translate }}&nbsp;<span class="red-required">*</span>
+              </mat-label>
+              <mat-select placeholder="{{ 'formField.messages.selectArtistType' | translate }}"
+                formControlName="personTypeId" required>
+                <mat-option *ngFor="let personType of personTypes" [value]="personType.value">
+                  {{personType.viewValue}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="f.artistTypeId?.errors?.required">
+                {{ 'validations.errors.artistTypeRequired' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ng-template>
+
+          <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4 p-8">
+            <mat-label>{{ 'general.musicalgenre' | translate }}&nbsp;<span class="red-required">*</span>
+            </mat-label>
+            <mat-select placeholder="{{ 'formField.messages.selectMusicalGenre' | translate }}"
+              formControlName="musicalGenreId" multiple>
+              <mat-option *ngFor="let musicalGenre of musicalGenres" [value]="musicalGenre.value">
+                {{musicalGenre.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="f.musicalGenreId?.errors?.required">
+              {{ 'validations.errors.musicalGenreRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field *ngIf="isInternal" appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4 p-8">
+            <mat-label>{{ 'general.website' | translate }}&nbsp;<span class="red-required">*</span>
+            </mat-label>
+            <input matInput type="url" placeholder="{{ 'formField.messages.enterWebsite' | translate }}"
+              formControlName="website">
+            <mat-error *ngIf="f.website?.errors?.pattern">
+              {{ 'validations.errors.invalidWebSite' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="isInternal" appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4 p-8">
+            <mat-label>{{ 'general.price' | translate }}&nbsp;<span class="red-required">*</span>
+            </mat-label>
+            <input matInput type="number" placeholder="{{ 'formField.messages.enterPrice' | translate }}"
+              formControlName="price">
+            <mat-error *ngIf="f.price?.errors?.pattern">
+              {{ 'validations.errors.incorrectFormat' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="isInternal" appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-4 p-8">
+            <mat-label>{{ 'general.agent' | translate }}</mat-label>
+            <mat-select placeholder="{{ 'general.agent' | translate }}" formControlName="personRelationId">
+              <mat-option *ngFor="let agent of agentsList" [value]="agent.value">
+                {{agent.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-12 p-8">
+            <mat-label>{{ 'general.biography' | translate }}</mat-label>
+            <textarea matInput placeholder="{{ 'formField.messages.enterBiography' | translate }}" rows="5"
+              formControlName="biography"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="end-xs">
+          <button mat-flat-button color="primary" type="submit" (click)="setArtist()"
+            [disabled]="!artistForm.valid || isWorking">
+            {{'general.save' | translate}}&nbsp;<mat-icon>save</mat-icon>
+          </button>
+        </div>
+      </div>
+
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

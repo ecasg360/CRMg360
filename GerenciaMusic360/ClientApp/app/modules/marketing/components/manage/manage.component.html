@@ -1,0 +1,301 @@
+<div class="page-layout carded fullwidth">
+    <!-- HEADER -->
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h4>{{ 'general.marketing' | translate }}</h4>
+        </div>
+        <div class="custom-breadcrum">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <a routerLink="/marketing" class="fuse-white-fg">{{ 'general.marketing' | translate }}</a> /
+            <span class="secondary-text">{{ 'general.management' | translate }}</span>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content mat-card">
+        <div class="image-container" [style.background-image]="backgroundImg">
+            <div class="campain-data-container">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <img [src]="project.pictureUrl"
+                            onerror="this.src = 'assets/images/backgrounds/dark-material-bg.png';" class="avatar-image"
+                            alt="">
+                    </div>
+                    <div class="col-xs-8">
+                        <p class="h2 m-0 p-0">{{marketing.name}}</p>
+                        <small>{{marketing.created | date}}</small>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <ng-container *ngIf="isChangeImage; then showEditButtons; else showSettingsButtons"></ng-container>
+                <ng-template #showEditButtons>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <mat-spinner *ngIf="isUploading" diameter="25"></mat-spinner>
+                        </div>
+                        <div class="col-xs-5">
+                            <button mat-raised-button color="warn" (click)="uploadClick()">
+                                <mat-icon>cloud_upload</mat-icon>
+                                {{'general.uploadImage' | translate}}
+                            </button>
+                            <strong class="fuse-white-200-bg warn-800-fg">{{filename}}</strong>
+                            <input type="file" id="fileUploadMarketing" name="fileUploadMarketing" accept="image/*"
+                                style="display:none;" />
+                        </div>
+                        <div class="col-xs-5">
+                            <button mat-raised-button [disabled]="isUploading" (click)="changeImage()">
+                                {{ 'general.save' | translate }}
+                            </button>&nbsp;
+                            <button mat-raised-button [disabled]="isUploading" (click)="cancelChange()">
+                                {{ 'general.cancel' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #showSettingsButtons>
+                    <div class="text-right">
+                        <button mat-raised-button (click)="isChangeImage = !isChangeImage">
+                            {{ 'general.settings' | translate }}
+                        </button>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+        <mat-tab-group>
+            <mat-tab label="{{ 'general.generalInformation' | translate }}">
+                <!-- general information -->
+                <div class="tab-body page-layout simple fullwidth p-8">
+                    <div class="row between-lg between-md" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <mat-card class="example-card">
+                                <mat-card-header class="w-100-p row header-p">
+                                    <div class="col-xs-9 pt-8">
+                                        {{'general.generalInformation' | translate}}
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button mat-icon-button (click)="downloadReport()">
+                                            <mat-icon class="s-16">cloud_download</mat-icon>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button mat-icon-button (click)="editAction()">
+                                            <mat-icon class="s-16">edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button *ngIf="isEdit" (click)="editAction()">
+                                            <mat-icon class="s-16">close</mat-icon>
+                                        </button>
+                                    </div>
+
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <ng-container *ngIf="isEdit; then editTemplate; else infoTemplate"></ng-container>
+                                    <ng-template #editTemplate>
+                                        <div [formGroup]="addMarketingForm" *fuseIfOnDom
+                                            [@animateStagger]="{value:'50'}">
+                                            <app-campain-form [marketing]="marketing"
+                                                (formReady)="bindExternalForm('marketing',$event)">
+                                            </app-campain-form>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                                                </div>
+                                                <div class="col-xs-6 text-right">
+                                                    <button mat-flat-button color="primary"
+                                                        [disabled]="!addMarketingForm.valid || isWorking"
+                                                        (click)="updateMarketing()">
+                                                        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template #infoTemplate>
+                                        <div class="w-100-p p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                                            <mat-list>
+                                                <mat-list-item>
+                                                    <mat-icon mat-list-icon>card_membership</mat-icon>
+                                                    <h4 mat-line>{{'general.name' | translate}}</h4>
+                                                    <p mat-line> {{marketing.name}} </p>
+                                                </mat-list-item>
+                                                <mat-list-item *ngIf="marketing.projectId">
+                                                    <mat-icon mat-list-icon>perm_camera_mic</mat-icon>
+                                                    <h4 mat-line>{{'general.project' | translate}}</h4>
+                                                    <p mat-line> {{project.name}} </p>
+                                                </mat-list-item>
+                                                <mat-list-item>
+                                                    <mat-icon mat-list-icon>calendar_today</mat-icon>
+                                                    <h4 mat-line>{{'general.startDate' | translate}}</h4>
+                                                    <p mat-line> {{marketing.startDateString | date}} </p>
+                                                </mat-list-item>
+                                                <mat-list-item>
+                                                    <mat-icon mat-list-icon>calendar_today</mat-icon>
+                                                    <h4 mat-line>{{'general.endDate' | translate}}</h4>
+                                                    <p mat-line> {{marketing.endDateString | date}} </p>
+                                                </mat-list-item>
+
+                                                <mat-list-item>
+                                                    <mat-icon mat-list-icon>info</mat-icon>
+                                                    <h4 mat-line>{{'general.generalInformation' | translate}}</h4>
+                                                    <p mat-line> {{marketing.generalInformation}} </p>
+                                                </mat-list-item>
+                                            </mat-list>
+                                        </div>
+                                    </ng-template>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="row row between-lg between-md">
+                                <!-- start Date -->
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+                                        <!-- Front -->
+                                        <div class="fuse-widget-front">
+                                            <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
+                                                fxLayoutAlign="space-between center">
+                                                {{ 'general.day_' + formatStartDate.weekDay | translate}}
+                                            </div>
+                                            <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                                                <div class="h3 secondary-text font-weight-500">
+                                                    {{ 'general.month_' + formatStartDate.month | translate }}
+                                                </div>
+                                                <div class="light-blue-fg font-size-72 line-height-72">
+                                                    {{formatStartDate.day}}</div>
+                                                <div class="h3 secondary-text font-weight-500">{{formatStartDate.year}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- / Front -->
+                                    </fuse-widget>
+                                </div>
+                                <!-- / start Date -->
+                                <!-- end Date -->
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+                                        <!-- Front -->
+                                        <div class="fuse-widget-front">
+                                            <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
+                                                fxLayoutAlign="space-between center">
+                                                <div class="h3">
+                                                    {{ 'general.day_' + formatEndDate.weekDay | translate}}
+                                                </div>
+                                            </div>
+
+                                            <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                                                <div class="h3 secondary-text font-weight-500">
+                                                    {{ 'general.month_' + formatEndDate.month | translate }}
+                                                </div>
+                                                <div class="light-blue-fg font-size-72 line-height-72">
+                                                    {{formatEndDate.day}}</div>
+                                                <div class="h3 secondary-text font-weight-500">{{formatStartDate.year}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- / Front -->
+                                    </fuse-widget>
+                                </div>
+                                <!-- / end date -->
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <!-- metas -->
+                                    <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+
+                                        <!-- Front -->
+                                        <div class="fuse-widget-front">
+                                            <div class="px-16 py-8 header" fxLayout="row"
+                                                fxLayoutAlign="space-between center">
+                                                <div class="h3">{{'general.goals' | translate }}</div>
+                                            </div>
+                                            <div class="p-8">
+                                                <app-goals [marketing]="marketing" ></app-goals>
+                                            </div>
+                                        </div>
+                                        <!-- / Front -->
+                                    </fuse-widget>
+                                    <!-- / metas -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- / general information -->
+            </mat-tab>
+
+            <mat-tab label="{{ 'general.campainPlan' | translate }}">
+                <!-- plan de campaña -->
+                <div class="tab-body p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <!--<fuse-widget [@animate]="{value:'*',params:{y:'100%'}}">
+                        <div class="fuse-widget-front">
+
+                            <div class="px-16 py-8 header" fxLayout="row" fxLayoutAlign="space-between center">
+                                <div class="h3">{{ 'general.campainPlan' | translate }}</div>
+                            </div>
+                            <div class="p-16">
+                                <app-campain-plan [marketing]="marketing"></app-campain-plan>
+                            </div>
+                        </div>
+                    </fuse-widget> -->
+                    <app-general-view-container [marketingId]="marketing.id"></app-general-view-container>
+                    <app-keys-ideas-manage [marketingId]="marketing.id"></app-keys-ideas-manage>
+                    <app-assets [marketingId]="marketing.id"></app-assets>
+                </div>
+                <!-- / plan de campaña -->
+            </mat-tab>
+
+            <mat-tab label="{{ 'general.filesAndDemographic' | translate }}">
+                <div class="tab-body page-layout simple fullwidth p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <!-- enfoque demografico -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <app-demographic-focus [marketingId]="marketing.id"></app-demographic-focus>
+                        </div>
+                    </div>
+                    <!-- / enfoque demografico -->
+                    <!-- file uploads -->
+                    <div class="row">
+                        <div class="col-xs-12 fix-overflow">
+                            <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+                                <!-- Front -->
+                                <div class="fuse-widget-front">
+                                    <app-upload-multi-file [marketingId]="marketing.id"></app-upload-multi-file>
+                                </div>
+                                <!-- / Front -->
+                            </fuse-widget>
+                        </div>
+                    </div>
+                    <!-- / file uploads -->
+                </div>
+            </mat-tab>
+
+            <mat-tab label="{{'general.tasks' |  translate}}">
+                <!-- Tareas -->
+                <div class="tab-body p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}">
+                        <!-- Front -->
+                        <div class="fuse-widget-front">
+
+                            <div class="px-16 py-8 header" fxLayout="row" fxLayoutAlign="space-between center">
+                                <div class="h3">{{ 'general.campainPlan' | translate }}</div>
+                            </div>
+                            <div class="p-16">
+                                <app-campain-plan [marketing]="marketing"></app-campain-plan>
+                            </div>
+                        </div>
+                        <!-- / Front -->
+                    </fuse-widget>
+                </div>
+                <!-- / tareas -->
+            </mat-tab>
+
+            <mat-tab label="{{ 'general.calendar' | translate }}">
+                <div class="tab-body" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <app-calendar-manager [eventType]="eventType.none" [create]="false"></app-calendar-manager>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <!-- / CONTENT -->
+</div>

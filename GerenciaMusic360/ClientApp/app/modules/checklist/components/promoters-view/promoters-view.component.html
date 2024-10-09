@@ -1,0 +1,63 @@
+<mat-dialog-content>
+  <mat-list>
+    <div mat-subheader>
+      <b>{{model.name}} {{model.lastname}}</b>
+    </div>
+    <mat-list-item>
+      <div mat-line>
+        <b>Phone</b>
+      </div>
+      <div mat-line>
+        {{model.phone}}
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <div mat-line>
+        <b>Email</b>
+      </div>
+      <div mat-line>
+        {{model.email}}
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <div mat-line>
+        <b>Contact Date</b>
+      </div>
+      <div mat-line>
+        {{model.dateContact | date:'MM-dd-yyyy'}}
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <div mat-line>
+        <b>Contact Type</b>
+      </div>
+      <div mat-line>
+        {{model.contactType}}
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <div mat-line>
+        <b>Terms</b>
+      </div>
+      <div mat-line>
+        {{model.terms}}
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <div mat-line>
+        <b>Deal</b>
+      </div>
+      <div mat-line>
+        {{model.deal ? 'Y' : 'N'}}
+      </div>
+    </mat-list-item>
+   </mat-list> 
+</mat-dialog-content>
+
+<mat-dialog-actions class="row">
+  <div class="col-xs-12 text-right">
+      <button mat-stroked-button color="primary" type="button" (click)="dialogRef.close(null)">
+          <mat-icon>cancel</mat-icon> {{ 'general.close' | translate }}
+      </button>&nbsp;
+  </div>
+</mat-dialog-actions>

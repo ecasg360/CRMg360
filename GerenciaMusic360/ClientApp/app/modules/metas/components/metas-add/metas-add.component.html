@@ -1,0 +1,228 @@
+<div style="overflow-y: auto; overflow-x:hidden; height: 50rem;">
+  <div [formGroup]="metasForm">
+    <div class="row">
+      <div class="col-xs-12 m-6">
+        <h3>{{model.userName}}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12" style="width: 100%;">
+        <mat-form-field appearance="outline" class="p-8">
+          <mat-label>{{ 'general.meta' | translate }}</mat-label>
+          <textarea
+            matInput
+            placeholder="{{ 'general.meta' | translate }}"
+            rows="6"
+            formControlName="meta"
+          ></textarea>
+          <div style="margin-left: 1rem;">
+            <button
+              (click)="isEmojiPickerVisible = !isEmojiPickerVisible;"
+              class="btn btn-primary"
+            >
+              😀
+            </button>
+          </div>
+        </mat-form-field>
+      </div>
+      <div
+        *ngIf="isEmojiPickerVisible"
+        class="absolute"
+        style="margin-left: 1rem;"
+      >
+        <div style="margin-left: 1rem;">
+          <div>
+            <button
+              (click)="closeEmojis()"
+              class="btn btn-primary"
+            >
+              Close
+            </button>
+          </div>
+          <emoji-mart (emojiClick)="addEmoji($event)" title="Elige tu emoji…" emoji="point_up" ></emoji-mart>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-left: 1rem;margin-bottom: 1rem;">
+      <div class="col-12">
+        <mat-slide-toggle
+          
+          [checked]="isMeasurable"
+          (change)="updateIsMeasurable()"
+        ></mat-slide-toggle>
+        <mat-label style="margin-left: 1rem;">{{ 'general.isMeasurable' | translate }}</mat-label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 px-8">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="setMeta()"
+          type="button"
+        >
+          {{ 'general.add' | translate }}&nbsp;<mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12" style="width: 100%;">
+      <div
+        class="row p-8 m-4"
+        *ngFor="let meta of metasAdded"
+        style="border-bottom: 2px solid #000;"
+      >
+        <div class="px-6" style="width: 80%;">
+          <div *ngIf="!meta.editing">
+            <div style="width: 100%;display: flex; flex-direction: row;">
+              <div style="width: 80%;">
+                {{meta.goalDescription}}
+              </div>
+              <div style="width: 20%;">
+                {{meta.isMeasurable ? 'Measurable' : 'No Measurable'}}
+              </div>
+            </div>
+          </div>
+          <div *ngIf="meta.editing">
+            <div style="width: 100%;display: flex; flex-direction: row;">
+              <div style="width: 80%;">
+                <textarea
+                  matInput
+                  placeholder="{{ 'general.meta' | translate }}"
+                  rows="3"
+                  [(ngModel)]="descriptionEdit"
+                  style="border: 1px solid #c0c0c0;"
+                ></textarea>
+              </div>
+              <div style="width: 20%;">
+                <mat-slide-toggle
+                  [color]="accent"
+                  [checked]="meta.isMeasurable"
+                  (change)="updateIsMeasurableEdit(meta.isMeasurable)"
+                ></mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="width: 20%;display: flex; flex-direction: row;">
+          <div>
+            <mat-icon
+              (click)="editMetaAdded(meta)"
+              class="pointer mat-icon-checklist"
+              *ngIf="!meta.editing"
+            >create</mat-icon>
+            <mat-icon
+              (click)="saveMetaAdded()"
+              class="pointer mat-icon-checklist"
+              *ngIf="meta.editing"
+            >save</mat-icon>
+          </div>
+          <div>
+            <mat-icon
+              (click)="deleteMetaAdded(meta)"
+              class="pointer"
+            >delete_outline</mat-icon>
+          </div>
+          <div>
+            <mat-icon
+              (click)="reply(meta)"
+              class="pointer"
+            >message</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row m-4">
+    <div class="col-12" style="width: 100%;">
+      <div
+        class="row p-8 m-4"
+        *ngFor="let meta of metas"
+        style="border-bottom: 2px solid #000;"
+      >
+        <div class="px-6" style="width: 80%;">
+          <div *ngIf="!meta.editing">
+            <div style="width: 100%;display: flex; flex-direction: row;" >
+              <div style="width: 80%;">
+                {{meta.description}}
+              </div>
+              <div style="width: 20%;">
+                {{meta.isMeasurable ? 'Measurable' : 'No Measurable'}}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="meta.editing">
+            <div style="width: 100%;display: flex; flex-direction: row;">
+              <div style="width: 80%;">
+                <textarea
+                  matInput
+                  placeholder="{{ 'general.meta' | translate }}"
+                  rows="3"
+                  [(ngModel)]="descriptionEdit"
+                  style="border: 1px solid #c0c0c0;"
+                ></textarea>
+              </div>
+              <div style="width: 20%;">
+                <mat-slide-toggle
+                  [color]="accent"
+                  [checked]="meta.isMeasurable"
+                  (change)="updateIsMeasurableEdit(meta.isMeasurable)"
+                ></mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+        <div style="width: 20%;display: flex; flex-direction: row;">
+          <div>
+            <mat-icon
+              (click)="editMeta(meta)"
+              class="pointer mat-icon-checklist"
+              *ngIf="!meta.editing"
+            >create</mat-icon>
+            <mat-icon
+              (click)="saveMeta(meta)"
+              class="pointer mat-icon-checklist"
+              *ngIf="meta.editing"
+            >save</mat-icon>
+          </div>
+          <div>
+            <mat-icon
+              (click)="deleteMeta(meta)"
+              class="pointer"
+            >delete_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 2rem;">
+    <div class="col" style="width: 100%;">
+      <div class="end-xs" style="margin-right: 5rem;">
+        <button
+          mat-stroked-button
+          color="primary"
+          type="button"
+          (click)="dialogRef.close(null)"
+        >
+          <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+        </button>&nbsp;
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          (click)="saveMetas()"
+          *ngIf="metasForm.valid && metas.length > 0"
+        >
+          Save&nbsp;<mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

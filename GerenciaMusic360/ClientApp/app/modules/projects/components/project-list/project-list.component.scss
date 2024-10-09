@@ -1,0 +1,191 @@
+.textUnder {
+    font-size: 8pt;
+}
+
+.status-started {
+    background-color: #006064;
+    color: white;
+}
+
+.status-waiting {
+    background-color: #e59d03;
+    color: white;
+}
+
+.status-inProgress {
+    background-color: #039be5;
+    color: white;
+}
+
+.status-completed {
+    background-color: #1eb30b;
+    color: white;
+}
+
+.status-canceled {
+    background-color: #e50b03;
+    color: white;
+}
+
+.status-default {
+    background-color: #1e90ff;
+}
+
+.status-all {
+    background-color: #161616;
+    color: white;
+}
+
+@-webkit-keyframes animate-stripes {
+    100% {
+        background-position: -100px 0px;
+    }
+}
+
+@keyframes animate-stripes {
+    100% {
+        background-position: -100px 0px;
+    }
+}
+
+
+
+/*Daniel Sanchez*/
+.barBtnEstatus button {
+    /*border-radius: none;
+    -webkit-box-shadow: 0px 0px 7px -2px rgba(0, 0, 0, 0.50);
+    -moz-box-shadow: 0px 0px 7px -2px rgba(0, 0, 0, 0.50);
+    box-shadow: 0px 0px 7px -2px rgba(0, 0, 0, 0.50);*/
+}
+
+button.addProject {
+    float: right;
+    height: 100%;
+}
+
+progress {
+    -webkit-appearance: none;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #e7e7e7;
+    border: 0;
+    height: 18px;
+}
+
+
+progress.progress-bar-all::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(-45deg,
+            transparent 33%, #575757 33%,
+            #161616 66%, transparent 66%),
+        -webkit-linear-gradient(top,
+            #575757,
+            #161616),
+        -webkit-linear-gradient(left, #575757, #161616);
+}
+
+progress.progress-bar-started::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(-45deg,
+            transparent 33%, #9b9b9b 33%,
+            #006064 66%,
+            transparent 66%),
+        -webkit-linear-gradient(top,
+            #9b9b9b,
+            #006064),
+        -webkit-linear-gradient(left, #9b9b9b, #006064);
+}
+
+progress.progress-bar-waiting::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(-45deg,
+            transparent 33%, #e59d03 33%,
+            #8d6103 66%, transparent 66%),
+        -webkit-linear-gradient(top,
+            #e59d03,
+            #8d6103),
+        -webkit-linear-gradient(left, #e59d03, #8d6103);
+}
+
+progress.progress-bar-inProgress::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(-45deg,
+            transparent 33%, #039be5 33%,
+            #025b88 66%, transparent 66%),
+        -webkit-linear-gradient(top,
+            #039be5,
+            #025b88),
+        -webkit-linear-gradient(left, #039be5, #025b88);
+}
+
+progress.progress-bar-completed::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(-45deg,
+            transparent 33%, #1eb30b 33%,
+            #136d07 66%, transparent 66%),
+        -webkit-linear-gradient(top,
+            #1eb30b,
+            #136d07),
+        -webkit-linear-gradient(left, #1eb30b, #136d07);
+}
+
+progress.progress-bar-canceled::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(-45deg,
+            transparent 33%, #e50b03 33%,
+            #610401 66%, transparent 66%),
+        -webkit-linear-gradient(top,
+            #e50b03,
+            #610401),
+        -webkit-linear-gradient(left, #e50b03, #610401);
+}
+
+.progress-bar-default {
+    background-image: -webkit-linear-gradient(-45deg,
+            transparent 33%, rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%, transparent 66%),
+        -webkit-linear-gradient(top,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)),
+        -webkit-linear-gradient(left, #1e90ff, #fff);
+}
+
+.barIconProject button {
+    padding: 0;
+    background: rgba(3, 154, 229, 1);
+    background: -moz-linear-gradient(top, rgba(3, 154, 229, 1) 0%, rgba(0, 33, 71, 1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(3, 154, 229, 1)), color-stop(100%, rgba(0, 33, 71, 1)));
+    background: -webkit-linear-gradient(top, rgba(3, 154, 229, 1) 0%, rgba(0, 33, 71, 1) 100%);
+    background: -o-linear-gradient(top, rgba(3, 154, 229, 1) 0%, rgba(0, 33, 71, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(3, 154, 229, 1) 0%, rgba(0, 33, 71, 1) 100%);
+    background: linear-gradient(to bottom, rgba(3, 154, 229, 1) 0%, rgba(0, 33, 71, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#039ae5', endColorstr='#002147', GradientType=0);
+    transition: ease 1s;
+}
+
+
+.barIconProject button img {
+    width: 20px;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+}
+
+body.theme-default .mat-header-cell {
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
+
+.lblFilterActive {
+    margin: 8px;
+    background-color: #039be5;
+    padding: 8px;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.titlefilter {
+    text-align: center;
+}
+
+.project-description {
+    height: 100%;
+    overflow-y: scroll;
+}

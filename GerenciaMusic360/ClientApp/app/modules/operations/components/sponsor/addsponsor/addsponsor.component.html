@@ -1,0 +1,99 @@
+<h3 mat-dialog-title>{{actionLabel}} Sponsor</h3>
+<div *ngIf="addviewcontactssponsors else addcontactssponsor">
+    <form [formGroup]="addSponsorForm">
+        <mat-dialog-content>
+            <div class="row">
+                <div class="col-md-12 control">
+                    <img class="avatar img-responsive" [src]="croppedImage" />
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 control">
+                    <button mat-mini-fab color="primary" type="button"
+                        onclick="document.getElementById('fileToUpload').click()">
+                        <i class="fas fa-upload"></i>
+                    </button> <span *ngIf="croppedImage?.length == 0"> Subir imagen</span>
+                    <input id="fileToUpload" (change)="fileChangeEvent($event);" type="file" style="display:none;">
+                    <button *ngIf="croppedImage?.length > 0" mat-mini-fab (click)="removeImage();" color="warn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 control">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre(s)&nbsp;<span class="red-required">*</span></mat-label>
+                        <input matInput placeholder="Ingresa Nombre(s)" formControlName="name" required>
+                        <mat-error *ngIf="f.name?.errors?.required">
+                            Nombre es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 control">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput placeholder="Add Description" rows="4"
+                            formControlName="description"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 control">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Web Site</mat-label>
+                        <input matInput placeholder="Web Site" formControlName="webSite" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 control">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Contact&nbsp;<span class="red-required">*</span></mat-label>
+                        <mat-select placeholder="Select Contact" formControlName="idContactsSponsor">
+                            <mat-option *ngFor="let contact of contactssponsors" [value]="contact.value">
+                                {{contact.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-1 control pull-left">
+                    <button mat-mini-fab color="primary" (click)="addContactssponsor()">+</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 control">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Office Phone</mat-label>
+                        <input matInput placeholder="Office Phone" formControlName="officePhone">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="button-row">
+                <mat-dialog-actions class="pull-right">
+                    <div class="row">
+                        <div class="col-md-12 control button-row">
+
+                            <button *ngIf="actionBtn=='create'" mat-flat-button color="primary" type="submit"
+                                (click)="setSponsor();">
+                                <i class="fas fa-save fa-lg"></i> Guardar
+                            </button>
+                            <button *ngIf="actionBtn=='update'" mat-flat-button color="primary" type="submit"
+                                (click)="updateSponsor(id);">
+                                <i class="fas fa-save fa-lg"></i> Editar
+                            </button>
+                        </div>
+                    </div>
+                </mat-dialog-actions>
+            </div>
+        </mat-dialog-content>
+    </form>
+</div>
+<ng-template #addcontactssponsor>
+    <app-addcontactssponsor></app-addcontactssponsor>
+</ng-template>
+<button mat-stroked-button color="primary" type="button" (click)="addContactssponsor();">
+    <i class="fas fa-ban fa-lg"></i> Cancelar
+</button>

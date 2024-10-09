@@ -1,0 +1,134 @@
+<div class="page-layout carded fullwidth">
+    <!-- HEADER -->
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h4>{{ 'general.projectDetail' | translate }}</h4>
+        </div>
+        <div class="custom-breadcrum">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <a routerLink="/projects" class="fuse-white-fg">{{ 'general.projects' | translate }}</a> /
+            <span class="secondary-text">{{ 'general.detail' | translate }}</span>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <div class="sub-header h-160">
+        <h1 class="mat-display-2">
+            <img class="w-40 h-40 border-radius-100" src="{{project.pictureUrl}}"
+                onerror="this.src='assets/images/logos/360-circle.png'">
+            {{project.projectTypeName}}</h1>
+        <img class="sub-header-img" src="assets/images/audifonos.png" alt="{{project.projectTypeName}}">
+    </div>
+    <!-- CONTENT -->
+    <div class="content p-16 mt-20">
+        <div class="row between-lg between-md">
+            <div class="col-xs-12 col-lg-8 col-md-8 col-sm-12">
+                <!-- contacts -->
+                <mat-card *fuseIfOnDom [@animateStagger]="{value:'50'}" class="w-100-p mb-12">
+                    <mat-card-header>
+                        <mat-card-title>{{ 'general.contacts' | translate }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="fix-overflow p-12">
+                        <app-project-contact [listMode]="true" [projectId]="projectId"></app-project-contact>
+                    </mat-card-content>
+                </mat-card>
+                <!-- /contacts -->
+
+                <!-- calendar -->
+                <mat-card *fuseIfOnDom [@animateStagger]="{value:'50'}" class="w-100-p mb-12">
+                    <mat-card-header>
+                        <mat-card-title>{{ 'general.calendar' | translate }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="content-dates">
+                        <div class="row">
+                            <div class="col-xs-3" *ngFor="let item of projectTaskList">
+                                <!-- Dates -->
+                                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}">
+                                    <!-- Front -->
+                                    <div class="fuse-widget-front">
+                                        <div class="pl-16 pr-8 py-16 h-40" fxLayout="row"
+                                            fxLayoutAlign="space-between center"
+                                            matTooltip="{{item.templateTaskDocumentDetailName}}">
+                                            {{ 'general.day_' + item.weekDay | translate}}
+                                            <button mat-icon-button fuseWidgetToggle aria-label="more">
+                                                <mat-icon class="s-20">more_vert</mat-icon>
+                                            </button>
+                                        </div>
+
+                                        <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                                            <div class="h3 secondary-text font-weight-500">
+                                                {{ 'general.month_' + item.month | translate }}</div>
+                                            <div
+                                                class="{{item.checked ? 'green-900-fg' : 'light-blue-fg'}} font-size-72 line-height-72">
+                                                {{item.day}}</div>
+                                            <div class="h3 secondary-text font-weight-500">{{item.year}}</div>
+                                        </div>
+                                    </div>
+                                    <!-- / Front -->
+
+                                    <!-- Back -->
+                                    <div class="fuse-widget-back p-16 pt-32">
+                                        <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                                            aria-label="Flip widget">
+                                            <mat-icon class="s-16">close</mat-icon>
+                                        </button>
+
+                                        <div>
+                                            <p class="text-center primary-600-fg title">
+                                                {{item.templateTaskDocumentDetailName}}
+                                            </p>
+                                            <p>{{item.comments}}</p>
+                                        </div>
+                                    </div>
+                                    <!-- / Back -->
+                                </fuse-widget>
+                                <!-- / Dates -->
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <!--<a routerLink="/projects/event-calendar">{{ 'general.viewCalendar' | translate }}</a>-->
+                    </mat-card-actions>
+                </mat-card>
+                <!-- / calendar -->
+            </div>
+            <!-- General Data -->
+            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                <mat-card *fuseIfOnDom [@animateStagger]="{value:'50'}" class="w-100-p mb-12">
+                    <mat-card-header>
+                        <mat-card-title>{{ 'general.projectDetails' | translate }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <mat-list role="list">
+                            <mat-list-item role="listitem">
+                                <strong>{{ 'general.name' | translate }}</strong>:{{ project.name }}
+                            </mat-list-item>
+                            <mat-list-item role="listitem">
+                                <strong>{{ 'general.description' | translate }}</strong>:{{ project.description }}
+                            </mat-list-item>
+                            <mat-list-item role="listitem">
+                                <strong>{{ 'general.startDate' | translate }}</strong>:{{ project.initialDate | date }}
+                            </mat-list-item>
+                            <mat-list-item role="listitem">
+                                <strong>{{ 'general.endDate' | translate }}</strong>:{{ project.endDate | date }}
+                            </mat-list-item>
+                            <mat-list-item role="listitem">
+                                <strong>{{ 'general.totalBudget' | translate }}</strong>:
+                                {{ project.totalBudget }}
+                                {{project.currencyCode}}
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card *fuseIfOnDom [@animateStagger]="{value:'50'}" class="w-100-p mb-12">
+                    <mat-card-header>
+                        <mat-card-title>{{ 'general.activities' | translate }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="fix-overflow">
+                        <app-project-activities [projectId]="projectId"></app-project-activities>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

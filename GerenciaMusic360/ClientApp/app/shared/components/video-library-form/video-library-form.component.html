@@ -1,0 +1,87 @@
+<form [formGroup]="videoForm" class="p-12">
+    <h3 mat-dialog-title>{{action}} Video</h3>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col-xs-4">
+                <app-upload-image [image]="pictureUrl" (selectImage)="selectImage($event)">
+                </app-upload-image>
+            </div>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+                <mat-label>{{ 'general.name' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}"
+                       formControlName="name">
+                <mat-error *ngIf="f.name?.errors?.required">
+                    {{ 'validations.errors.nameRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-xs-12 col-sm-4 col-md-6 col-lg-6">
+                <mat-label>{{ 'general.type' | translate }}</mat-label>
+                <mat-select placeholder="{{ 'formField.messages.selectType' | translate }}"
+                            formControlName="videoTypeId" required>
+                    <mat-option *ngFor="let type of videoTypes" [value]="type.value">
+                        {{type.viewValue | translate }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.videoTypeId?.errors?.required">
+                    {{ 'validations.errors.typeRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                <mat-label>{{ 'general.videoURL' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterVideo' | translate }}"
+                       formControlName="videoUrl">
+                <mat-error *ngIf="f.videoUrl?.errors?.required">
+                    {{ 'validations.errors.videoRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+
+            <section class="col-xs-12 col-sm-4 col-md-5 col-lg-5">
+                <mat-checkbox labelPosition="before" formControlName="cover">
+                    {{ 'general.isCover' | translate }}
+                </mat-checkbox>
+            </section>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-xs-12 example-full-width">
+
+                <input matInput placeholder="Artistas" aria-label="Artistas" [matAutocomplete]="auto"
+                       formControl="artistCtrl">
+
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedArtist($event)">
+                    <mat-option *ngFor="let artist of filteredArtists | async" [value]="artist.name" [id]="artist.id">
+                        <img class="example-option-img table-image img-rounded" [src]="pictureurl"
+                             onerror="this.src='assets/images/backgrounds/dark-material-bg.jpg'" height="15">
+                        <span>{{artist.name}}</span> 
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-chip-list aria-label="Color selection" class="col-xs-12">
+                <mat-chip *ngFor="let chip of artistVideo" [selectable]="true" [removable]="true"
+                          (removed)="removeChip(chip)">
+                    {{chip?.name}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="row">
+            <div class="col-xs-12">
+                <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                    <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                </button>&nbsp;
+                <button mat-flat-button color="primary" [disabled]="!videoForm.valid" (click)="setVideo()">
+                    {{action}}&nbsp;<mat-icon>save</mat-icon>
+                </button> &nbsp;
+            </div>
+        </div>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,63 @@
+
+<div class="page-layout carded fullwidth">
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h3>Patrocinador</h3>
+        </div>
+        <div class="w-50-p text-right pr-8">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <span class="secondary-text">{{ 'artist.admin.title' | translate }}</span>
+        </div>
+    </div>
+   
+    <div class="content  m-24 p-4 mat-card">
+        <button mat-flat-button color="primary" *ngIf="perm.Sponsor.Post" class="my-16 mx-8" routerLink="/addsponsor">
+            <mat-icon>add</mat-icon>&nbsp;{{ 'general.new' | translate }}
+        </button>
+        <mat-form-field appearance="outline" class="w-100-p m-4">
+            <mat-label>{{ 'general.search' | translate }}</mat-label>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name}}  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.description}}  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="edit">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Editar </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-icon-button color="primary" *ngIf="perm.Sponsor.Put" (click)="updateSponsor(row.id);">
+                            <i class="fas fa-pencil-alt fa-lg"></i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="delete">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Eliminar </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-icon-button color="primary" *ngIf="perm.Sponsor.Delete" (click)="confirmDelete(row.id);">
+                            <i class="fas fa-trash fa-lg"></i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

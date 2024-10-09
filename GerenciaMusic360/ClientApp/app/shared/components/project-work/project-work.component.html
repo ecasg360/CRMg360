@@ -1,0 +1,181 @@
+<div class="row">
+  <div class="col-xs-12">
+    <button mat-raised-button color="accent" (click)="addData()">
+      <mat-icon>add</mat-icon>{{ 'projectWork.addProjectWork' | translate }}
+    </button>
+  </div>
+</div>
+<br>
+<mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+<div *ngIf="projectWorks.length > 0">
+  <div class="workProject" *ngFor="let item of projectWorks">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="card-work">
+          <div class="card-work-body">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header class="row">
+                        <mat-panel-title class="col-xs-3">
+                            <mat-icon>music_note</mat-icon>
+                            <ul>
+                                <li>
+                                    <h3>{{item.trackName != null ? item.trackName.toUpperCase() : item.itemName}}</h3>
+                                </li>
+                            </ul>
+                        </mat-panel-title>
+                        <mat-panel-description class="col-xs-3">
+                            <ul>
+                                <li>
+                                    <mat-icon class="cursor-pointer" *ngIf="!isWorking"
+                                              (click)="$event.stopPropagation(); editWork(item.itemId, item.id, item);"> edit</mat-icon>
+                                    <mat-icon class="cursor-pointer" *ngIf="!isWorking"
+                                              (click)="$event.stopPropagation(); confirmDeleteWork(item.itemId, item.itemName);">delete</mat-icon>
+
+                                </li>
+                            </ul>
+                        </mat-panel-description>
+                        <mat-panel-description class="col-xs-3">
+                            <ul>
+                                <li>
+                                    <h5>ISRC: {{item.trackWorkISRC}}</h5>
+                                </li>
+                            </ul>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-xs-10 m-4 writers">
+                            <div class="row">
+                                <div class="col-xs-6">Track No: {{item.numberTrack}}</div>
+                                <div class="col-xs-6">Time: {{item.trackTime | mask:'99:99'}}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">Track Title: {{item.trackName}}</div>
+                                <div class="col-xs-6">ISRC: {{item.isrc}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6"></div>
+                                <div class="col-xs-6">UPC: {{item.trackWorkUPC}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 my-8">
+                        <h3 class="title">Recording Artist(s)</h3>
+                        <table>
+                            <tbody *ngIf="item.workRecordings.length > 0">
+                                <tr *ngFor="let row of item.workRecordings">
+                                    <td>
+                                        <ng-container *ngIf="row.detail">
+                                            <span>{{ row.detail.aliasName }}</span>
+                                            <mat-icon matTooltip="{{ row.detail.biography ? row.detail.biography : 'projectWork.notFoundInfo' | translate  }}">info</mat-icon>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-xs-6 writers">
+                            <h3 class="title">Composers</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Composer</th>
+                                        <th>Association</th>
+                                        <th>Percentage %</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="item?.work?.workCollaborator?.length > 0">
+
+                                    <tr *ngFor="let row of item.work.workCollaborator">
+                                        <td>{{row?.composer?.name}}&nbsp;{{row?.composer?.lastName}}</td>
+                                        <td>
+                                            {{row?.association?.name}}
+                                        </td>
+                                        <td>
+                                            {{row?.percentageRevenue}}%
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 *ngIf="item.percentageRevenueLeft > 0">
+                                <button class="mat-raised-button"
+                                        (click)="showModalComposerForm(item.itemId, item.itemName, item.percentageRevenueLeft)">
+                                    <mat-icon>add</mat-icon> {{ 'projectWork.addWriters' | translate }}
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div class="col-xs-6 publishers">
+                            <h3 class="title">{{ 'projectWork.publishers' | translate }}</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Composer</th>
+                                        <th>Association</th>
+                                        <th>Percentage %</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="item?.work?.workPublisher?.length > 0">
+                                    <tr *ngFor="let row of item.work.workPublisher">
+                                        <td>{{row?.publisher?.name}}</td>
+                                        <td>{{row?.association?.name}}</td>
+                                        <td>{{row?.percentageRevenue}}%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-6 writers">
+                            <h3 class="title">Track Mix Master</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="item?.mixMaster">
+                                    <tr>
+                                        <td>{{item.mixMaster.name}} {{item.mixMaster.lastName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-xs-6 writers">
+                            <h3 class="title">Track Producer / Engineer</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="item?.producer">
+
+                                    <tr>
+                                        <td>{{item.producer.name}} {{item.producer.lastName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="projectWorks.length == 0 && isWorking == false">
+  <div class="row">
+    <div class="col-xs-12">
+        <h2>{{'messages.assetNotFound' | translate }}...</h2>
+    </div>
+  </div>
+</div>

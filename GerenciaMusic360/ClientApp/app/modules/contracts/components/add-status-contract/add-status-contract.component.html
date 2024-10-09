@@ -1,0 +1,36 @@
+<div mat-dialog-title>{{ 'general.changeStatus' | translate }}</div>
+<form class="p-4 w-100-p" [formGroup]="form">
+  <mat-dialog-content>
+    <hr>
+    <!-- Status List -->
+    <mat-form-field appearance="outline" class="w-100-p">
+      <mat-label>{{ 'general.status' | translate }} ESR</mat-label>
+      <mat-select formControlName="statusId" placeholder="{{ 'formField.messages.selectStatus'  | translate }}">
+        <mat-option *ngFor="let item of status" [value]="item.value">
+          {{item.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Notes Field -->
+    <mat-form-field appearance="outline" class="w-100-p">
+      <mat-label>{{ 'general.notes' | translate }}</mat-label>
+      <textarea matInput placeholder="{{ 'formField.messages.enterNote' | translate }}" formControlName="notes"
+        rows="5"></textarea>
+    </mat-form-field>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="row">
+    <div class="col-xs-3">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-9 text-right">
+      <button mat-flat-button color="primary" [disabled]="isWorking" type="button" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="isWorking || !form.valid" (click)="set()">
+        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+      </button> &nbsp;
+    </div>
+  </mat-dialog-actions>
+</form>

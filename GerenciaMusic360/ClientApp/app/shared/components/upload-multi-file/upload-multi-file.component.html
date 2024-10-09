@@ -1,0 +1,105 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-3 marketingImage" *ngFor="let file of files">
+            <div class="contentImage">
+                <img *ngIf="file.isImage" src="{{file.fullName.split('wwwroot')[indexSplit]}}">
+                <div class="divExtension" *ngIf="!file.isImage">
+                    <!--esto se hace por la forma en la que se formateo en el servidor, debe mejorarse en el server y hacerlo de mejor manera-->
+                    <a href="assets/{{file.fullName.split('assets')[indexSplit]}}" target="_blank">
+                        <span> {{file.extension}} </span>
+                    </a>
+                    
+                </div>
+                <mat-icon (click)="confirmDelete(file.name)">delete_outline</mat-icon>
+            </div>
+            <span>{{file.name}}</span>
+        </div>
+    </div>
+    <div class="row" *ngIf="files && files.length > 0">
+        <button mat-raised-button class="mat-warn" (click)="removeAll()">
+            <mat-icon>delete_outline</mat-icon> {{ 'multiFileUpload.removeAll' | translate }}
+        </button>
+    </div>
+
+
+    <div class="navbar navbar-default">
+        <h3>{{ 'multiFileUpload.title' | translate }}</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div ng2FileDrop [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
+                (fileOver)="fileOverAnother($event)" [uploader]="uploader" class="well my-drop-zone">
+                <h3>{{ 'multiFileUpload.dropFileHere' | translate }}</h3>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <h4>{{ 'multiFileUpload.selectMultipleFile' | translate }}</h4>
+            <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
+
+            <!-- <h4>Single</h4>
+          <input type="file" ng2FileSelect [uploader]="uploader" /> -->
+        </div>
+
+        <div class="col-xs-12 resume-files" style="margin-bottom: 40px">
+
+            <p>{{ 'multiFileUpload.filesLength' | translate }} {{ uploader?.queue?.length }}</p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="50%"><span>{{ 'multiFileUpload.table.name' | translate }}</span></th>
+                        <th><span>{{ 'multiFileUpload.table.size' | translate }}</span></th>
+                        <!-- <th><span>{{ 'multiFileUpload.table.progress' | translate }}</span></th>
+                  <th><span>{{ 'multiFileUpload.table.status' | translate }}</span></th> -->
+                        <th><span>{{ 'multiFileUpload.table.actions' | translate }}</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of uploader.queue">
+                        <td><strong>{{ item?.file?.name }}</strong></td>
+                        <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB
+                        </td>
+                        <td nowrap>
+                            <button mat-raised-button class="mat-accent" (click)="item.upload()"
+                                (onclick)="onProgress()" [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                matTooltip="Upload">
+                                <mat-icon>cloud_upload</mat-icon>
+                            </button>
+                            <button mat-raised-button class="mat-accent" (click)="item.cancel()"
+                                [disabled]="!item.isUploading" matTooltip="Cancel">
+                                <mat-icon>not_interested</mat-icon>
+                            </button>
+                            <button mat-raised-button class="mat-warn" (click)="item.remove()" matTooltip="Delete">
+                                <mat-icon>delete_outline</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="divActions">
+                <div>
+                    {{ 'multiFileUpload.progress' | translate }}:
+                    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                </div>
+                <div class="btn-progress">
+                    <button mat-raised-button class="mat-accent" (click)="uploader.uploadAll()"
+                        [disabled]="!uploader.getNotUploadedItems().length" tooltip="Upload">
+                        <mat-icon>cloud_upload</mat-icon> {{ 'multiFileUpload.uploadAll' | translate }}
+                    </button>
+                    <button mat-raised-button class="mat-accent" (click)="uploader.cancelAll()"
+                        [disabled]="!uploader.isUploading">
+                        <mat-icon>not_interested</mat-icon> {{ 'multiFileUpload.cancelAll' | translate }}
+                    </button>
+                    <button mat-raised-button class="mat-warn" (click)="uploader.clearQueue()"
+                        [disabled]="!uploader.queue.length">
+                        <mat-icon>delete_outline</mat-icon> {{ 'multiFileUpload.removeAll' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>

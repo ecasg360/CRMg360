@@ -1,0 +1,69 @@
+<form [formGroup]="dataForm">
+  <div class="row">
+    <div class="col-xs-6" *ngFor="let field of fields">
+      <div class="col-xs-12">
+        <!-- Cadena Type -->
+        <mat-form-field *ngIf="field.fieldTypeId == 1" appearance="outline" class="w-100-p">
+          <mat-label>{{field.text}}<span *ngIf="field.required" class="red-required">*</span></mat-label>
+          <input matInput formControlName="{{field.formControlName}}" mask='{{field.masked}}' value="{{field.value}}">
+        </mat-form-field>
+
+        <!-- Numero Sin Decimal -->
+        <mat-form-field *ngIf="field.fieldTypeId == 2" appearance="outline" class="w-100-p">
+          <mat-label>{{field.text}}<span *ngIf="field.required" class="red-required">*</span></mat-label>
+          <input matInput formControlName="{{field.formControlName}}" type="text" value="{{field.value}}" mask="0{10}">
+        </mat-form-field>
+
+        <!-- Numero Con Decimal -->
+        <mat-form-field *ngIf="field.fieldTypeId == 3" appearance="outline" class="w-100-p">
+          <mat-label>{{field.text}}<span *ngIf="field.required" class="red-required">*</span></mat-label>
+          <input matInput formControlName="{{field.formControlName}}" type="number" value="{{field.value}}">
+        </mat-form-field>
+
+        <!-- Fecha y Hora Type -->
+        <mat-form-field *ngIf="field.fieldTypeId == 4" appearance="outline" class="w-100-p">
+          <mat-label>{{ field.text }}<span *ngIf="field.required" class="red-required">*</span></mat-label>
+          <input matInput [matDatepicker]="pickerInitialDate" formControlName="{{field.formControlName}}"
+            value="{{field.value}}">
+          <mat-datepicker-toggle matSuffix [for]="pickerInitialDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerInitialDate></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Fecha -->
+        <mat-form-field *ngIf="field.fieldTypeId == 5" appearance="outline" class="w-100-p">
+          <mat-label>{{ field.text }}<span *ngIf="field.required" class="red-required">*</span></mat-label>
+          <input matInput [matDatepicker]="pickerDate" formControlName="{{field.formControlName}}"
+            value="{{field.value}}">
+          <mat-datepicker-toggle matSuffix [for]="pickerDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDate></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Hora -->
+        <mat-form-field *ngIf="field.fieldTypeId == 6" appearance="outline" class="w-100-p">
+          <mat-label>{{field.text}}<span *ngIf="field.required" class="red-required">*</span></mat-label>
+          <input matInput formControlName="{{field.formControlName}}" type="number" value="{{field.value}}">
+        </mat-form-field>
+
+        <!-- CheckBox Type -->
+        <mat-checkbox *ngIf="field.fieldTypeId == 7" formControlName="{{field.formControlName}}"
+          checked="{{field.value}}">
+          {{field.text}}
+          <span *ngIf="field.required" class="red-required">*</span>
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+  <div class="row my-4">
+    <div class="col-xs-4">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-8 text-right">
+      <button mat-stroked-button color="primary" type="button">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!dataForm.valid" (click)="saveField()">
+        <mat-icon>save</mat-icon> {{action}}
+      </button>
+    </div>
+  </div>
+</form>

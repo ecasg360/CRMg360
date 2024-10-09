@@ -1,0 +1,121 @@
+<mat-spinner *ngIf="isWorking" diameter="30"></mat-spinner>
+<mat-accordion>
+  <div *ngFor="let configuration of configurationMarketing">
+    <!-- streaming -->
+    <div *ngIf="configuration.sectionId == marketingSection.streaming && configuration.active">
+      <mat-expansion-panel [disabled]="isWorking"
+        (opened)="openPanel(marketingSection.streaming, configuration.sectionId)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Streaming</mat-panel-title>
+          <mat-panel-description class="row end-xs">
+            <mat-icon class="cursor-pointer"
+              (click)="showModal(configuration.sectionId, configuration.position, marketingSection.streaming)">
+              add</mat-icon>&nbsp;
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let item of streamingList">
+          <table class="table w-100-p mb-12">
+            <tr>
+              <td class="mr-12">
+                <img src="{{item.pictureUrl}}" width="90" onerror="this.src='/assets/images/logos/360-circle.png';"
+                  alt="{{item.socialName}}">
+                <p class="text-center m-0">
+                  <mat-icon class="cursor-pointer" (click)="deleteStream(item.socialId, 'overview', item.overview)">
+                    delete</mat-icon>
+                </p>
+              </td>
+              <td class="playlist-container w-85-p">
+                <div *ngFor="let detail of item.detail" class="ml-12">
+                  <img src="/assets/images/albums/albumdisco.png" width="120" alt="{{detail.name}}"><br />
+                  <small>{{detail.name}}</small>&nbsp;
+                  <mat-icon class="cursor-pointer" (click)="deleteStream(detail.id, 'overviewDetail', item.overview)">
+                    delete</mat-icon>
+                </div>
+              </td>
+              <td>
+                <button mat-fab (click)="addPlaylist(item)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- / streaming -->
+
+    <!-- media target -->
+    <div *ngIf="configuration.sectionId == marketingSection.mediaTargets && configuration.active">
+      <mat-expansion-panel [disabled]="isWorking"
+        (opened)="openPanel(marketingSection.mediaTargets, configuration.sectionId)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{'general.mediaTarget' | translate}}</mat-panel-title>
+          <mat-panel-description class="row end-xs">
+            <mat-icon class="cursor-pointer" *ngIf="!isWorking"
+              (click)="showModal(configuration.sectionId, configuration.position, marketingSection.mediaTargets)">
+              add</mat-icon>&nbsp;
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="playlist-container">
+          <div *ngFor="let item of mediaList" class="ml-8">
+            <img src="{{item.pictureUrl}}" onerror="this.src='assets/images/logos/360-circle.png';" width="120"
+              alt="{{item.name}}"><br />
+            <small>{{item.name}}</small>&nbsp;
+            <mat-icon class="cursor-pointer" (click)="deleteMedia(item)">delete</mat-icon>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- / media target -->
+
+    <!-- marketing & social media -->
+    <div *ngIf="configuration.sectionId == marketingSection.marketingSocialMedia && configuration.active">
+      <mat-expansion-panel [disabled]="isWorking"
+        (opened)="openPanel(marketingSection.marketingSocialMedia, configuration.sectionId)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{'general.marketingSocialMedia' | translate}}</mat-panel-title>
+          <mat-panel-description class="row end-xs">
+            <mat-icon class="cursor-pointer" *ngIf="!isWorking"
+              (click)="showModal(configuration.sectionId, configuration.position, marketingSection.marketingSocialMedia)">
+              add</mat-icon>&nbsp;
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="playlist-container">
+          <div *ngFor="let item of socialMediaList" class="ml-8">
+            <img src="{{item.pictureUrl}}" onerror="this.src='assets/images/logos/360-circle.png';" width="120"
+              alt="{{item.socialNetwork}}"><br />
+            <small>{{item.socialNetwork}}</small>&nbsp;<mat-icon class="cursor-pointer" (click)="deleteSocial(item)">
+              delete</mat-icon>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- / marketing & social media -->
+
+    <!-- overwiew material release -->
+    <div *ngIf="configuration.sectionId == marketingSection.OverviewMaterialRelease && configuration.active">
+      <mat-expansion-panel [disabled]="isWorking" (opened)="openPanelMaterial(configuration.sectionId, configuration.position,
+        marketingSection.OverviewMaterialRelease)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{'general.overwiewMaterialRelease' | translate}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field appearance="outline">
+          <input type="text" placeholder="Material" matInput [formControl]="materialFC" [matAutocomplete]="auto"
+            (keyup.enter)="enter()">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteOptionSelected($event)">
+            <mat-option *ngFor="let option of filteredOptions | async" [id]="option.id" [value]="option.name">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-list>
+          <mat-list-item *ngFor="let material of selectedMaterial">
+            <mat-icon mat-list-icon class="cursor-pointer" (click)="deleteMaterial(material)">delete</mat-icon>
+            <h4 mat-line>{{material.name}}</h4>
+          </mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+    </div>
+    <!-- / overwiew material release -->
+  </div>
+</mat-accordion>

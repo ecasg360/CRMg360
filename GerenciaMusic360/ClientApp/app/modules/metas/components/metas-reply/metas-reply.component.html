@@ -1,0 +1,100 @@
+<div style="overflow-y: auto; overflow-x:hidden; height: 50rem;">
+  <div [formGroup]="metasForm">
+    <div class="row">
+      <div class="col-xs-12 m-6" style="width: 100%;">
+        <div style="border: 1px solid #c0c0c0;margin: 1rem;padding: 0.5rem;border-radius: 5px;">
+          <h3>
+            <b>{{metaDescription}}</b>
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="col-xs-12"
+        *ngFor="let reply of replies"
+      >
+        <div style="border: 1px solid #044A9F; border-radius: 5px;margin: 1rem; padding: 0.5rem;">
+          <div>
+            {{reply.goalMessage}}
+          </div>
+          <div style="display: flex; flex-direction: row;margin-top: 0.5rem;">
+            <div style="float: left;width: 50%;">
+              <small class="info-details">{{reply.userName}}</small>
+            </div>
+            <div style="text-align: right; width: 50%;">
+              <small class="info-details">{{reply.commentDate | date:'yyyy-MM-dd HH:mm'}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12" style="width: 100%;">
+        <mat-form-field appearance="outline" class="p-8">
+          <mat-label>{{ 'general.reply' | translate }}</mat-label>
+          <textarea
+            matInput
+            placeholder="{{ 'general.reply' | translate }}"
+            rows="6"
+            formControlName="goalReply"
+          ></textarea>
+          <div style="margin-left: 1rem;">
+            <button
+              (click)="isEmojiPickerVisible = !isEmojiPickerVisible;"
+              class="btn btn-primary"
+            >
+              😀
+            </button>
+          </div>
+        </mat-form-field>
+      </div>
+      <div
+        *ngIf="isEmojiPickerVisible"
+        class="absolute"
+        style="margin-left: 1rem;"
+      >
+        <div style="margin-left: 1rem;">
+          <div>
+            <button
+              (click)="closeEmojis()"
+              class="btn btn-primary"
+            >
+              Close
+            </button>
+          </div>
+          <emoji-mart (emojiClick)="addEmoji($event)" title="Elige tu emoji…" emoji="point_up" ></emoji-mart>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="model.isMeasurable == 1" style="margin-bottom: 1rem;">
+      <mat-slide-toggle
+        [color]="accent"
+        [checked]="model.isCompleted == 1"
+        (change)="updateCompleted()"
+      ></mat-slide-toggle>
+      &nbsp;Completed
+    </div>
+    <div class="row">
+      <div class="col-12 px-8">
+        <button
+          mat-stroked-button
+          color="primary"
+          type="button"
+          (click)="dialogRef.close(null)"
+        >
+          <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+        </button>
+        &nbsp;&nbsp;
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="sendReply()"
+          type="button"
+        >
+          {{ 'general.save' | translate }}&nbsp;<mat-icon>save</mat-icon>
+        </button>
+        </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+<div class="page-layout carded fullwidth">
+    <!-- HEADER -->
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h4>General Reports</h4>
+        </div>
+        <div class="custom-breadcrum">
+            <a routerLink="/" class="fuse-white-fg">Hello</a> /
+            <span class="secondary-text">World</span>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content">
+        <mat-tab-group>
+            <!-- PROJECT -->
+            <mat-tab class="tab-body" label="Projects" *ngIf="perm.Report.ReportProjects">
+                <div class="p-12" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <mat-card [@animate]="{value:'*',params:{x:'50px'}}">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">Project</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <app-tab-project></app-tab-project>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- /PROJECT -->
+
+            <!-- MARKETING -->
+            <mat-tab label="Marketing">
+                <div class="p-12" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <mat-card [@animate]="{value:'*',params:{y:'100%'}}">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">Marketing</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <app-tab-marketing></app-tab-marketing>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- /MARKETING -->
+
+            <!-- CONTACTS -->
+            <mat-tab label="Contacts" *ngIf="perm.Report.ReportContacts">
+                <div class="p-12" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <mat-card [@animate]="{value:'*',params:{y:'100%'}}">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">Contacts</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <app-tab-contact></app-tab-contact>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- /CONTACTS -->
+
+            <!-- ACTIVITIES -->
+            <mat-tab label="{{'general.activities' | translate}}">
+                <div class="p-12" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <mat-card [@animate]="{value:'*',params:{y:'100%'}}">
+                                <mat-card-content>
+                                    <app-report-activities></app-report-activities>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- /ACTIVITIES -->
+
+
+            <!-- WORKS -->
+            <mat-tab class="tab-body" label="Works" *ngIf="perm.Report.ReportWorks">
+                <div class="p-12" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <mat-card [@animate]="{value:'*',params:{x:'50px'}}">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">Works</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                        <app-tab-works></app-tab-works>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- /WORKS -->
+
+            <!-- WORKS -->
+            <!-- <mat-tab label="Works">
+              <mat-card *fuseIfOnDom [@animate]="{value:'*',params:{y:'100%'}}">
+                  <mat-card-header>
+                      <mat-card-title>
+                          <h3 class="h3">Works</h3>
+                      </mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                  </mat-card-content>
+              </mat-card>
+          </mat-tab> -->
+            <!-- /WORKS -->
+        </mat-tab-group>
+    </div>
+    <!-- / CONTENT -->
+</div>

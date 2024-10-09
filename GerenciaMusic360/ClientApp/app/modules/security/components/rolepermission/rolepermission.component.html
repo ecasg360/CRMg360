@@ -1,0 +1,70 @@
+<div class="page-layout carded fullwidth">
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h3>{{'general.user'|translate}}s</h3>
+        </div>
+        <div class="w-50-p text-right pr-8">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <span class="secondary-text">{{ 'general.usertitle' | translate }}</span>
+        </div>
+    </div>
+    <div class="content  m-24 p-4 mat-card">
+        <form [formGroup]="form">
+            <div class="row between-xs">
+                <button mat-flat-button color="primary" class="my-16 mx-8" (click)="set()" type="submit">
+                    <mat-icon>save</mat-icon>&nbsp;{{ 'general.save' | translate }}
+                </button>
+                <button mat-flat-button color="primary" class="my-16 mx-8" (click)="addAllPermissions()" type="submit">
+                    <mat-icon>group_add</mat-icon>&nbsp;{{ 'general.addallPermissions' | translate }}
+                </button>
+                <button mat-flat-button color="primary" class="my-16 mx-8" (click)="removeAllPermissions()" type="submit">
+                    <mat-icon>person_add_disabled</mat-icon>&nbsp;{{ 'general.removeallPermissions' | translate }}
+                </button>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="outline" class="w-100-p m-4" >
+                    <mat-label>{{'general.role'|translate}}</mat-label>
+                    <mat-select (selectionChange)="getPermissionByRolId($event)" formControlName="role" required>
+                        <mat-option>{{'general.select'|translate}}</mat-option>
+                        <mat-option *ngFor="let role of roles" [value]="role.id">{{role.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </form>
+        <!--<mat-form-field appearance="outline" class="w-100-p m-4">
+            <mat-label>{{'general.search'|translate}}</mat-label>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'general.search'|translate}}">
+        </mat-form-field>-->
+        <div class="row">
+            <div class="col-xs-12" style="height:550px;overflow-y:scroll;">
+                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                        <button mat-icon-button disabled></button>
+                        <mat-checkbox class="checklist-leaf-node" [(ngModel)]="node.checked"
+                                      [checked]="checklistSelection.isSelected(node)"
+                                      (change)="todoLeafItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
+                    </mat-tree-node>
+                    <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                        <button mat-icon-button disabled></button>
+                        <mat-form-field>
+                            <input matInput #itemValue placeholder="New item...">
+                        </mat-form-field>
+                        <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+                    </mat-tree-node>
+                    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                        <button mat-icon-button matTreeNodeToggle
+                                [attr.aria-label]="'toggle ' + node.filename">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                        <mat-checkbox [checked]="descendantsAllSelected(node)" [(ngModel)]="node.checked"
+                                      [indeterminate]="descendantsPartiallySelected(node)"
+                                      (change)="todoItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
+                    </mat-tree-node>
+                </mat-tree>
+            </div>
+        </div>
+
+    </div>
+</div>

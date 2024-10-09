@@ -1,0 +1,81 @@
+
+.searchbar {
+    float: right;
+}
+
+button.organize {
+    float: right;
+    height: 100%;
+}
+
+/*DSANCHEZ*/
+.card-contract{
+
+    padding: 10px;
+    -webkit-box-shadow: 12px 12px 13px -11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 12px 12px 13px -11px rgba(0,0,0,0.75);
+    box-shadow: 12px 12px 13px -11px rgba(0,0,0,0.75);
+    border: 1px solid #9a9a9a;
+    border-radius: 15px;
+
+
+    .card-header{
+        img{
+            width: 20px;
+            height: 20px;
+            float: right;
+        }
+    }
+
+    .card-title{
+        height: 50px;
+
+        img{
+            width: 50px;
+            height: 50px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        h4, h2{
+            margin: 0;
+        }
+    }
+
+    .card-body{
+
+        ul{
+            list-style: none;
+            padding: 0;     
+            line-height: 2;
+
+            mat-icon{
+                font-size: 15px;
+            }
+        }
+        
+    }
+
+    .card-footer{
+
+        button{
+            background: none;
+            border: none;
+            padding: 5px;
+            margin: 0 10px 0 0;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: .3s ease all;
+            vertical-align: middle;
+          }
+
+        button:hover{
+            background-color: #044a9f;
+            color: white;
+        }
+        
+        button.btn-download{
+            width: 100%;
+        }
+    }
+}

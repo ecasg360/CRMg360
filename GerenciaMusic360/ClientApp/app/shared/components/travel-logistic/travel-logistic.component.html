@@ -1,0 +1,448 @@
+<div class="">
+  <div class="row travel-logistics-header">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    <div class="col-xs-2">
+      <button
+            mat-mini-fab
+            color="primary"
+            [disabled]="isWorking"
+            (click)="downloadFile()"
+        >
+            <mat-icon>cloud_download</mat-icon>
+        </button>
+    </div>
+    <div class="col-xs-10">
+        <mat-radio-group name="opList">
+              <mat-radio-button name="opList" id="artist" class="my-16 mx-8" #chkArtist (click)="changeFilter(chkArtist)">
+                {{ 'travelLogistics.artist' | translate }}
+              </mat-radio-button>
+              <mat-radio-button name="opList" id="internal" class="my-16 mx-8" #chkInternal (click)="changeFilter(chkInternal)">
+                {{ 'general.G360CompanyExpense' | translate }}
+              </mat-radio-button>
+              <mat-radio-button name="opList" id="moe" class="my-16 mx-8" #chkMoe (click)="changeFilter(chkMoe)">
+                {{ 'general.MOE' | translate }}
+              </mat-radio-button>
+              <mat-radio-button name="opList" id="all" class="my-16 mx-8" #chkAll (click)="changeFilter(chkAll)">
+                  {{ 'travelLogistics.all' | translate }}
+                </mat-radio-button>
+        </mat-radio-group>
+    </div>
+  </div>
+  <section>
+    <div class="row" *ngIf="perm.Post">
+        <div class="col-xs-12">
+            <button *ngIf="flights.length == 0" mat-flat-button class="my-4 mx-8 btnHeader" (click)="showModalFlightForm()">
+              <mat-icon>flight_takeoff</mat-icon>{{ 'travelLogistics.addFlight' | translate }}
+            </button>
+            <button *ngIf="hotels.length == 0" mat-flat-button class="my-4 mx-8 btnHeader" (click)="showModalHotelForm()">
+              <mat-icon>hotel</mat-icon>{{ 'travelLogistics.addHotel' | translate }}
+            </button>
+            <button *ngIf="transportations.length == 0" mat-flat-button class="my-4 mx-8 btnHeader" (click)="showModalTransportationForm()">
+              <mat-icon>directions_bus</mat-icon>{{ 'travelLogistics.addTransportation' | translate }}
+            </button>
+            <button *ngIf="others.length == 0" mat-flat-button class="my-4 mx-8 btnHeader" (click)="showModalOtherForm()">
+              <mat-icon>fastfood</mat-icon>{{ 'travelLogistics.addOther' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <section *ngIf="flights.length > 0">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card-logistics">
+                    <div class="card-logistics-title">
+                          <h2><mat-icon>flight_takeoff</mat-icon>{{ 'travelLogistics.flights' | translate }}</h2>
+                    </div>
+                    <div class="card-logistics-body">
+                        <button
+                          mat-flat-button
+                          color="primary"
+                          class="mb-8 btnAdd"
+                          (click)="showModalFlightForm()"
+                          *ngIf="perm.Post"
+                        >
+                          <mat-icon>add</mat-icon>
+                        </button>
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let flight of flights">
+                                <mat-expansion-panel-header class="row">
+                                    <mat-panel-title class="col-xs-8">
+                                        {{flight.airLineName}}
+                                    </mat-panel-title>
+                                    <mat-panel-description class="col-xs-4">
+                                        <table>
+                                            <tr>
+                                                <td><strong>{{ 'travelLogistics.spent' | translate }}:</strong> {{flight.totalCost}}</td>
+                                            </tr>
+                                        </table>
+                    
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                          <h2>{{ 'travelLogistics.description' | translate }}</h2>
+                                          <h3>{{flight.airLineName}}</h3>
+                                            <ul>
+                                              <li>
+                                                <span>{{ 'travelLogistics.flight.passenger' | translate }}:</span> {{flight.passengerName}}
+                                              </li>
+                                              <li>
+                                                <span>{{ 'travelLogistics.flight.voyage' | translate }}:</span> {{flight.flightNumber}}
+                                              </li>
+                                              <li>
+                                                <span>{{ 'travelLogistics.flight.departure' | translate }}:</span> {{flight.departureDate}} / <span>{{ 'travelLogistics.flight.arrival' | translate }}:</span> {{flight.arrivalDate}}
+                                              </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="card-logistics-body-actions">
+                                              <table>
+                                                <thead>
+                                                  <tr>
+                                                    <th>
+                                                      {{ 'travelLogistics.spent' | translate }}
+                                                    </th>
+                                                    <th>
+                                                      {{ 'travelLogistics.edit' | translate }}
+                                                    </th>
+                                                    <th>
+                                                      {{ 'travelLogistics.delete' | translate }}
+                                                    </th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <td>
+                                                        <label>{{flight.totalCost}}</label>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                          mat-icon-button
+                                                          color="primary"
+                                                          (click)="showModalFlightForm(flight)"
+                                                          *ngIf="perm.Put"
+                                                        >
+                                                            <mat-icon>create</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                          mat-icon-button
+                                                          color="primary"
+                                                          (click)="confirmDelete(flight.projectTravelLogisticsId, flight.id, 'Flight', flight.airLineName)"
+                                                          *ngIf="perm.Delete"
+                                                        >
+                                                            <mat-icon>delete_outline</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                    </div>
+                  </div>
+            </div>
+          </div>
+    </section>
+
+
+
+    <section *ngIf="hotels.length > 0">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card-logistics">
+                    <div class="card-logistics-title">
+                        <h2><mat-icon>hotel</mat-icon>{{ 'travelLogistics.hotels' | translate }}</h2>
+                    </div>
+                    <div class="card-logistics-body">
+                        <button
+                          mat-flat-button
+                          color="primary"
+                          class="mb-8 btnAdd"
+                          (click)="showModalHotelForm()"
+                          *ngIf="perm.Post"
+                        >
+                          <mat-icon>add</mat-icon>
+                        </button>
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let hotel of hotels">
+                                <mat-expansion-panel-header class="row">
+                                    <mat-panel-title class="col-xs-8">
+                                        {{hotel.name}}
+                                    </mat-panel-title>
+                                    <mat-panel-description class="col-xs-4">
+                                        <table>
+                                            <tr>
+                                                <td><strong>{{ 'travelLogistics.spent' | translate }}: </strong> {{hotel.totalCost}}</td>
+                                            </tr>
+                                        </table>
+                    
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                          <h2>{{ 'travelLogistics.description' | translate }}</h2>
+                                          <h3>{{hotel.name}}</h3>
+                                            <ul>
+                                              <li>
+                                                <span>{{ 'travelLogistics.hotel.reservationName' | translate }}:</span> {{hotel.reservationName}}
+                                              </li>
+                                              <li>
+                                                <span>{{ 'travelLogistics.hotel.roomNumber' | translate }}:</span> {{hotel.roomNumber}}
+                                              </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="card-logistics-body-actions">
+                                              <table>
+                                                <thead>
+                                                  <tr>
+                                                    <th>
+                                                      {{ 'travelLogistics.spent' | translate }}
+                                                    </th>
+                                                    <th>
+                                                      {{ 'travelLogistics.edit' | translate }}
+                                                    </th>
+                                                    <th>
+                                                      {{ 'travelLogistics.delete' | translate }}
+                                                    </th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <td>
+                                                        <label>{{hotel.totalCost}}</label>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                          mat-icon-button
+                                                          color="primary"
+                                                          (click)="showModalHotelForm(hotel)"
+                                                          *ngIf="perm.Put"
+                                                        >
+                                                            <mat-icon>create</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                          mat-icon-button
+                                                          color="primary"
+                                                          (click)="confirmDelete(hotel.projectTravelLogisticsId, hotel.id, 'Hotel', hotel.reservationName)"
+                                                          *ngIf="perm.Delete"
+                                                        >
+                                                            <mat-icon>delete_outline</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                    </div>
+                  </div>
+            </div>
+          </div>
+    </section>
+
+    <section *ngIf="transportations.length > 0">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card-logistics">
+                    <div class="card-logistics-title">
+                        <h2><mat-icon>directions_bus</mat-icon>{{ 'travelLogistics.transportations' | translate }}</h2>
+                    </div>
+                    <div class="card-logistics-body">
+                        <button
+                          mat-flat-button
+                          color="primary"
+                          class="mb-8 btnAdd"
+                          (click)="showModalTransportationForm()"
+                          *ngIf="perm.Post"
+                        >
+                          <mat-icon>add</mat-icon>
+                        </button>
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let transportation of transportations">
+                                <mat-expansion-panel-header class="row">
+                                    <mat-panel-title class="col-xs-8">
+                                        {{transportation.vehicleName}}
+                                    </mat-panel-title>
+                                    <mat-panel-description class="col-xs-4">
+                                        <table>
+                                            <tr>
+                                                <td><strong>{{ 'travelLogistics.spent' | translate }}: </strong> {{transportation.totalCost}}</td>
+                                            </tr>
+                                        </table>
+                    
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                          <h2>{{ 'travelLogistics.description' | translate }}</h2>
+                                          <h3>{{transportation.vehicleName}}</h3>
+                                            <ul>
+                                              <li>
+                                                <mat-checkbox class="w-40-p" [checked]="transportation.ownVehicle" disabled>
+                                                    {{ 'travelLogistics.transportation.ownVehicle' | translate }}
+                                                </mat-checkbox>
+                                              </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="card-logistics-body-actions">
+                                              <table>
+                                                <thead>
+                                                  <tr>
+                                                    <th>
+                                                      {{ 'travelLogistics.spent' | translate }}
+                                                    </th>
+                                                    <th>
+                                                      {{ 'travelLogistics.edit' | translate }}
+                                                    </th>
+                                                    <th>
+                                                      {{ 'travelLogistics.delete' | translate }}
+                                                    </th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <td>
+                                                        <label>{{transportation.totalCost}}</label>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                          mat-icon-button
+                                                          color="primary"
+                                                          (click)="showModalTransportationForm(transportation)"
+                                                          *ngIf="perm.Put"
+                                                        >
+                                                            <mat-icon>create</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                          mat-icon-button
+                                                          color="primary"
+                                                          (click)="confirmDelete(transportation.projectTravelLogisticsId, transportation.id, 'Transportation', transportation.vehicleName)"
+                                                          *ngIf="perm.Delete"
+                                                        >
+                                                            <mat-icon>delete_outline</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                  </div>
+            </div>
+          </div>
+    </section>
+
+    <section *ngIf="others.length > 0">
+      <div class="row">
+          <div class="col-xs-12">
+              <div class="card-logistics">
+                  <div class="card-logistics-title">
+                      <h2><mat-icon>fastfood</mat-icon>{{ 'travelLogistics.others' | translate }}</h2>
+                  </div>
+                  <div class="card-logistics-body">
+                      <button
+                        mat-flat-button
+                        color="primary"
+                        class="mb-8 btnAdd"
+                        (click)="showModalOtherForm()"
+                        *ngIf="perm.Post"
+                      >
+                        <mat-icon>add</mat-icon>
+                      </button>
+                      <mat-accordion>
+                          <mat-expansion-panel *ngFor="let other of others">
+                              <mat-expansion-panel-header class="row">
+                                  <mat-panel-title class="col-xs-8">
+                                      {{other.name}}
+                                  </mat-panel-title>
+                                  <mat-panel-description class="col-xs-4">
+                                      <table>
+                                          <tr>
+                                              <td><strong>{{ 'travelLogistics.spent' | translate }}: </strong> {{other.totalCost}}</td>
+                                          </tr>
+                                      </table>
+                                  </mat-panel-description>
+                              </mat-expansion-panel-header>
+                                  <div class="row">
+                                      <div class="col-xs-8">
+                                        <h2>{{ 'travelLogistics.description' | translate }}</h2>
+                                        <h3>{{other.name}}</h3>
+                                      </div>
+                                      <div class="col-xs-4">
+                                          <div class="card-logistics-body-actions">
+                                            <table>
+                                              <thead>
+                                                <tr>
+                                                  <th>
+                                                    {{ 'travelLogistics.spent' | translate }}
+                                                  </th>
+                                                  <th>
+                                                    {{ 'travelLogistics.edit' | translate }}
+                                                  </th>
+                                                  <th>
+                                                    {{ 'travelLogistics.delete' | translate }}
+                                                  </th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr>
+                                                  <td>
+                                                      <label>{{other.totalCost}}</label>
+                                                  </td>
+                                                  <td>
+                                                      <button
+                                                        mat-icon-button
+                                                        color="primary"
+                                                        (click)="showModalOtherForm(other)"
+                                                        *ngIf="perm.Put"
+                                                      >
+                                                          <mat-icon>create</mat-icon>
+                                                      </button>
+                                                  </td>
+                                                  <td>
+                                                      <button
+                                                        mat-icon-button
+                                                        color="primary"
+                                                        (click)="confirmDelete(other.projectTravelLogisticsId, other.id, 'Other', other.name)"
+                                                        *ngIf="perm.Delete"
+                                                      >
+                                                          <mat-icon>delete_outline</mat-icon>
+                                                      </button>
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                          </mat-expansion-panel>
+                      </mat-accordion>
+
+                  </div>
+                </div>
+          </div>
+        </div>
+  </section>
+
+  </section>
+</div>

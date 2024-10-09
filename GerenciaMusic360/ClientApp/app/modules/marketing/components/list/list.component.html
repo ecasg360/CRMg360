@@ -1,0 +1,68 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'general.marketing' | translate }}</h4>
+    </div>
+    <div class="custom-breadcrum">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.marketing' | translate }}</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content  m-8 p-8">
+    <div class="row mb-8">
+      <div class="col-xs-6">
+        <button mat-button color="accent" *ngIf="perm.Marketing.Post" class="mat-raised-button mat-accent my-16 mx-8" (click)="openModal()">
+          <mat-icon>add</mat-icon> &nbsp; {{ 'general.createCampain' | translate }}
+        </button>
+      </div>
+      <div class="col-xs-6">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-md-6 col-lg-3" *ngFor="let item of marketingList; trackBy:trackByFn;">
+
+        <mat-card class="mb-16 mx-0">
+          <mat-card-header>
+            <p class="cut-text"><a routerLink="/marketing/manage/{{item.id}}"
+                matTooltip="{{item.name}}">{{item.name}}</a>
+            </p>
+          </mat-card-header>
+          <img mat-card-image src="assets/images/default/marketing_list.jpg" alt="{{item.name}}">
+          <mat-card-content>
+            <ul class="panel-list">
+              <li class="text-center p-8"><strong>{{ 'general.startDate' | translate }}:</strong>
+                {{ item.startDateString | date}}</li>
+              <li class="text-center p-8"><strong>{{ 'general.endDate' | translate }}:</strong>
+                {{ item.endDateString | date}}</li>
+            </ul>
+          </mat-card-content>
+          <mat-card-actions class="actionCard">
+            <div class="row">
+              <div class="col-xs-4">
+                <button mat-button (click)="downloadReport(item)">
+                  <mat-icon>cloud_download</mat-icon>
+                </button>
+              </div>
+              <div class="col-xs-4">
+                <button mat-button  *ngIf="perm.Marketing.Put" routerLink="/marketing/manage/{{item.id}}">
+                  <mat-icon>create</mat-icon>
+                </button>
+              </div>
+              <div class="col-xs-4">
+                <button mat-button  *ngIf="perm.Marketing.Delete" (click)="confirmDelete(item)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <!-- / CONTENT -->
+</div>

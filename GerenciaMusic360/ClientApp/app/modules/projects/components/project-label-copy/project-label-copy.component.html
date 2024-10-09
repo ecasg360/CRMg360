@@ -1,0 +1,188 @@
+<div [formGroup]="formLabelCopy">
+    <div class="row mb-4">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <strong>UPC Code:</strong> {{project.upcCode}}
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <strong>{{'general.updateDate' | translate}}</strong>: {{labelCopy.dateLastUpdate | date:'medium' }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{'general.executiveProducer' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input type="text" placeholder="{{'general.executiveProducer' | translate}}" matInput
+                    [formControl]="producerExecutiveFC" [matAutocomplete]="autoProducer"
+                    (keyup.enter)="enter(labelCopyType.productor)">
+                <mat-autocomplete #autoProducer="matAutocomplete"
+                    (optionSelected)="autocompleteOptionSelected($event, labelCopyType.productor)">
+                    <mat-option *ngFor="let option of producerExecutiveFiltered | async" [id]="option.value"
+                        [value]="option.viewValue">
+                        {{option.viewValue}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f.personProducerExecutiveId?.errors?.required">
+                    {{ 'validations.errors.fieldRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{'general.studio' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input type="text" placeholder="{{'general.studio' | translate}}" matInput [formControl]="studioFC"
+                    [matAutocomplete]="autoStudio" (keyup.enter)="enter(labelCopyType.studio)">
+                <mat-autocomplete #autoStudio="matAutocomplete"
+                    (optionSelected)="autocompleteOptionSelected($event, labelCopyType.studio)">
+                    <mat-option *ngFor="let option of studioFiltered | async" [id]="option.value"
+                        [value]="option.viewValue">
+                        {{option.viewValue}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f.studioId?.errors?.required">
+                    {{ 'validations.errors.fieldRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{'general.distributor' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input type="text" placeholder="{{'general.distributor' | translate}}" matInput
+                    [formControl]="distributorFC" [matAutocomplete]="autoDistributor"
+                    (keyup.enter)="enter(labelCopyType.distributor)">
+                <mat-autocomplete #autoDistributor="matAutocomplete"
+                    (optionSelected)="autocompleteOptionSelected($event, labelCopyType.distributor)">
+                    <mat-option *ngFor="let option of distributorFiltered | async" [id]="option.value"
+                        [value]="option.viewValue">
+                        {{option.viewValue}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f.distributorId?.errors?.required">
+                    {{ 'validations.errors.fieldRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{'general.producer' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                        <input type="text" placeholder="{{'general.producer' | translate}}" matInput
+                            [formControl]="recordingEngineerFC" [matAutocomplete]="autoEngineer"
+                            (keyup.enter)="enter(labelCopyType.recordingEngineer)" [disabled]="true">
+                        <mat-autocomplete #autoEngineer="matAutocomplete"
+                            (optionSelected)="autocompleteOptionSelected($event, labelCopyType.recordingEngineer)">
+                            <mat-option *ngFor="let option of recordingEngineerFiltered | async" [id]="option.value"
+                                [value]="option.viewValue">
+                                {{option.viewValue}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="f.personRecordingEngineerId?.errors?.required">
+                            {{ 'validations.errors.fieldRequired' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                    <div>
+                        <mat-list role="list">
+                            <mat-list-item
+                                role="listitem"
+                                *ngFor="let person of personsRecordingEngineerIds"
+                            >
+                                <mat-icon
+                                    aria-hidden="false"
+                                    aria-label="Example home icon"
+                                    (click)="deleteProducer(person)"
+                                    style="cursor: pointer;"
+                                >cancel</mat-icon>
+                                {{person.viewValue}} 
+                            </mat-list-item>
+                          </mat-list>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <button
+                        mat-mini-fab
+                        color="primary"
+                        [disabled]="isWorking"
+                        (click)="showModalAddProducer()"
+                    >
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{'general.mixAndMaster' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input type="text" placeholder="{{'general.mixAndMaster' | translate}}" matInput
+                    [formControl]="mixAndMasterFC" [matAutocomplete]="autoMixAndMaster"
+                    (keyup.enter)="enter(labelCopyType.mixAndMaster)">
+                <mat-autocomplete #autoMixAndMaster="matAutocomplete"
+                    (optionSelected)="autocompleteOptionSelected($event, labelCopyType.mixAndMaster)">
+                    <mat-option *ngFor="let option of mixAndMasterFiltered | async" [id]="option.value"
+                        [value]="option.viewValue">
+                        {{option.viewValue}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f.personMixMasterId?.errors?.required">
+                    {{ 'validations.errors.fieldRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.location' | translate }}&nbsp;<span class="red-required">*</span>
+                </mat-label>
+                <input matInput type="text" placeholder="{{ 'formField.messages.enterLocation' | translate }}"
+                    formControlName="location">
+                <mat-error *ngIf="f.location?.errors?.required">
+                    {{ 'validations.errors.locationRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <mat-radio-group name="opList" [value]="recordLabel">
+                <mat-radio-button
+                    name="opList"
+                    id="LDV"
+                    class="my-16 mx-8"
+                    #chkLdv
+                    (click)="changeFilter(chkLdv)"
+                    value="LDV"
+                >
+                  {{ 'general.LDV' | translate }}
+                </mat-radio-button>
+                <mat-radio-button
+                    name="opList"
+                    id="GM360"
+                    class="my-16 mx-8"
+                    #chkG360
+                    (click)="changeFilter(chkG360)"
+                    value="GM360"
+                >
+                    {{ 'general.G360CompanyExpense' | translate }}
+                  </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="col-xs-9 text-right">
+            <button
+                mat-flat-button
+                color="primary"
+                (click)="saveLabel()"
+                [disabled]="!formLabelCopy.valid || isWorking"
+                *ngIf="perm.Post"
+            >
+                {{ 'general.save' | translate }}&nbsp;<mat-icon>save</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,293 @@
+<div mat-dialog-content class="p-12">
+
+  <mat-tab-group>
+    <mat-tab label="{{ 'track.tabSelect' | translate }}" *ngIf="!isEditData">
+        <div style="padding: 20px;">
+          <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+          <div *ngIf="dataSource != undefined && dataSource.data.length > 0">
+              <div class="row">
+                  <div class="col-sm-6">
+                    <mat-form-field class="w-80-p m-4" *ngIf="isDataAvailable">
+                      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <br>
+                <div class="row" >
+                    <div class="col-xs-12">
+                        <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+        
+                            <ng-container matColumnDef="select">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'track.tabSelect' | translate }} </mat-header-cell>
+                              <mat-cell *matCellDef="let row">
+                                <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                              </mat-cell>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="name">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header> {{'track.table.name'|translate}}
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+                
+                            <ng-container matColumnDef="ISRC">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header> {{'track.table.ISRC'|translate}}
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let row"> {{row.isrc}} </mat-cell>
+                            </ng-container>
+                
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                          </table>
+                          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                  </div>
+          </div>
+          <div *ngIf="dataSource != undefined && dataSource.data.length == 0 && isWorking == false">
+              <div class="row">
+                <div class="col-xs-12">
+                  <h2>Tracks Not Found...</h2>
+                </div>
+              </div>
+            </div>
+          <br>
+          <div class="row text-right">
+              <div class="col-xs-12">
+                  <button mat-flat-button color="accent" (click)="onNoClick()">
+                    <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                  </button>&nbsp;
+                  <button mat-flat-button color="accent" (click)="saveSelectWorks()">
+                    <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+                  </button>
+              </div>
+          </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="{{action}}">
+        <div style="padding: 20px;">
+        <div class="row">
+            <div class="col-xs-12">
+                <form [formGroup]="form">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <h3>{{ 'track.titleTrack' | translate }}</h3>
+                        <hr>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <!-- Name Track Field -->
+                            <mat-form-field appearance="outline" class="w-100-p">
+                                <mat-label>{{ 'track.nameTrack' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                                <input type="text" [formControl]="nameTrack" placeholder="{{ 'track.form.nameTrack' | translate }}" aria-label="text" (keyup)="enterNameTrack($event)" matInput>
+                            </mat-form-field>
+                        </div>
+                        <!-- Has Work Check -->
+                        <!-- <div class="col-xs-3 text-center" style="padding-top: 13px;">
+
+        <mat-checkbox (change)="checkedHasWork($event)" [formControl]="hasWork">
+            {{ 'track.hasWork' | translate }}
+        </mat-checkbox>
+    </div>-->
+                        <div class="col-xs-4">
+                            <!-- Autocomplete Works Field -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ 'general.composition' | translate }}</mat-label>
+                                <input type="text" placeholder="{{ 'general.composition' | translate}}" matInput [formControl]="worksFC"
+                                       [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteOptionSelected($event)">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [id]="option.id" [value]="option.name">
+                                        {{option.name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="isTracksAvailable">
+                      <div class="col-xs-12" >
+                        <!-- Tracks By Work -->
+                        <table class="tracks">
+                          <thead>
+                            <tr>
+                              <th>
+                                {{ 'track.table.name' | translate }}
+                              </th>
+                              <th>
+                                {{ 'track.table.ISRC' | translate }}
+                              </th>
+                              <th>
+                                {{ 'track.table.actions' | translate }}
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of tracksByWork">
+                              <td>
+                                {{item.name}}
+                              </td>
+                              <td>
+                                {{item.isrc}}
+                              </td>
+                              <td>
+                                  <button mat-icon-button color="primary" (click)="selectTrack(item)">
+                                      <mat-icon>done</mat-icon>
+                                  </button>
+                              </td>
+                            </tr>
+                            <tr *ngIf="tracksByWork.length == 0" >
+                                <td colspan="3">
+                                  This work has no registered tracks
+                                </td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 20px;">
+                      <div class="col-xs-3">
+                        <!-- ISRC Field -->
+                        <mat-form-field appearance="outline" class="w-100-p">
+                          <mat-label>{{ 'track.ISRC' | translate }}</mat-label>
+                          <input type="text" [formControl]="ISRC" placeholder="{{ 'track.form.ISRC' | translate }}" aria-label="text" (keyup)="enterISRC($event)" matInput>
+                        </mat-form-field>
+                        <mat-error *ngIf="existISRC">
+                          {{ 'track.form.existISRC' | translate }}
+                        </mat-error>
+                      </div>
+                      <div class="col-xs-3">
+                        <!-- UPC Track Field -->
+                        <mat-form-field appearance="outline" class="w-100-p">
+                          <mat-label>{{ 'track.UPC' | translate }}</mat-label>
+                          <input type="text" [formControl]="UPC" placeholder="{{ 'track.form.UPC' | translate }}" aria-label="text" matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xs-3">
+                        <!-- TIME Track Field -->
+                        <mat-form-field appearance="outline" class="w-100-p">
+                          <mat-label>{{ 'track.time' | translate }}</mat-label>
+                          <input type="text" [formControl]="time" mask="00:00" placeholder="Format 00:00" aria-label="text" matInput>
+                          <mat-error *ngIf="time?.errors?.pattern">
+                            formato incorrecto
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xs-3">
+                        <!-- Number Track Field -->
+                        <mat-form-field appearance="outline" class="w-100-p">
+                          <mat-label>{{ 'track.numberTrack' | translate }}</mat-label>
+                          <input type="number" [formControl]="numberTrack" placeholder="{{ 'track.form.numberTrack' | translate }}" aria-label="text" matInput>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <h3>{{ 'track.titleArtists' | translate }}</h3>
+                        <hr>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-3" style="margin-top: 20px;">
+                          <button mat-flat-button color="primary" (click)="showArtist()" [disabled]="isWorking">
+                              <mat-icon>add</mat-icon> {{'work.addArtist' | translate}}
+                          </button>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="selectedArtists != null && selectedArtists.length > 0">
+                      <table class="composers">
+                        <thead>
+                          <tr>
+                            <th>
+                                {{ 'work.table.name' | translate }}
+                            </th>
+                            <th>
+                                {{ 'work.table.actions' | translate }}
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of selectedArtists">
+                              <td>
+                                {{item.detail.name}}&nbsp;{{item.detail.lastName}}
+                              </td>
+                              <td>
+                                  <button mat-icon-button color="primary" (click)="showArtist(item, true);">
+                                      <mat-icon>edit</mat-icon>
+                                  </button>
+                                  <button mat-icon-button color="primary" (click)="confirmDeleteArtist(item);">
+                                      <mat-icon>delete</mat-icon>
+                                  </button>
+                              </td>
+                            </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <h3>{{ 'track.titleCollaborator' | translate }}</h3>
+                        <hr>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <!-- Productor List -->
+                            <mat-form-field appearance="outline" class="w-100-p">
+                                <mat-label>{{ 'general.producer' | translate }}</mat-label>
+                                <mat-select formControlName="personProducerId"
+                                    placeholder="{{ 'formField.messages.selectAssociation'  | translate }}">
+                                    <mat-option *ngFor="let item of productors" [value]="item.value">
+                                        {{item.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xs-2">
+                              <button mat-raised-button color="accent"  (click)="openDialogForAddProducer()">
+                                  <mat-icon>add</mat-icon> {{ 'general.addProducer' | translate }}
+                              </button>&nbsp;
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <!-- Remix List -->
+                            <mat-form-field appearance="outline" class="w-100-p">
+                                <mat-label>{{ 'general.remixCreator' | translate }}</mat-label>
+                                <mat-select formControlName="personRemixId"
+                                    placeholder="{{ 'formField.messages.selectAssociation'  | translate }}">
+                                    <mat-option *ngFor="let item of remixes" [value]="item.value">
+                                        {{item.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xs-2">
+                              <button mat-raised-button color="accent"  (click)="openDialogForAddRemix()">
+                                  <mat-icon>add</mat-icon> {{ 'general.addRemix' | translate }}
+                              </button>&nbsp;
+                          </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                          <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 text-right">
+                          <button mat-flat-button color="accent" (click)="onNoClick()">
+                            <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                          </button>&nbsp;
+                          <button mat-flat-button color="primary" (click)="save()"  [disabled]="!form.valid || isWorking || !validForm()">
+                            <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+                          </button>
+                      </div>
+                    </div>
+                  </form>
+            </div>
+        </div>
+      </div>
+    </mat-tab>
+</mat-tab-group>
+
+</div>

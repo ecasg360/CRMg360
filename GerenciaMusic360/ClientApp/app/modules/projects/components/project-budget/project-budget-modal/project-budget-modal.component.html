@@ -1,0 +1,57 @@
+<div [formGroup]="projectBudgetForm">
+    <div mat-dialog-title>
+        <table>
+            <tr>
+                <td>
+                    {{ 'general.budget' | translate }}
+                </td>
+                <td class="end-xs">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">attach_money</mat-icon>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mat-dialog-content">
+        <br />
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-12">
+                <mat-label>{{ 'general.category' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input type="text" placeholder="{{ 'general.budgetDetail' | translate}}" matInput
+                    [formControl]="categoryFC" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteOptionSelected($event)">
+                    <mat-option *ngFor="let option of filteredOptions | async" [id]="option.value"
+                        [value]="option.viewValue">
+                        {{option.viewValue}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f.categoryId?.errors?.required">
+                    {{ 'validations.errors.categoryRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-12">
+                <mat-label>{{ 'general.budget' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input type="number" matInput formControlName="budget" min="1"
+                    placeholder="{{ 'formField.messages.enterBudget' | translate }}">
+                <mat-error *ngIf="f.budget?.errors?.required">
+                    {{ 'validations.errors.budgetRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="row">
+        <div class="col-xs-3">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="col-xs-9 text-right">
+            <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon>&nbsp;{{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" (click)="confirmSave()"
+                [disabled]="!projectBudgetForm.valid || isWorking">
+                {{ 'general.save' | translate }}&nbsp;<mat-icon>save</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

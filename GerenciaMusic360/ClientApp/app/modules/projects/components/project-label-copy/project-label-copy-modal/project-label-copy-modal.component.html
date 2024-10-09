@@ -1,0 +1,36 @@
+<div class="row" [formGroup]="formLabelCopy">
+  <div class="col-sm-12 col-md-12">
+    <mat-form-field appearance="outline">
+      <mat-label>{{'general.producer' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+      <input type="text" placeholder="{{'general.producer' | translate}}" matInput
+        [formControl]="recordingEngineerFC" [matAutocomplete]="autoEngineer"
+      >
+      <mat-autocomplete #autoEngineer="matAutocomplete"
+          (optionSelected)="autocompleteOptionSelected($event, labelCopyType.recordingEngineer)">
+          <mat-option *ngFor="let option of recordingEngineerFiltered | async" [id]="option.value"
+              [value]="option.viewValue">
+              {{option.viewValue}}
+          </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="f.personRecordingEngineerId?.errors?.required">
+          {{ 'validations.errors.fieldRequired' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-12 text-right">
+    <button mat-stroked-button color="primary" [disabled]="isWorking" type=" button"
+      (click)="onNoClick()">
+      <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+  </button>&nbsp;
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="selectContact()"
+      [disabled]="!formLabelCopy.valid || isWorking"
+  >
+      {{ 'general.save' | translate }}&nbsp;<mat-icon>save</mat-icon>
+  </button>
+  </div>
+</div>

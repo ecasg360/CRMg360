@@ -1,0 +1,57 @@
+<h3 mat-dialog-title>{{ 'composer.title' | translate }} - {{subTitle}}</h3>
+
+<form [formGroup]="composerForm">
+  <mat-dialog-content>
+      <div class="row">
+          <div class="col-xs-4">
+              <mat-form-field appearance="outline" class="w-100-p">
+                  <mat-label>{{ 'composer.composer' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                  <input type="text"
+                         placeholder="{{ 'composer.form.composer' | translate }}"
+                         matInput [formControl]="composerFC" [matAutocomplete]="autoComposer">
+                  <mat-autocomplete #autoComposer="matAutocomplete" (optionSelected)="optionComposerSelected($event)">
+                      <mat-option *ngFor="let option of filteredComposerOptions | async" [id]="option.value" [value]="option.viewValue">
+                          {{option.viewValue}}
+                      </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+          </div>
+          <div class="col-xs-4">
+              <!-- Association List -->
+              <mat-form-field appearance="outline" class="w-100-p">
+                  <mat-label>{{ 'general.association' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                  <input type="text"placeholder="{{ 'formField.messages.selectAssociation'  | translate }}" matInput
+                         [formControl]="associationFC" [matAutocomplete]="autoAssociation" />
+                  <mat-autocomplete #autoAssociation="matAutocomplete" (optionSelected)="associationOptionSelected($event)">
+                      <mat-option *ngFor="let option of filteredAssociationOptions | async" [id]="option.value" [value]="option.viewValue">
+                          {{option.viewValue}}
+                      </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+          </div>
+          <div class="col-xs-4">
+              <!-- Percentage Revenue Field -->
+              <mat-form-field appearance="outline" class="w-100-p">
+                  <mat-label>{{ 'general.percentage' | translate }}</mat-label>
+                  <input matInput placeholder="{{ 'composer.form.percentageRevenue' | translate }}"
+                         formControlName="percentageRevenue" type="number" min="0">
+                  <mat-error role="alert">{{ 'composer.messages.percentage' | translate }}</mat-error>
+              </mat-form-field>
+          </div>
+      </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="w-40-p text-right">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="w-60-p text-right">
+      <button mat-stroked-button color="primary" [disabled]="isWorking" type="button" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!composerForm.valid || isWorking" (click)="save()">
+        <mat-icon>save</mat-icon> {{action}}
+      </button> &nbsp;
+    </div>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,48 @@
+<h3 mat-dialog-title> Agregar Redes Sociales</h3>
+<form [formGroup]="personsocialNetworkForm">
+    <mat-dialog-content>
+        <!--<div class="row">
+            <div class="w-50-p m-x-auto">
+                <app-upload-image [image]="pictureUrl"
+                    (selectImage)="selectImage($event)">
+                </app-upload-image>
+            </div>
+        </div>-->
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-12">
+                <mat-label>{{ 'general.socialNetwork' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <mat-select placeholder="{{ 'formField.messages.selectSocialNetworkType' | translate }}"
+                    formControlName="socialNetworkTypeId">
+                    <mat-option *ngFor="let item of socialNetworkTypes" [value]="item.value">
+                        {{item.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.socialNetworkTypeId?.errors?.required">
+                    {{ 'validations.errors.socialNetworkTypeId' | translate }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-xs-12">
+                <mat-label>{{ 'general.link' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterLink' | translate }}" formControlName="link"
+                    required>
+                <mat-error *ngIf="f.link?.errors?.required">
+                    {{ 'validations.errors.linkRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions class="end-xs">
+        <div class="row">
+            <div class="col-xs-12">
+                <button mat-stroked-button color="primary" type="button" (click)="onNoClick();">
+                    <i class="fas fa-ban fa-lg"></i> Cancelar
+                </button>&nbsp;
+                <button mat-flat-button color="primary" type="submit" (click)="set();">
+                    <i class="fas fa-save fa-lg"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</form>

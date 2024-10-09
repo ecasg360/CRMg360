@@ -1,0 +1,52 @@
+
+<div class="page-layout carded fullwidth">
+    <div class="w-50-p">
+        <h3 mat-dialog-title>{{actionLabel}}Group</h3>
+    </div>
+    <div class="mat-elevation-z8">
+        <mat-card>
+            <form [formGroup]="addGroupForm">
+                <mat-dialog-content>
+                    <div fxLayout="row wrap" class="w-100-p">
+                        <mat-form-field appearance="outline" fxFlex="100" class="p-8">
+                            <mat-label>Nombre(s)&nbsp;<span class="red-required">*</span></mat-label>
+                            <input matInput placeholder="Ingresa Nombre(s)" formControlName="name" required>
+                            <mat-error *ngIf="f.name?.errors?.required">
+                                Nombre es requerido
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row wrap" class="w-100-p">
+                        <mat-form-field appearance="outline" fxFlex="100" class="p-8">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput placeholder="Add Description" rows="4" formControlName="description"></textarea>
+                        </mat-form-field>
+
+                    </div>
+                    <div fxLayout="row wrap" class="w-100-p">
+                        <mat-form-field appearance="outline" fxFlex="100" class="p-8">
+                            <mat-label>biography</mat-label>
+                            <textarea matInput placeholder="Add Biography" rows="4" formControlName="biography"></textarea>
+                        </mat-form-field>
+                    </div>
+                </mat-dialog-content>
+                <mat-dialog-actions class="pull-right">
+                    <div class="row">
+                        <div class="col-md-12 control button-row">
+                            <button mat-stroked-button color="primary" type="button" (click)="onNoClick();">
+                                <i class="fas fa-ban fa-lg"></i> Cancelar
+                            </button>
+                            <button *ngIf="actionBtn=='create'" mat-flat-button color="primary" type="submit" (click)="setGroup();">
+                                <i class="fas fa-save fa-lg"></i> Guardar
+                            </button>
+                            <button *ngIf="actionBtn=='update'" mat-flat-button color="primary" type="submit" (click)="updateGroup(id);">
+                                <i class="fas fa-save fa-lg"></i> Editar
+                            </button>
+                        </div>
+                    </div>
+                </mat-dialog-actions>
+            </form>
+        </mat-card>
+    </div>
+</div>
+

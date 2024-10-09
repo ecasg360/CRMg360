@@ -1,0 +1,21 @@
+.titleTypeAddress {
+    font-weight: bold;
+    font-size: 16px !important;
+}
+
+
+button .mat-button-wrapper {
+    color: #fff !important;
+}
+
+body.theme-default .mat-button.mat-accent, body.theme-default .mat-icon-button.mat-accent, body.theme-default .mat-stroked-button.mat-accent {
+    color: #fff !important;
+}
+
+
+
+/* Column Widths */
+.mat-column-status,
+.mat-column-action {
+    max-width: 124px;
+}

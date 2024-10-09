@@ -1,0 +1,156 @@
+<div mat-dialog-title>
+  <table>
+      <tr>
+          <td>
+             Checklist
+          </td>
+          <td class="end-xs">
+              <mat-icon aria-hidden="false" class="cursor-pointer" (click)="dialogRef.close(null)">close</mat-icon>
+          </td>
+      </tr>
+  </table>
+</div>
+<form [formGroup]="checklistForm" class="p-4 w-100-p">
+  <div class="row">
+    <div class="col-xs-12">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+  </div>
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+              <mat-form-field appearance="outline">
+                  <mat-label>{{'general.name'|translate}}(s)&nbsp;<span class="red-required">*</span></mat-label>
+                  <input matInput placeholder="{{'general.name'|translate}}(s)" formControlName="name">
+                  <mat-error *ngIf="f.name?.errors?.required">
+                      {{'general.required'|translate}}
+                  </mat-error>
+              </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'general.lastName'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{'general.lastName'|translate}}" formControlName="lastName">
+                    <mat-error *ngIf="f.lastName?.errors?.required">
+                        {{'general.required'|translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+              <mat-form-field appearance="outline">
+                  <mat-label>{{'general.phone'|translate}}(s)&nbsp;<span class="red-required">*</span></mat-label>
+                  <input matInput placeholder="{{'general.phone'|translate}}(s)" formControlName="phone">
+                  <mat-error *ngIf="f.phone?.errors?.required">
+                      {{'general.required'|translate}}
+                  </mat-error>
+              </mat-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+              <mat-form-field appearance="outline">
+                  <mat-label>{{'general.email'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                  <input matInput placeholder="{{'general.email'|translate}}" formControlName="email">
+                  <mat-error *ngIf="f.email?.errors?.required">
+                      {{'general.required'|translate}}
+                  </mat-error>
+              </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'general.terms'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                    <textarea matInput placeholder="{{'general.terms'|translate}}" formControlName="terms"></textarea>
+                    <mat-error *ngIf="f.terms?.errors?.required">
+                        {{'general.required'|translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <mat-radio-group name="contactType" [value]="contactType">
+                    <mat-radio-button
+                        name="contactType"
+                        id="llamada"
+                        class="my-16 mx-8"
+                        #chkLlamada
+                        (click)="changeFilter(chkLlamada)"
+                        value="Llamada"
+                        [checked]="callChecked"
+                    >
+                      {{ 'general.call' | translate }}
+                    </mat-radio-button>
+                    <mat-radio-button
+                        name="contactType"
+                        id="email"
+                        class="my-16 mx-8"
+                        #chkEmail
+                        (click)="changeFilter(chkEmail)"
+                        value="Email"
+                        [checked]="!callChecked"
+                    >
+                        {{ 'general.email' | translate }}
+                    </mat-radio-button>
+                    <mat-error *ngIf="f.contactType?.errors?.required">
+                        {{ 'general.required' | translate }}
+                    </mat-error>
+                </mat-radio-group>
+            </div>
+            <div class="col-xs-12 col-sm-6" style="margin-top: 2%;">
+                <mat-slide-toggle name="deal" formControlName="deal" class="mr-24" aria-label="Deal">
+                    Deal
+                </mat-slide-toggle>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'general.date'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput [matDatepicker]="datepicker" (dateChange)="dateChangeEvent($event)"
+                        placeholder="{{ 'formField.messages.selectDate' | translate }}" formControlName="dateContact">
+                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker></mat-datepicker>
+                    <mat-error *ngIf="f.dateContact?.errors?.required">
+                        {{ 'validations.errors.dateRequired' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'general.by'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{'general.by'|translate}}" formControlName="by">
+                    <mat-error *ngIf="f.by?.errors?.required">
+                        {{'general.required'|translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="row">
+    <div class="col-xs-4">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-8 text-right">
+        <button mat-stroked-button color="primary" type="button" (click)="dialogRef.close(null)">
+            <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+        </button>&nbsp;
+        <button mat-flat-button color="primary" [disabled]="isWorking" (click)="save()">
+            <mat-icon>save</mat-icon> 
+            {{action}}
+        </button> &nbsp;
+    </div>
+  </mat-dialog-actions>
+</form>

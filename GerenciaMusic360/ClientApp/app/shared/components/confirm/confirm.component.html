@@ -1,0 +1,16 @@
+﻿<h3 mat-dialog-title>{{title}}</h3>
+
+<mat-dialog-content>
+    <h5 class="mat-title">{{confirmText}}</h5>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <div class="w-100-p text-right">
+        <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+            <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+        </button>&nbsp;
+        <button mat-flat-button color="primary" type="button" (click)="confirm()">
+            <mat-icon *ngIf="confirmActionIcon">{{confirmActionIcon}}</mat-icon>
+            {{confirmActionText}}
+        </button>
+    </div>
+</div>

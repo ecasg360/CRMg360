@@ -1,0 +1,99 @@
+<div [formGroup]="campainPlanForm">
+  <h1 mat-dialog-title>{{'general.campainPlan' | translate }}</h1>
+  <div mat-dialog-content class="p-8">
+    <div class="row">
+      <div class="col-xs-12">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+          <input matInput formControlName="name" placeholder="{{'formField.messages.enterName' | translate}}">
+          <mat-error *ngIf="f.name?.errors?.required">
+            {{ 'validations.errors.nameRequired' | translate }}
+          </mat-error>
+          <mat-error *ngIf="f.name?.errors?.minLength">
+            {{ 'validations.errors.fieldMinLength' | translate:{minLength:3} }}
+          </mat-error>
+          <mat-error *ngIf="f.name?.errors?.maxLength">
+            {{ 'validations.errors.fieldMaxLength' | translate:{maxLength:250} }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            [min]="initDate"
+            [max]="endDate"
+            placeholder="{{ 'general.expirationDate' | translate }}"
+            formControlName="estimatedDateVerificationString"
+          >
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-error *ngIf="f.estimatedDateVerificationString?.errors?.required">
+            {{ 'valiadtions.errors.expirationDateRequired' | translate }}&nbsp;<span class="red-required">*</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-6">
+        <mat-checkbox formControlName="required">{{ 'general.isRequired' | translate }}
+        </mat-checkbox>
+        <mat-error *ngIf="f.required?.errors?.required">
+          {{ 'validations.errors.fieldRequired' | translate }}&nbsp;<span class="red-required">*</span>
+        </mat-error>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <mat-form-field appearance="outline">
+          <mat-chip-list #chipList aria-label="Members selection *">
+            <mat-chip *ngFor="let user of selectedUsersList" [selectable]="selectable" [removable]="removable"
+              (removed)="remove(user.id)">
+              {{user.fullName}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="{{'general.addUser' | translate}}" #usersInput [formControl]="userCtrl" [matAutocomplete]="auto"
+              [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let user of filteredUsers | async" [value]="user.fullName" [id]="user.id">
+              {{user.fullName}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="f.selectedUsers?.errors?.required">
+            {{ 'validations.errors.atLeastMember' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'general.notes' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+          <textarea matInput placeholder="{{ 'general.notes' | translate}}" rows="5" formControlName="notes"></textarea>
+          <mat-error *ngIf="f.notes?.errors?.minLength">
+            {{ 'validations.errors.fieldMinLength' | translate:{minLength:3} }}
+          </mat-error>
+          <mat-error *ngIf="f.notes?.errors?.maxLength">
+            {{ 'validations.errors.fieldMaxLength' | translate:{maxLength:250} }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="row">
+    <div class="col-xs-4">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-8 text-right">
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon>&nbsp;{{ 'general.cancel' | translate}}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" (click)="setTaskData()" [disabled]="!campainPlanForm.valid || isWorking">
+        {{ 'general.save' | translate}}&nbsp;<mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

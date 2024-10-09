@@ -1,0 +1,37 @@
+<h3 mat-dialog-title>{{titleAction}}</h3>
+<form class="p-4 w-100-p" [formGroup]="form">
+  <mat-dialog-content>
+    
+    <hr>
+    <mat-form-field appearance="outline" class="w-100-p">
+      <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+      <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}" formControlName="name" required>
+      <mat-error *ngIf="f.name?.errors?.required">
+        {{ 'validations.errors.nameRequired' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100-p">
+      <mat-label>{{ 'general.description' | translate }}</mat-label>
+      <textarea matInput placeholder="{{ 'formField.messages.enterDescription' | translate }}" rows="4"
+        formControlName="description"></textarea>
+      <mat-error *ngIf="f.description?.errors?.maxLength">
+        {{ 'validations.errors.fieldMaxLength' | translate:{maxLength:150} }}
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="w-40-p text-right">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="w-60-p text-right">
+      <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="set()">
+        <mat-icon>save</mat-icon> {{action}}
+      </button> &nbsp;
+    </div>
+
+  </mat-dialog-actions>
+</form>

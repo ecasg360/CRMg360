@@ -1,0 +1,10 @@
+.latestalbumthumb {
+    overflow: hidden;
+    background-image: url('/assets/images/albums/defaultAlbum.jpg');
+    background-size: cover;
+    background-position: center center;
+}
+
+.latestalbumthumb:hover {
+    border: 5px solid #ea5252;
+}

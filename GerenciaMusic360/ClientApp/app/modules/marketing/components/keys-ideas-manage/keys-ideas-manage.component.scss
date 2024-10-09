@@ -1,0 +1,41 @@
+.social-container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+}
+
+.social-item {
+  cursor: pointer;
+  float: left;
+}
+
+/*CHART*/
+.donut-container {
+  width: 40px;
+  height: 40px;
+  float: left;
+  -webkit-border-radius: 75px;
+  -moz-border-radius: 75px;
+  border-radius: 75px;
+  margin-right: 12px;
+}
+
+.donut-inner {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: 5px;
+  left: 5px;
+  background: #FFF;
+  -webkit-border-radius: 65px;
+  -moz-border-radius: 65px;
+  border-radius: 65px;
+}
+
+.donut-label {
+  line-height: 28px;
+  text-align: center;
+  font-size: 11px;
+}
+
+/* END CHART*/

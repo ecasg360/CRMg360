@@ -1,0 +1,148 @@
+<div style="overflow-y: auto; overflow-x:hidden; height: 50rem;">
+
+  <div [formGroup]="reportForm" >
+    <div class="row">
+      <div class="col-xs-12 m-6">
+        <h2>Daily Report</h2>
+
+        <h3>{{model.userName}}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12" style="width: 100%;"  >
+        <mat-form-field appearance="outline">
+          <mat-label>{{'general.date'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepicker"
+            
+            
+            placeholder="{{ 'formField.messages.selectDate' | translate }}"
+            formControlName="theDate"
+          >
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker></mat-datepicker>
+          <mat-error *ngIf="f.theDate?.errors?.required">
+              {{ 'validations.errors.dateRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="p-8">
+          <mat-label>daily Report&nbsp;<span class="red-required">*</span></mat-label>
+          <textarea
+            matInput
+            placeholder="dayli report"
+            rows="6"
+            formControlName="report"
+          ></textarea>
+          <div style="margin-left: 1rem;">
+            <button
+              (click)="isEmojiPickerVisible = !isEmojiPickerVisible;"
+              class="btn btn-primary"
+            >
+              😀
+            </button>
+          </div>
+        </mat-form-field>
+      </div>
+      <!-- Emojiss module-->
+      <div
+        *ngIf="isEmojiPickerVisible"
+        class="absolute"
+        style="margin-left: 1rem;"
+      >
+        <div style="margin-left: 1rem;">
+          <div>
+            <button
+              (click)="closeEmojis()"
+              class="btn btn-primary"
+            >
+              Close
+            </button>
+          </div>
+          <emoji-mart (emojiClick)="addEmoji($event)" title="Elige tu emoji…" emoji="point_up" ></emoji-mart>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-12 px-8">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="saveReport()"
+          type="button"
+          
+        >
+          Send&nbsp;<mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <h2 style="margin-left: 1rem;">Reports</h2>
+    <div class="col-xs-12" style="width: 100%;">
+      <div
+        class="row p-8 m-4"
+        *ngFor="let report of reportsAdded"
+        style="border-bottom: 2px solid #000;"
+      >
+        <div class="px-6" style="width: 80%;">
+          <div >
+            <div style="width: 100%;display: flex; flex-direction: row;">
+              <div style="width: 60%;">
+                {{report.description | slice:0:20 }}
+              </div>
+              <div style="width: 20%;">
+                {{report.initialDate  | date:'shortDate'}}
+              </div>
+              <div style="width: 20%; display: flex;">
+                <button mat-mini-fab
+                color="primary"
+                (click)="getReport(report.initialDate)"
+                style="margin-left: 1rem;"
+                >
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-mini-fab
+                color="primary"
+                (click)="downloadPDF(report.initialDate)"
+                style="margin-left: 1rem;"
+                >
+                <mat-icon>arrow_downward</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 2rem;">
+    <div class="col" style="width: 100%;">
+      <div class="end-xs" style="margin-right: 5rem;">
+        <button
+          mat-stroked-button
+          color="primary"
+          type="button"
+          (click)="dialogRef.close(null)"
+        >
+          <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+        </button>&nbsp;
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          (click)="saveMetas()"
+          *ngIf="reportForm.valid && report.length > 0"
+        >
+          Save&nbsp;<mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

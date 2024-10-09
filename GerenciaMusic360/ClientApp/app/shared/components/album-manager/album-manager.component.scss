@@ -1,0 +1,36 @@
+
+.mat-list-item-content {
+    display: block;
+    height: 22px !important;
+    -webkit-tap-highlight-color: transparent;
+    width: 100%;
+    padding: 0;
+}
+.latestalbumthumb img
+{
+    height:75%;
+}
+.listTrack{
+    overflow-y:auto;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: red;
+    opacity:.8;
+    z-index: 10;
+}
+
+.boxShadown:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2)!important;
+}
+.titleAlbum{
+    font-weight:bold!important;
+}
+
+.imageAlbum{
+    width: 60%;
+}

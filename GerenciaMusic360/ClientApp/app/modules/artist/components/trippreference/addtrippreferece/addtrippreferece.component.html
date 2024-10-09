@@ -1,0 +1,46 @@
+
+<div class="page-layout carded fullwidth">
+    <div class="w-50-p">
+        <h3 mat-dialog-title>{{actionLabel}} {{'general.trippreference'|translate}}</h3>
+    </div>
+    <div class="mat-elevation-z8">
+        <mat-card>
+            <form [formGroup]="addTrippreferenceForm">
+                <mat-dialog-content>
+                    <div fxLayout="row wrap" class="w-100-p">
+                        <mat-form-field appearance="outline" fxFlex="100" class="p-8">
+                            <mat-label>{{'general.name'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                            <input matInput placeholder="{{'general.name'|translate}}" formControlName="name" required>
+                            <mat-error *ngIf="f.name?.errors?.required">
+                                {{'general.required'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row wrap" class="w-100-p">
+                        <mat-form-field appearance="outline" fxFlex="100" class="p-8">
+                            <mat-label>{{'general.description'|translate}}</mat-label>
+                            <textarea matInput placeholder="{{'general.description'|translate}}" rows="4" formControlName="description"></textarea>
+                        </mat-form-field>
+                    </div>
+                </mat-dialog-content>
+                <mat-dialog-actions class="pull-right">
+                    <div class="row end-xs">
+                        <div class="col-md-12 control button-row">
+                            <button mat-stroked-button color="primary" type="button" (click)="onNoClick();">
+                                <mat-icon>cancel</mat-icon> {{'general.cancel'|translate}}
+                            </button>
+                            <button *ngIf="actionBtn=='create'" mat-flat-button color="primary" type="submit" (click)="setTrippreference();">
+                                <mat-icon>save</mat-icon>{{'general.save'|translate}}
+                            </button>
+                            <button *ngIf="actionBtn=='update'" mat-flat-button color="primary" type="submit" (click)="updateTrippreference(id);">
+                                <mat-icon>edit</mat-icon> {{'general.edit'|translate}}
+                            </button>
+                        </div>
+                    </div>
+                </mat-dialog-actions>
+            </form>
+
+        </mat-card>
+    </div>
+
+</div>

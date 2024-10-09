@@ -1,0 +1,81 @@
+<div class="page-layout carded fullwidth">
+    <!-- HEADER -->
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h4>{{ 'settings.catalogTypes.title' | translate }}</h4>
+        </div>
+        <div class="w-50-p text-right pr-8">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <span class="secondary-text">{{ 'settings.catalogTypes.title' | translate }}</span>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content m-24 p-4 mat-card">
+
+        <div class="row">
+            <div class="col-xs-2">
+                <button mat-flat-button color="primary" *ngIf="perm.Type.Post" class="my-16 mx-8" (click)="showModalForm()">
+                    <mat-icon>add</mat-icon>&nbsp;{{ 'general.new' | translate }}
+                </button>
+            </div>
+            <div class="col-xs-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'general.CatalogType' | translate }}</mat-label>
+                    <mat-select (selectionChange)="SelectionChangeCatalogType($event.value)" required placeholder="{{ 'formField.messages.selectDocumentType'  | translate }}">
+                        <mat-option *ngFor="let type of typeNames" [value]="type.value">
+                            {{type.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+                <mat-form-field appearance="outline" *ngIf="isDataAvailable">
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="w-100-p" matSort>
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'general.name' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'general.status' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-slide-toggle [color]="accent" [checked]="row.statusRecordId==1"
+                                          (change)="updateStatus(row.id, row.statusRecordId)">
+                        </mat-slide-toggle>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'general.actions' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-icon matTooltip="{{'general.edit'|translate}}" *ngIf="perm.Type.Put" (click)="showModalForm(row.id)"
+                                  class="cursor-pointer s-32 mr-4 blue-900-fg">create</mat-icon>
+
+                        <mat-icon matTooltip="{{'general.delete'|translate}}" *ngIf="perm.Type.Delete" (click)="confirmDelete(row.id, row.name)"
+                                  class="cursor-pointer s-32 mr-4 blue-900-fg">delete_outline</mat-icon>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            <div *ngIf="!isDataAvailable">
+                <h1 class="m-8 mat-display-1 text-center">{{ 'general.errors.noData' | translate }}</h1>
+            </div>
+        </div>
+    </div>
+    <!-- / CONTENT -->
+</div>

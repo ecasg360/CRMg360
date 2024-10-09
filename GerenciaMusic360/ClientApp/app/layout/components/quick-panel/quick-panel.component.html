@@ -1,0 +1,67 @@
+<div fxLayout="column" fxFlex fusePerfectScrollbar>
+    <mat-spinner class="mx-auto my-12" diameter="40" *ngIf="isWorking"></mat-spinner>
+
+    <ng-container *ngIf="notificationsList.length > 0; then notificationsContainer; else errorContainer"></ng-container>
+
+    <ng-template #notificationsContainer>
+        <mat-list class="date" cdkFocusRegionStart>
+            <div class="secondary-text mat-display-1 mb-0 p-16">
+                <div class="mb-12">
+                    {{date | date:'EEEE'}}
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <span> {{date | date:'d'}}</span>
+                    <span class="mat-subheading-1">th</span>
+                    <span> {{date | date:'MMMM'}}</span>
+                </div>
+            </div>
+        </mat-list>
+
+        <mat-divider cdkFocusRegionEnd></mat-divider>
+        <div class="notification-container">
+            <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="p-8"
+                *ngFor="let event of notificationsList; trackBy:trackFun">
+                <div class="fuse-widget-front light-green-100-bg">
+                    <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                        {{event.created | date:'short'}}
+                        <a class="close-notification" (click)="deleteNotification(event.id)">
+                            <strong>X</strong>
+                        </a>
+                    </div>
+                    <div class="p-8 text-justify" fxLayout="column" fxLayoutAlign="center center">
+                        {{event.message}}
+                    </div>
+                    <div *ngIf="event.taskId" class="p-8 text-center">
+                        <button
+                            mat-flat-button
+                            color="primary"
+                            type="submit"
+                            (click)="goToProject(event.taskId)"
+                        >
+                            Ir al proyecto&nbsp;<mat-icon>keyboard_arrow_right</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </fuse-widget>
+        </div>
+
+        <mat-divider></mat-divider>
+    </ng-template>
+    <ng-template #errorContainer>
+        <mat-list class="date" cdkFocusRegionStart>
+
+            <h3 matSubheader cdkFocusInit>
+                <span>{{'general.today' | translate }}</span>
+            </h3>
+
+            <div class="secondary-text mat-display-1 mb-0 p-16">
+                <div class="mb-12">
+                    {{date | date:'short'}}
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <p class="title">{{'errors.notificationError' | translate }}</p>
+                </div>
+            </div>
+        </mat-list>
+    </ng-template>
+</div>

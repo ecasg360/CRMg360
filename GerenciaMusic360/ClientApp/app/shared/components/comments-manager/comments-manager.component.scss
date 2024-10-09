@@ -1,0 +1,214 @@
+@import "ClientApp/@fuse/scss/fuse";
+
+app-comments-manager {
+    #timeline {
+        .reply {
+            /*textarea {
+                width: 100% !important;
+                min-height: 72px;
+                padding: 8px;
+                margin-bottom: 8px;
+                font-size: 13px;
+                border: 1px solid 666666;
+                border-radius: 4px;
+            }*/
+        }
+
+        .manageScroll {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            border-bottom: 1px solid #666666;
+            margin-bottom: 16px;
+            /*height: 400px !important;
+            min-height: 400px !important;*/
+            max-height: 400px !important;
+        }
+
+        .timeline-item {
+            margin-bottom: 32px;
+            overflow: hidden;
+            border-radius: 4px;
+            @include mat-elevation(2);
+            padding: 16px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .comment-count {
+
+                .col-xs {
+                    margin-bottom: 16px;
+                    cursor: pointer;
+
+                    mat-icon {
+                        margin-left: 8px;
+                    }
+                }
+            }
+
+            .comment {
+                margin-bottom: 24px !important;
+
+                .col-xs {
+                    .username {
+                        font-weight: 600;
+                        margin-right: 4px;
+                    }
+
+                    .date {
+                        font-style: italic;
+                    }
+
+                    .message {
+                        text-align: justify;
+                        margin: 6px 0;
+
+                        .user-comment {
+                            font-weight: bold;
+                            color: #0d47a1;
+                        }
+                    }
+
+                    .reply-message {
+                        border-left: 1px solid #0d47a1;
+                        padding: 16px;
+                    }
+
+                    .actions {
+                        margin-top: 8px;
+
+                        .reply-button {
+                            margin-right: 16px;
+                            cursor: pointer;
+                        }
+
+                        .report-button {
+                            margin: 0;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+
+        .timeline-sidebar {
+            padding-left: 32px;
+
+            @include media-breakpoint('lt-md') {
+                padding: 32px 0 0 0;
+            }
+
+            .latest-activity {
+
+                .content {
+
+                    .activities {
+
+                        .activity {
+                            padding: 16px 0;
+
+                            .avatar {
+                                margin-right: 16px;
+                            }
+
+                            .username {
+                                font-weight: 600;
+                            }
+
+                            .message {
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Profile boxes
+    .profile-box {
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 16px;
+        @include mat-elevation(2);
+
+        header {
+            padding: 16px;
+
+            .title {
+                font-size: 17px;
+            }
+
+            .more {
+                cursor: pointer;
+            }
+        }
+
+        .content {
+            padding: 16px;
+        }
+
+        footer {
+            padding: 8px;
+            border-top: 1px solid;
+        }
+
+        &.info-box {
+
+            .info-line {
+                margin-bottom: 24px;
+
+                .title {
+                    font-size: 15px;
+                    font-weight: 600;
+                    padding-bottom: 4px;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+}
+
+//#region mention zone
+mention-list {
+    z-index: 100000;
+    background-color: rgb(0, 33, 71) !important;
+    cursor: pointer;
+    max-height: 130px;
+}
+
+mention-list ul {
+    max-height: 130px !important;
+    list-style-type: none !important;
+    margin: 0;
+    padding: 0;
+}
+
+mention-list ul li {
+    margin: 0 !important;
+    padding: 5px;
+}
+
+mention-list ul li.active {
+    background-color: #044a9f !important;
+}
+
+mention-list ul li a {
+    color: #f6f6f6 !important;
+    font-weight: bold;
+    padding: 2px;
+    font-size: 15px !important;
+}
+
+mention-list ul li a:hover,
+mention-list ul li.active a:hover {
+    text-decoration: none !important;
+    padding: 3px !important;
+}
+
+//#endregion

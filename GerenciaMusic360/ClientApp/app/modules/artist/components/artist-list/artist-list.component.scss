@@ -1,0 +1,16 @@
+ul {
+  list-style: none;
+  padding: 0;
+  line-height: 2;
+}
+
+.custom-card-header {
+  ::ng-deep .mat-card-header-text {
+    margin: 0 !important;
+    display: none;
+  }
+}
+
+// .actionCard button mat-icon {
+//   color: #ffffff !important;
+// }

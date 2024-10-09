@@ -1,0 +1,206 @@
+<form [formGroup]="dataProjectFilter">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+              <!-- Filter -->
+                <div class="col-xs-7" id="formFilter">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ 'report.general.status' | translate }}</mat-label>
+                                <mat-select placeholder="{{ 'report.general.form.selectStatus' | translate }}"
+                                    formControlName="statusId">
+                                    <mat-option *ngFor="let status of listStatus" [value]="status.value">
+                                        {{status.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-xs-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ 'report.general.artist' | translate }}</mat-label>
+                                <mat-select placeholder="{{ 'report.general.form.selectArtist' | translate }}"
+                                    formControlName="artistId">
+                                    <mat-option *ngFor="let artist of listArtists" [value]="artist.value">
+                                        {{artist.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-xs-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ 'report.general.type' | translate }}</mat-label>
+                                <mat-select placeholder="{{ 'report.general.form.selectTypes' | translate }}"
+                                    formControlName="typeId">
+                                    <mat-option *ngFor="let type of listTypes" [value]="type.value">
+                                        {{type.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                          <mat-form-field appearance="outline">
+                              <mat-label>Date</mat-label>
+                              <input matInput [matDatepicker]="date"
+                                  placeholder="{{ 'report.general.form.selectDate' | translate }}"
+                                  formControlName="date">
+                              <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                              <mat-datepicker #date></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-xs-6">
+                          <mat-form-field appearance="outline">
+                              <mat-label>Expire Date</mat-label>
+                              <input matInput [matDatepicker]="expireDate"
+                                  placeholder="{{ 'report.general.form.selectExpireDate' | translate }}"
+                                  formControlName="expireDate">
+                              <mat-datepicker-toggle matSuffix [for]="expireDate"></mat-datepicker-toggle>
+                              <mat-datepicker #expireDate></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+              <!-- Filter Slides -->
+                <div class="col-xs-3 text-center" *ngIf="!isValidSlider" >
+                    <mat-spinner  diameter="25" style="margin:0 auto;"></mat-spinner>
+                </div>
+                <div class="col-xs-3" id="sliderFilter" *ngIf="isValidSlider">
+                  <h4>{{ 'report.general.budget' | translate }}</h4>
+                  <ng5-slider 
+                    [(value)]="minBudget" 
+                    [(highValue)]="maxBudget" 
+                    [options]="optionsBudget"
+                    (highValueChange)="changeRangeBudget()">
+                  </ng5-slider>
+                  <h4>{{ 'report.general.spent' | translate }}</h4>
+                  <ng5-slider 
+                    [(value)]="minSpent" 
+                    [(highValue)]="maxSpent" 
+                    [options]="optionsSpent"
+                    (highValueChange)="changeRangeSpent()">
+                  </ng5-slider>
+                </div>
+              <!-- Button Generate -->
+                <div class="col-xs-2" id="buttonFilter">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button mat-flat-button color="primary" [disabled]="isWorking"
+                                (click)="searchByFilter()">
+                                <mat-icon>search</mat-icon> {{ 'report.general.applyFilter' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-12">
+                    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row" *ngIf="isDataAvailable">
+  <div class="col-xs-3">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+    </mat-form-field>
+  </div>
+  <!-- <div class="col-xs-2">
+      <button mat-flat-button color="primary" [disabled]="isWorking"
+          (click)="searchAll()">
+          <mat-icon>search</mat-icon> Search All
+      </button>
+  </div> -->
+</div>
+<div class="row" *ngIf="isDataAvailable">
+  <table mat-table [dataSource]="dataSource" class="w-100-p" matSort>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'general.name' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <div class="divProjectName">
+          <h5>{{row.name}}</h5>
+          <div class="progress-bar progress-bar-{{row.statusProjectName}}"></div>
+        </div>
+      </mat-cell>
+    </ng-container>
+    <!-- projectTypeName Column -->
+    <ng-container matColumnDef="projectTypeName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.projectTypeName' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ 'general.' + row.projectTypeName.replace(' ','').replace(' ','') | translate }} </mat-cell>
+    </ng-container>
+    <!-- StartDate Column -->
+    <ng-container matColumnDef="artist">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.artist' | translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.artistName}} </mat-cell>
+    </ng-container>
+    <!-- startDate Column -->
+    <ng-container matColumnDef="startDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.startDate' | translate }} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.initialDate | date}} </mat-cell>
+      </ng-container>
+    <!-- endDate Column -->
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.endDate' | translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.endDate | date}} </mat-cell>
+    </ng-container>
+    <!-- Total Budget Column -->
+    <ng-container matColumnDef="totalBudget">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'general.totalBudget' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.totalBudget}} </mat-cell>
+    </ng-container>
+    <!-- Spent Column -->
+    <ng-container matColumnDef="spent">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'general.spent' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.spent}} </mat-cell>
+    </ng-container>
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'general.status' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <p *ngIf="row.statusProjectId > 0" class="status-{{row.statusProjectName}} p-4">
+          {{ 'general.' + row.statusProjectName | translate }}
+        </p>
+      </mat-cell>
+    </ng-container>
+    <!-- Action Column -->
+    <!-- <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'general.action' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+
+        <mat-icon class="cursor-pointer s-32 mr-4 blue-900-fg"
+          matTooltip="{{'general.downloadLabelCopy'|translate}}" (click)="downloadReport(row.id,row.name)">cloud_download
+        </mat-icon>
+
+      </mat-cell>
+    </ng-container> -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+  <div *ngIf="!dataSource.data">
+    <h1 class="m-8 mat-display-1 text-center">{{ 'general.errors.noData' | translate }}</h1>
+  </div>
+</div>
+<div class="row" *ngIf="isDataAvailable">
+  <mat-icon class="cursor-pointer s-32 mr-4 blue-900-fg"
+    matTooltip="{{'general.download'|translate}}" (click)="downloadReportProjects()">cloud_download
+  </mat-icon>
+</div>

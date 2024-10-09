@@ -1,0 +1,76 @@
+<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{titleAction}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false">access_time</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<form class="p-4 w-100-p" [formGroup]="form">
+  <mat-dialog-content>    
+    <hr>
+    <!-- Name Field -->
+    <mat-form-field appearance="outline" class="w-100-p">
+      <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+      <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}" formControlName="name">
+    </mat-form-field>
+
+    <!-- TimeType List -->
+    <mat-form-field appearance="outline" class="w-100-p">
+      <mat-label>{{ 'general.timeType' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+      <mat-select formControlName="timeTypeId" placeholder="{{ 'formField.messages.selectTimeType'  | translate }}">
+        <mat-option *ngFor="let item of timeTypes" [value]="item.value">
+          {{item.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- With Range -->
+    <section _ngcontent-khc-c22="">
+      <mat-checkbox class="w-40-p" formControlName="withRange" [checked]="isRange" (change)="showInputRange($event)">
+          {{ 'general.withRange' | translate }}
+      </mat-checkbox>
+
+      <!-- Initial Value Field -->
+      <mat-form-field appearance="outline" class="w-100-p">
+        <mat-label>{{ 'general.initialValue' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+        <input matInput placeholder="{{ 'formField.messages.enterInitialValue' | translate }}" formControlName="initialValue" type="number">
+      </mat-form-field>
+
+      <!-- Final Value Field -->
+      <mat-form-field appearance="outline" class="w-100-p" *ngIf="isRange">
+        <mat-label>{{ 'general.finalValue' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'formField.messages.enterFinalValue' | translate }}" formControlName="finalValue" type="number">
+      </mat-form-field>
+    </section>
+
+    <!-- Module List -->
+    <mat-form-field appearance="outline" class="w-100-p">
+        <mat-label>{{ 'general.module' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+        <mat-select formControlName="moduleId" placeholder="{{ 'formField.messages.selectModule'  | translate }}">
+          <mat-option *ngFor="let item of modules" [value]="item.value">
+            {{item.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="w-40-p text-right">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="w-60-p text-right">
+      <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="set()">
+        <mat-icon>save</mat-icon> {{action}}
+      </button> &nbsp;
+    </div> 
+  </mat-dialog-actions>
+</form>

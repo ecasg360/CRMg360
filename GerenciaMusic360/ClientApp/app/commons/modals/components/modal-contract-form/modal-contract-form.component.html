@@ -1,0 +1,37 @@
+<form [formGroup]="form" class="p-4 w-100-p">
+  <div mat-dialog-title>
+    <div class="row">
+      <div class="col-xs-11">{{ 'general.addContract' | translate }}</div>
+      <div class="col-xs-1">
+        <mat-icon aria-hidden="false" aria-label="subject">subject</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <div class="row row-contract-types">
+      <div class="col-xs-2" *ngFor="let contractType of contractTypes">
+        <div class="cursor-pointer {{contractType.id == contractTypeSelected.id ? 'active' : ''}}"
+          (click)="selectContractType(contractType)">
+          <img width="120" src="assets/images/contract-type/preview.jpg"
+            onerror="this.src='assets/images/backgrounds/dark-material-bg.jpg'">
+          <small>{{contractType.name}}</small>
+        </div>
+      </div>
+    </div>
+    <app-contract-form (formReady)="bindForm($event)" (formWorking)="manageFormWork($event)" [contract]="contract">
+    </app-contract-form>
+  </div>
+  <div mat-dialog-actions class="row">
+    <div class="col-xs-4">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-8 text-right">
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!form.valid || isWorking" (click)="setContract()">
+        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+      </button>
+    </div>
+  </div>
+</form>

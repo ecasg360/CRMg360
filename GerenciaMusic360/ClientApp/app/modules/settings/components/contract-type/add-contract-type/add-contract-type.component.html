@@ -1,0 +1,48 @@
+<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{titleAction}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false">file_copy</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<form class="p-4 w-100-p" [formGroup]="form">
+    <mat-dialog-content>
+        <hr>
+        <div class="w-50-p m-x-auto">
+            <app-upload-image [image]="croppedImage" errorImage="assets/images/logos/360-circle.png" (selectImage)="selectImage($event)"></app-upload-image>
+        </div>
+        <br>
+        <!-- Name Field -->
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+            <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}" formControlName="name">
+        </mat-form-field>
+        <!-- Local Company List -->
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.localCompany' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+            <mat-select formControlName="localCompanyId" placeholder="{{ 'formField.messages.selectCompany'  | translate }}">
+                <mat-option *ngFor="let item of localCompanies" [value]="item.value">
+                    {{item.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="w-40-p text-right">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="w-60-p text-right">
+            <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="set()">
+                <mat-icon>save</mat-icon> {{action}}
+            </button> &nbsp;
+        </div>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,98 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'settings.menu.title' | translate }}</h4>
+    </div>
+    <div class="w-50-p text-right pr-8">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'settings.menu.title' | translate }}</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content  m-24 p-4 mat-card">
+    <button mat-flat-button color="primary" class="my-16 mx-8" *ngIf="perm.Permission.AddAllPermission" (click)="showModalForm()">
+      <mat-icon>add</mat-icon>&nbsp;{{ 'general.new' | translate }}
+    </button>
+
+    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+
+    <br/>
+    <mat-form-field class="w-100-p m-4">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" class="w-100-p" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.title' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
+        </ng-container>
+        
+        <!-- <ng-container matColumnDef="translate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.translate' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.translate}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="icon">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.icon' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.icon}} </mat-cell>
+        </ng-container> -->
+
+        <ng-container matColumnDef="url">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.url' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.url}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.status' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-slide-toggle [color]="accent" [checked]="row.statusRecordId==1"
+              (change)="updateStatus(row.id, row.statusRecordId)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.edit' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="showModalForm(row.id)">
+              <mat-icon>create</mat-icon>
+            </button>
+
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.delete' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="confirmDelete(row.id, row.name)">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+  <!-- / CONTENT -->
+</div>

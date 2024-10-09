@@ -1,0 +1,496 @@
+﻿/*start project*/
+$color-project: #044a9f;
+$color-contract: #009688;
+$color-company: #161f2b;
+$color-marketing: #03A9F4;
+$color-general: #00BCD4;
+$color-artist: #3F51B5;
+$color-publishing: #3F51B5;
+$color-security: #2196F3;
+$color-field: #2196F3;
+
+.mat-dialog-container {
+    position: relative;
+    padding: 50px 24px 24px 24px !important;
+
+    .mat-dialog-title {
+        display: block;
+        padding: 10px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: 0;
+    }
+
+    /*#region Project*/
+    app-add-project,
+    app-project-detail {
+        .mat-dialog-title {
+            background-color: $color-project;
+            color: white;
+        }
+    }
+
+    app-project-budget-modal {
+        .mat-dialog-title {
+            background-color: $color-project;
+            color: white;
+        }
+    }
+
+    app-add-album-release {
+        .mat-dialog-title {
+            background-color: $color-project;
+            color: white;
+        }
+    }
+
+    project-contact-form {
+        .mat-dialog-title {
+            background-color: $color-project;
+            color: white;
+        }
+    }
+
+    app-add-task-info {
+        .mat-dialog-title {
+            background-color: $color-project;
+            color: white;
+        }
+    }
+
+    /*#endregion Project*/
+    /*#region company*/
+    app-add-company {
+        .mat-dialog-title {
+            background-color: $color-company;
+            color: white;
+        }
+    }
+
+    /*#endregion company*/
+    /*#region contract*/
+
+    app-add-contract-terms,
+    app-add-status-contract,
+    app-modal-contract-form {
+        .mat-dialog-title {
+            background-color: $color-contract;
+            color: white;
+        }
+    }
+
+    app-contract-manager,
+    app-selection-contract-terms,
+    app-add-contract,
+    app-add-term-type {
+        .mat-dialog-title {
+            background-color: $color-contract;
+            color: white;
+        }
+    }
+
+    /*#endregion contract*/
+    /*#region artist*/
+    app-add-artist,
+    app-person-document-form,
+    app-add-address,
+    app-member-form {
+        .mat-dialog-title {
+            background-color: $color-artist;
+            color: white;
+        }
+    }
+
+    /*#endregion artist*/
+    /*#region general*/
+    app-add-type,
+    app-add-musical-instrument,
+    app-add-company,
+    app-add-currency,
+    app-add-location,
+    app-add-musical-genre,
+    app-add-preference,
+    app-add-role-notification,
+    app-add-time,
+    app-add-category,
+    app-add-certification-authority,
+    app-add-socialnetworktype,
+    app-add-contract-type,
+    app-add-field,
+    app-add-contact {
+        .mat-dialog-title {
+            background-color: $color-general;
+            color: white;
+        }
+    }
+
+    /*#endregion general*/
+    /*#region publishing*/
+    app-campain-form-modal {
+        .mat-dialog-title {
+            background-color: $color-marketing;
+            color: white;
+        }
+    }
+
+    /*#endregion publishing*/
+    /*#region marketing*/
+    app-add-composer {
+        .mat-dialog-title {
+            background-color: $color-publishing;
+            color: white;
+        }
+    }
+
+    /*#endregion marketing*/
+    /*#region security*/
+    app-add-role,
+    app-add-user,
+    app-add-permission {
+        .mat-dialog-title {
+            background-color: $color-security;
+            color: white;
+        }
+    }
+
+    /*#endregion security*/
+    /*#region field*/
+    app-add-field {
+        .mat-dialog-title {
+            background-color: $color-general;
+            color: white;
+        }
+    }
+
+    /*#endregion field*/
+}
+
+/*#region project*/
+app-project-list,
+app-project-work,
+app-project-contact,
+app-project-list,
+app-add-album-release,
+app-project-detail,
+app-project-list {
+    .mat-header-row {
+        background-color: $color-project !important;
+        color: white !important;
+    }
+
+    .mat-header-cell {
+        color: white !important;
+    }
+
+    button.mat-accent {
+        background-color: $color-project !important;
+    }
+
+    button.mat-accent {
+        background-color: $color-project !important;
+    }
+
+    button.mat-primary {
+        background-color: $color-project !important;
+    }
+
+    button.mat-icon-button {
+        color: $color-project !important;
+        background-color: white !important;
+    }
+
+    .header {
+        background-color: $color-project !important;
+    }
+}
+
+app-project-detail {
+    mat-card-header {
+        background-color: $color-project;
+        color:#ffffff;
+    }
+}
+
+/*#endregion project*/
+/*#region contract*/
+app-contract-list {
+    .card-link {
+        color: $color-contract !important;
+    }
+
+    .actionCard {
+        background-color: $color-contract !important;
+        padding-bottom: 4px !important;
+        border-radius: 2px;
+    }
+
+    .mat-header-row {
+        background-color: $color-contract !important;
+        color: white !important;
+    }
+
+    .mat-header-cell {
+        color: white !important;
+    }
+
+    .mat-accent {
+        background-color: $color-contract !important;
+    }
+
+    .header {
+        background-color: $color-contract !important;
+    }
+}
+
+app-contract-terms-manager,
+app-contract-list,
+app-add-contract-terms,
+app-selection-contract-terms,
+app-add-term-type,
+app-contract-manager,
+app-add-status-contract,
+app-modal-contract-form {
+
+    button.mat-accent {
+        background-color: $color-contract !important;
+    }
+
+    button.mat-primary {
+        background-color: $color-contract !important;
+    }
+
+    button.mat-icon-button {
+        color: $color-contract !important;
+        background-color: white !important;
+    }
+
+    button.mat-flat-button {
+        background-color: $color-contract !important;
+    }
+}
+
+app-selection-contract-terms {
+    mat-dialog-content {
+        button.mat-accent {
+            background-color: $color-contract !important;
+        }
+
+        button.mat-primary {
+            background-color: $color-contract !important;
+        }
+
+        button.mat-icon-button {
+            color: $color-contract !important;
+            background-color: white !important;
+        }
+
+        button .accent {
+            background-color: $color-contract !important;
+        }
+    }
+}
+
+app-contract-manager {
+
+    app-status-contract-manager,
+    app-contract-data,
+    mat-card {
+
+        mat-card-header,
+        .mat-card-header {
+            background-color: $color-contract;
+            color: white;
+        }
+    }
+}
+
+app-contract-manager {
+    .accent {
+        background-color: $color-contract !important;
+        color: white !important;
+    }
+}
+
+/*#endregion contract*/
+/*#region company*/
+app-company-manager {
+    .mat-header-row {
+        background-color: $color-company !important;
+        color: white !important;
+    }
+
+    .mat-header-cell {
+        color: white !important;
+    }
+
+    .header {
+        background-color: $color-company !important;
+    }
+}
+
+/*#endregion company*/
+/*#region artist*/
+app-artist,
+app-member-manager,
+app-address-manager,
+app-person-document-manager,
+app-album-manager,
+app-social-network-manager {
+    button.mat-primary {
+        background-color: $color-artist !important;
+    }
+
+    button.mat-accent {
+        background-color: $color-artist !important;
+    }
+
+    .mat-header-row {
+        background-color: $color-artist !important;
+        color: white !important;
+    }
+
+    .mat-header-cell {
+        color: white !important;
+    }
+
+    .header {
+        background-color: $color-artist !important;
+    }
+}
+
+/*#endregion artist*/
+/*#region general*/
+app-maintenance-type,
+app-musical-instrument,
+app-company-manager,
+app-currency,
+app-location,
+app-musical-genre,
+app-preferences,
+app-role-notification,
+app-time,
+app-category,
+app-certification-authority,
+app-social-networktype,
+app-contract-type,
+app-contact,
+app-field,
+app-profile,
+app-project-contacts-manage {
+    button.mat-primary {
+        background-color: $color-general !important;
+    }
+
+    button.mat-icon-button {
+        color: $color-general !important;
+        background-color: white !important;
+    }
+
+    button.mat-accent {
+        background-color: $color-general !important;
+    }
+
+    .mat-header-row {
+        background-color: $color-general !important;
+        color: white !important;
+    }
+
+    .mat-header-cell {
+        color: white !important;
+    }
+
+    .header {
+        background-color: $color-general !important;
+    }
+}
+
+/*#endregion general*/
+/*#region publishing*/
+app-composer {
+    button.mat-primary {
+        background-color: $color-publishing !important;
+    }
+
+    button.mat-accent {
+        background-color: $color-publishing !important;
+    }
+
+    .mat-header-row {
+        background-color: $color-publishing !important;
+        color: white !important;
+    }
+
+    .mat-header-cell {
+        color: white !important;
+    }
+
+    .header {
+        background-color: $color-publishing !important;
+    }
+
+    button.mat-icon-button {
+        color: $color-publishing !important;
+        background-color: white !important;
+    }
+}
+
+/*#endregion publishing*/
+/*#region marketing*/
+app-list {
+    .header {
+        background-color: $color-marketing !important;
+    }
+}
+
+/*#endregion marketing*/
+/*#region security*/
+app-role,
+app-user,
+app-permission {
+    button.mat-primary {
+        background-color: $color-security !important;
+    }
+
+    button.mat-icon-button {
+        color: $color-security !important;
+        background-color: white !important;
+    }
+
+    button.mat-accent {
+        background-color: $color-security !important;
+    }
+
+    .mat-header-row {
+        background-color: $color-security !important;
+        color: white !important;
+    }
+
+    .mat-header-cell {
+        color: white !important;
+    }
+
+    .header {
+        background-color: $color-security !important;
+    }
+
+    .mat-column-action {
+        button.mat-primary {
+            margin-left: 2px !important;
+            margin-right: 2px !important;
+        }
+    }
+}
+
+/*#endregion security*/
+.mat-column-action {
+    button.mat-primary {
+        margin-left: 2px !important;
+        margin-right: 2px !important;
+    }
+}
+
+.red-required {
+    color: red;
+}

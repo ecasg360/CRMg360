@@ -1,0 +1,57 @@
+
+<div class="row">
+    <div class="col-xs-12">
+      <h3 mat-dialog-title>Compositor y Productor</h3>
+    </div>
+  </div>
+
+<div class="row">
+  <div class="col-xs-2"></div>
+  <div class="col-xs-8">
+      <mat-form-field appearance="outline" class="w-100-p m-4" *ngIf="isDataAvailable">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+      </mat-form-field>
+  </div>
+  <div class="col-xs-2"></div>
+</div>
+
+<div class="row"  *ngIf="isWorking">
+    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+</div>
+
+<div class="collaborators">
+    <div class="row collaborator" *ngFor="let collaborator of collaboratorsArray">
+        <div class="col-xs-2 center">
+            <img id="{{collaborator.projectContract.id}}" class="collaborator-image" src="{{collaborator.projectContract.pictureUrl}}" alt="{{collaborator.projectContract.name}}"
+                onerror="this.src='assets/images/avatars/defaultProfile5.jpg'" />
+        </div>
+        <div class="col-xs-7">
+          <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header class="row">
+                    <mat-panel-title class="col-xs-12">
+                      <!-- <mat-icon>music_note</mat-icon> -->
+                      <span>{{collaborator.projectContract.name}} - {{collaborator.projectContract.type}}</span>
+                    </mat-panel-title>
+                    <!-- <mat-panel-description class="col-xs-3">
+                      <span>Compositor</span>
+                    </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <ul>
+                  <li *ngFor="let projectWork of collaborator.projectContract.projectWorks">
+                    <strong>{{projectWork.itemName}}</strong> ({{projectWork.albumName}})
+                  </li>
+                </ul>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+        <div class="col-xs-3">
+          <button mat-raised-button color="accent" *ngIf="collaborator.configurationProjectContract != null && collaborator.configurationProjectContract != undefined" (click)="confirmCreate(collaborator.configurationProjectContract, collaborator.projectContract.name)">
+              <mat-icon>library_books</mat-icon>&nbsp;Crear
+          </button>
+        </div>
+      </div>
+</div>
+
+
+

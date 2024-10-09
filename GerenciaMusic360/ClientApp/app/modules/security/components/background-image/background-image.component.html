@@ -1,0 +1,26 @@
+    <div [formGroup]="imageForm">
+      <div class="row">
+        <div class="col-xs-12 col-lg-4 col-sm-4 col-md-4">
+          <app-upload-image [rounded]="false" errorImage="assets/images/avatars/defaultProfile4.jpg" (selectImage)="selectImage($event)">
+          </app-upload-image>
+        </div>
+        <div class="col-xs-12 col-lg-8 col-sm-8 col-md-8">
+          <mat-form-field appearance="outline" class="col-xs-12">
+            <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+            <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}" formControlName="name">
+            <mat-error *ngIf="f.name?.errors?.required">
+              {{ 'validations.errors.nameRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <!--<mat-slide-toggle formControlName="isDefault">
+            Default
+          </mat-slide-toggle>-->
+        </div>
+      </div>
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      <div class="row end-xs">
+        <button mat-flat-button color="primary" type="submit" [disabled]="!imageForm.valid" (click)="setImage()">
+          <mat-icon aria-label="save">save</mat-icon> {{'general.save'| translate}}
+        </button>
+      </div>
+    </div>

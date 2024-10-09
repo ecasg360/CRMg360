@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-xs-4 mb-4" *ngFor="let item of marketingGoalsList">
+    <img src="{{item.pictureURL}}" onerror="this.src='/assets/images/logos/360-circle.png';" class="cursor-pointer"
+      height="100" width="100" matTooltip="{{item.goalName}}" (click)="showModal(item)"
+      alt="{{item.socialNetworkName}}">
+    <p class="m-0 p-0">
+      <small><strong>{{item.goalName}} </strong>
+        <mat-icon (click)="deleteGoal(item)" class="cursor-pointer">
+          delete</mat-icon>
+      </small></p>
+  </div>
+</div>
+<hr>
+<div class="row" *ngIf="marketing.id">
+  <div class="col-xs-12 text-right">
+    <button mat-flat-button color="primary" class="btn-marketing" (click)="showAuditModal()">
+      <mat-icon>edit</mat-icon>&nbsp;{{ 'general.auditGoal' | translate}}
+    </button>&nbsp;
+    <button mat-flat-button color="primary" class="btn-marketing" (click)="showModal()">
+      <mat-icon>add</mat-icon>&nbsp;{{ 'general.addGoal' | translate}}
+    </button>
+  </div>
+</div>

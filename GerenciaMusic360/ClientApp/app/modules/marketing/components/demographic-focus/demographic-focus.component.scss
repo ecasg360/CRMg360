@@ -1,0 +1,12 @@
+::ng-deep .mat-card-header-text,
+div.mat-card-header-text mat-card-title,
+mat-card-header .mat-card-header-text {
+  padding: 0;
+  margin: 0 !important;
+  width: 100%;
+}
+
+.header {
+    background-color: #039be5 !important;
+    color: #fff !important;
+}

@@ -1,0 +1,55 @@
+<div class="page-layout carded fullwidth">
+  <!-- CONTENT -->
+  <div class="content  m-24 p-4 mat-card">
+
+    <div>
+      <div class="row">
+        <div class="col-xs-2"><button mat-raised-button color="accent" (click)="showModalForm()">
+            <mat-icon>add</mat-icon>&nbsp;{{ 'general.new' | translate }}
+          </button>
+        </div>
+        <div class="col-xs-3">
+          <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="col-xs-7">
+          <mat-form-field appearance="outline" class="w-100-p m-4" *ngIf="isDataAvailable">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      <br />
+      <div class="row">
+        <div class="col-xs-4" *ngFor="let item of contracts" matSort>
+          <div class="card-contract">
+            <div class="row">
+              <div class="col-xs-4">
+                <img src="assets/images/contract/contrato.png">
+              </div>
+              <div class="col-xs-6">
+                <ul>
+                  <li class="card-contract-title">{{item.name}}</li>
+                  <li>
+                    <p>{{item.description}}</p>
+                  </li>
+                  <li><strong>{{ 'general.startDate' | translate }}:&nbsp;</strong>{{item.startDate.split('T')[0]}}</li>
+                  <li><strong>{{ 'general.endDate' | translate }}:&nbsp;</strong>{{item.endDate.split('T')[0]}}</li>
+                </ul>
+              </div>
+              <div class="col-xs-12">
+                <button mat-raised-button color="accent">
+                  <mat-icon>remove_red_eye</mat-icon>&nbsp;View Detail
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <mat-paginator *ngIf="isDataAvailable" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <div *ngIf="!isDataAvailable">
+        <h1 class="m-8 mat-display-1 text-center">{{ 'general.errors.noData' | translate }}</h1>
+      </div>
+    </div>
+  </div>
+  <!-- / CONTENT -->
+</div>

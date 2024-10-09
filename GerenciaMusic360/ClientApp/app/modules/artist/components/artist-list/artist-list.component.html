@@ -1,0 +1,81 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'general.artists' | translate }} ESR </h4>
+    </div>
+    <div class="custom-breadcrum">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.artists' | translate }}</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content m-12">
+    <div class="row mb-12">
+      <div class="col-xs-8 col-sm-3 col-md-6 col-lg-3">
+        <button color="accent" class="mat-raised-button mat-accent" (click)="openModal()">
+          <span class="mat-button-wrapper">
+            <mat-icon>add</mat-icon>&nbsp;{{ 'general.createNewArtist' | translate }}
+          </span>
+        </button>
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-6 col-lg-2">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-12 col-lg-7">
+        <mat-form-field appearance="outline">
+          <input matInput #searchInput (keyup)="applyFilter($event.target.value)"
+            placeholder="{{ 'general.search' | translate }}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" *ngFor="let item of artistsList">
+        <mat-card class="mb-16 mx-0">
+          <mat-card-header class="custom-card-header">
+            <p class="cut-text text-center mx-0 my-4 w-100-p">
+              <a class="card-link" routerLink="/contracts/manage/{{item.id}}"
+                matTooltip="{{item.name + ' ' + item.lastName}}">{{item.name + ' ' + item.lastName}}</a> <br />
+              <small>{{item.email ? item.email : '~'}}</small>
+            </p>
+          </mat-card-header>
+          <img mat-card-image class="image-card" src="{{item.pictureUrl}}"
+            onerror="this.src='assets/images/artistsummary/summary.jpg'" alt="{{item.name}}">
+          <mat-card-content>
+            <ul class="panel-list">
+              <li class="mt-4 pt-4"><strong>
+                  <mat-icon class="s-16">calendar_today</mat-icon>&nbsp;{{ 'general.birthdate' | translate }}:
+                </strong>
+                {{item.birthDate | date}}</li>
+              <li class="mt-4 pt-4">
+                {{item.cellPhone ? item.cellPhone : ''}}</li>
+            </ul>
+          </mat-card-content>
+          <mat-card-actions class="actionCard">
+            <div class="row">
+              <div class="col-xs-4">
+                <button mat-button matTooltip="{{'general.detail'|translate}}" routerLink="/artist/detail/{{item.id}}">
+                  <mat-icon>description</mat-icon>
+                </button>
+              </div>
+              <div class="col-xs-4">
+                <button mat-button matTooltip="{{'general.edit'|translate}}" routerLink="/artist/manage/{{item.id}}">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <div class="col-xs-4">
+                <button mat-button matTooltip="{{'general.delete'|translate}}"
+                  (click)="confirmDelete(item.id, item.name)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <!-- / CONTENT -->
+</div>

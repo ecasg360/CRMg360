@@ -1,0 +1,19 @@
+<div [formGroup]="addressForm">
+  <h3 mat-dialog-title>{{titleAction}}</h3>
+  <mat-dialog-content>
+    <app-address-form [data]="data" [isArtist]="isArtist" (formReady)="bindExternalForm('address',$event)"></app-address-form>
+  </mat-dialog-content>
+
+    <div class="row end-xs">
+      <div class="col-xs-12">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        <button mat-stroked-button color="primary" type="button" [disabled]="isWorking" (click)="onNoClick()">
+          <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+        </button>&nbsp;
+        <button mat-flat-button color="primary" [disabled]="isWorking" (click)="setAddress()">
+          {{action}}&nbsp;<mat-icon>save</mat-icon>
+        </button> &nbsp;
+      </div>
+    </div>
+
+</div>

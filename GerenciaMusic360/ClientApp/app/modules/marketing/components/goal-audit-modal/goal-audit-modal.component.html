@@ -1,0 +1,67 @@
+<div [formGroup]="goalFG">
+  <h1 class="header" mat-dialog-title>{{ 'general.auditGoal' | translate}}</h1>
+  <div mat-dialog-content class="mt-16">
+    <div class="row between-xs mb-8" [formGroup]="goalFG">
+      <div class="col-xs-3">
+        <!--<img src="{{marketing.PictureUrl}}" alt="">-->
+        <img src="assets/images/avatars/profile.jpg" alt="">
+        <br>
+        <button mat-button (click)="downloadReport(marketing)">
+          <mat-icon>cloud_download</mat-icon>
+        </button>
+      </div>
+      <div class="col-xs-9">
+        <div class="row between-xs mb-4">
+          <div class="col-xs-4">
+            <h3 class="h3">{{marketing.artistName}}</h3>
+            <h4 class="h4">{{marketing.name}}</h4>
+          </div>
+          <div class="col-xs-4">
+            <h3 class="h3">&nbsp;</h3>
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="picker" (dateChange)="dateChange($event)"
+                placeholder="{{'general.date' | translate}}" formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3" *ngFor="let formElem of formTemplate">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ formElem.social }}</mat-label>
+              <input matInput type="number" min="0" placeholder="{{ formElem.goal }}"
+                formControlName="{{formElem.social}}">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="overflow-x:scroll" class="my-8">
+      <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8 w-100-p">
+
+        <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
+          <mat-header-cell *matHeaderCellDef>{{disCol}}</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element[disCol]}}
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+  <div mat-dialog-actions class="row">
+    <div class="col-xs-6">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-6 text-right">
+      <button mat-flat-button color="primary" (click)="onNoClick()" [disabled]="isWorking">
+        {{ 'general.cancel' | translate}}&nbsp;<mat-icon>cancel</mat-icon>
+      </button>&nbsp;
+      <button mat-flat-button color="primary" (click)="addGoal()" [disabled]="isWorking || !goalFG.valid">
+        {{ 'general.save' | translate}}&nbsp;<mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

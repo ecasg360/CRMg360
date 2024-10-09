@@ -1,0 +1,40 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <div class="row">
+                <div class="col-xs-9">
+                    {{ 'general.generalData' | translate }}
+                </div>
+                <div class="col-xs-3 text-right">
+                    <button mat-icon-button color="primary" matTooltip="{{'general.previewProject'|translate}}"
+                        (click)="showProjectDetail(contract.projectId)"
+                        *ngIf="contract.id > 0 && contract.projectId > 0">
+                        <mat-icon class="s-20">description&nbsp;</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-card-title>
+    </mat-card-header>
+    <div [formGroup]="form" class="mt-4">
+        <mat-card-content>
+            <app-contract-form (formReady)="bindForm($event)" (formWorking)="manageFormWork($event)"
+                [contract]="contract">
+            </app-contract-form>
+        </mat-card-content>
+        <mat-card-actions class="m-0">
+            <div class="row">
+                <div class="col-xs-4">
+                    <mat-spinner *ngIf="isWorking" diameter="30"></mat-spinner>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <button mat-flat-button color="primary" [disabled]="isWorking">
+                        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                    </button>&nbsp;
+                    <button mat-flat-button color="accent" [disabled]="!form.valid || isWorking" (click)="save()">
+                        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+                    </button>
+                </div>
+            </div>
+        </mat-card-actions>
+    </div>
+</mat-card>

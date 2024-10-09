@@ -1,0 +1,254 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'general.projects' | translate }}</h4>
+    </div>
+    <div class="custom-breadcrum">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.projects' | translate }}</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content p-8">
+    <div class="row m-8">
+      <div class="col-mx-3">
+        <button
+          color="accent"
+          class="mat-raised-button mat-accent addProject"
+          *ngIf="(permisions.Project.Post && !moduleFilter) || (permisions.Project.PostLabel && moduleFilter === 'label') || (permisions.Project.PostEvent && moduleFilter === 'event')"
+          (click)="openModal()"
+        >
+          <span class="mat-button-wrapper">
+            <mat-icon>add</mat-icon>&nbsp;{{ 'general.CreateNewProject' | translate }}
+          </span>
+        </button> 
+      </div>
+      <div class="col-xs-5">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      </div>
+    </div>
+    <div class="row mx-8">
+      <div class="col-xs-12 text-left">
+        <small class="titlefilter">{{ 'general.filterByProjectType' | translate }}</small>
+      </div>
+    </div>
+    <div class="row mx-8">
+      <div class="col-xs-12 col-lg-8 col-sm-8 col-md-8">
+        <div class="row box barIconProject">
+          <div *ngFor="let item of projectTypes" class="m-4">
+            <button _ngcontent-pmw-c64="" matTooltip="{{ 'general.' + item.name | translate }}" color="primary"
+              mat-raised-button="" class="mat-raised-button mat-primary" (click)="filterByType(item.id)">
+              <img src="{{ item.pictureUrl }}">
+            </button>
+          </div>
+          <div class="m-4">
+            <button _ngcontent-pmw-c64="" matTooltip="{{'general.all'|translate}}" color="primary" mat-raised-button=""
+              class="mat-raised-button mat-primary" (click)="filterByType(0)">
+              <mat-icon>list</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-lg-4 col-sm-4 col-md-4">
+        <mat-form-field appearance="outline">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row my-20 barBtnEstatus">
+      <button mat-button class="col-xs-12 col-lg-2 col-md-3 col-sm-4 active" (click)="filterByStatus(0, '')">
+        <span class="start-xs">{{ 'general.allProjects' | translate }}</span>
+        &nbsp;
+        <span class="end-xs">
+          {{projects.length}}
+        </span>
+        <p class="m-0 mb-4 progress-bar-all">
+          <progress class="progress-bar-all" max="100" value="100"></progress>
+        </p>
+      </button>
+      <button *ngFor="let item of statusList" mat-button class="col-xs-12 col-lg-2 col-md-3 col-sm-4"
+        (click)="filterByStatus(item.id, item.name)">
+        {{ item.name }} &nbsp; {{item.count}}&nbsp;/&nbsp;{{projects.length}}
+        <p class="m-0 mb-4">
+          <progress class="progress-bar-{{item.name}}" max="{{projects.length}}" value="{{item.count}}"></progress>
+        </p>
+      </button>
+    </div>
+
+    <div>
+      <button mat-button (click)="changeView()"> <mat-icon>{{viewIcon}}</mat-icon> {{viewLabel}}</button>
+    </div>
+
+    <div class="row" *ngIf="!isTable">
+      <div class="col-xs-12 col-lg-3 col-md-6 col-sm-12 mb-12" *ngFor="let item of projectList">
+        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}">
+          <!-- Front -->
+          <div class="fuse-widget-front mat-elevation-z2">
+            <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="cut-text"><a routerLink="/projects/manage/{{item.id}}"
+                  matTooltip="{{item.name}}">{{item.name}}</a></div>
+
+              <button mat-icon-button fuseWidgetToggle aria-label="more">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>
+
+            <div class="pt-8 pb-16" fxLayout="column" fxLayoutAlign="center center">
+              <a routerLink="/projects/manage/{{item.id}}">
+                <img width="250" src="{{item.pictureUrl}}" alt="{{item.name}}"
+                  onerror="this.src='assets/images/default/200/projects.png';">
+              </a>
+              <p class="m-0 mt-4">{{ 'general.' + item.projectTypeName.replace(' ','').replace(' ','') | translate }}
+              </p>
+              <p *ngIf="item.statusProjectId > 0" class="status-{{item.statusProjectName}} p-4 m-0 mt-4">
+                {{ 'general.' + item.statusProjectName | translate }}
+              </p>
+              <p class="m-0 mt-4">
+                {{ 'general.endDate' | translate }}: {{item.endDate | date}}
+              </p>
+            </div>
+            <div class="row w-100-p p-4 text-center">
+              <div class="col-xs-2">
+                <app-report [projectTypeId]="item.projectTypeId" [artistId]="item.artistId"></app-report>
+              </div>
+              <div class="col-xs-2">
+                <mat-icon *ngIf="canDownloadLC(item.projectTypeName) && permisions.Project.Put"  class="cursor-pointer s-24 mr-4 blue-900-fg"
+                  matTooltip="{{'general.downloadLabelCopy'|translate}}"
+                  (click)="downloadLabelCopy(item.id, item.name)">
+                  cloud_download
+                </mat-icon>
+              </div>
+              <div class="col-xs-2">
+                <mat-icon matTooltip="{{'general.downloadBudget'|translate}}" *ngIf="permisions.Project.Put" (click)="downloadFile(item.id, item.name)"
+                  class="cursor-pointer s-24 mr-4 blue-900-fg">cloud_download</mat-icon>
+              </div>
+              <div class="col-xs-2">
+                <mat-icon
+                  matTooltip="{{'general.edit'|translate}}"
+                  *ngIf="(permisions.Project.Put && !moduleFilter) || (permisions.Project.PutLabel && moduleFilter === 'label') || (permisions.Project.PutEvent && moduleFilter === 'event')"
+                  routerLink="/projects/manage/{{item.id}}"
+                  class="cursor-pointer s-24 mr-4 blue-900-fg"
+                >
+                  edit
+                </mat-icon>
+              </div>
+              <div class="col-xs-2">
+                <mat-icon
+                  matTooltip="{{'general.delete'|translate}}" 
+                  *ngIf="(permisions.Project.Delete && !moduleFilter) || (permisions.Project.DeleteLabel && moduleFilter === 'label') || (permisions.Project.DeleteEvent && moduleFilter === 'event')"
+                  (click)="confirmDelete(item.id, item.name)"
+                  class="cursor-pointer s-24 mr-4 blue-900-fg"
+                >
+                  delete
+                </mat-icon>
+              </div>
+              <div class="col-xs-2">
+                <mat-icon matTooltip="{{'general.detail'|translate}}" routerLink="/projects/detail/{{item.id}}"
+                  class="cursor-pointer s-24 mr-4 blue-900-fg">assignment</mat-icon>
+              </div>
+            </div>
+          </div>
+          <!-- / Front -->
+
+          <!-- Back -->
+          <div class="fuse-widget-back mat-elevation-z2">
+            <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="cut-text"><a routerLink="/projects/manage/{{item.id}}"
+                  matTooltip="{{item.name}}">{{item.name}}</a></div>
+
+              <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+                <mat-icon class="s-16">close</mat-icon>
+              </button>
+            </div>
+            <div>
+              <mat-list role="list">
+                <mat-list-item role="listitem">{{'general.artist' | translate}}:
+                  {{item.artistName}}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'general.budget' | translate }}:
+                  {{ item.totalBudget | currency:''}}</mat-list-item>
+                <mat-list-item role="listitem">{{ 'general.spent' | translate }}:
+                  {{ item.spent | currency:''}}</mat-list-item>
+                <mat-list-item role="listitem">
+                  <div class="project-description">
+                    {{item.description}}
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+          <!-- / Back -->
+        </fuse-widget>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="isTable">
+      <div class="col-xs-12 mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort class="w-100-p mr-4" [@animate]="{value:'*',params:{y:'100%'}}">
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.name' | translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} {{row.lastName}} {{row.secondLastName}} </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.ProjectType' | translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.projectTypeName}} </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="artist">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.artist' | translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.artistName}} </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="initialDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.initialDate' | translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.initialDate | date}} </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.status'| translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.statusProjectName}}</mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="totalBudget">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.totalBudget'|translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.totalBudget}}</mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.actions' | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <app-report [projectTypeId]="row.projectTypeId" [artistId]="row.artistId"></app-report>&nbsp;
+                <mat-icon *ngIf="canDownloadLC(row.projectTypeName) && permisions.Project.Put"  class="cursor-pointer s-24 mr-4 blue-900-fg"
+                  matTooltip="{{'general.downloadLabelCopy'|translate}}"
+                  (click)="downloadLabelCopy(row.id, row.name)">
+                  cloud_download
+                </mat-icon>
+                &nbsp;
+                <mat-icon matTooltip="{{'general.downloadBudget'|translate}}" *ngIf="permisions.Project.Put" (click)="downloadFile(row.id, row.name)"
+                  class="cursor-pointer s-24 mr-4 blue-900-fg">cloud_download</mat-icon>
+                  &nbsp;
+                <mat-icon matTooltip="{{'general.edit'|translate}}" *ngIf="permisions.Project.Put" routerLink="/projects/manage/{{row.id}}"
+                  class="cursor-pointer s-24 mr-4 blue-900-fg">edit</mat-icon>
+                  &nbsp;
+                <mat-icon matTooltip="{{'general.delete'|translate}}"  *ngIf="permisions.Project.Delete" (click)="confirmDelete(row.id, row.name)"
+                  class="cursor-pointer s-24 mr-4 blue-900-fg">delete</mat-icon>
+                  &nbsp;
+                <mat-icon matTooltip="{{'general.detail'|translate}}" routerLink="/projects/detail/{{row.id}}"
+                  class="cursor-pointer s-24 mr-4 blue-900-fg">assignment</mat-icon>
+              
+            </mat-cell>
+          </ng-container>
+  
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+    </div>
+  </div>
+  <!-- / CONTENT -->
+</div>

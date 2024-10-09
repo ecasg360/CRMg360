@@ -1,0 +1,27 @@
+﻿<div class="m-4">
+    <mat-form-field *ngIf="!listMode" class="w-100-p px-8 mt-4">
+        <input type="text" placeholder="{{ 'general.contacts' | translate }}" aria-label="Contacts" matInput
+            [formControl]="contactCtrl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autoCompleteOptionSelected($event)">
+            <mat-option *ngFor="let option of filteredOptions | async" [id]="option.id" [value]="option.name">
+                <img class="img-rounded image-30" aria-hidden [src]="option.pictureUrl"
+                    onerror="this.src='assets/images/avatars/defaultProfile5.jpg'" height="25" />
+                {{option.name}} {{option.lastName}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <div class="w-100-p">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        <span class="contact-wrap" *ngFor="let item of projectContactsList">
+            <img class="img-rounded image-lg" src="{{item.pictureUrl}}" alt="avatar"
+                onerror="this.src='assets/images/avatars/defaultProfile5.jpg'" /><br>
+            <small>{{item.name}} {{item.lastName}}</small>
+            <mat-icon color="warn" (click)="confirmDelete(item.id, item.name)" class="cursor-pointer">
+                delete
+            </mat-icon>&nbsp;
+        </span>
+        <button mat-fab color="accent" *ngIf="!listMode" class="mt-16" (click)="showModalForm()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,390 @@
+<div class="page-layout carded fullwidth">
+    <!-- HEADER -->
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h4>{{ 'general.startCenter' | translate }}</h4>
+        </div>
+        <div class="custom-breadcrum">
+            <span class="secondary-text">{{ 'general.startCenter' | translate }}</span>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content  m-8 p-8">
+        <h1 class="mat-headline text-center m-8">{{ 'general.lastProjects' | translate }}</h1>
+
+        <div class="row">
+            <div class="col-xs-12 col-lg-3 col-md-6 col-sm-12 mb-12" *ngFor="let item of projectList">
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}">
+                    <!-- Front -->
+                    <div class="fuse-widget-front mat-elevation-z2">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="cut-text"><a routerLink="/projects/manage/{{item.id}}"
+                                    matTooltip="{{item.name}}">{{item.name}}</a></div>
+
+                            <button mat-icon-button fuseWidgetToggle aria-label="more">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="pt-8 pb-16" fxLayout="column" fxLayoutAlign="center center">
+                            <a routerLink="/projects/manage/{{item.id}}">
+                                <img width="250" src="{{item.pictureUrl}}" alt="{{item.name}}"
+                                    onerror="this.src='assets/images/default/200/projects.png';">
+                            </a>
+                            <p>{{item.type}}</p>
+                            <p class="project-{{item.statusColor}}">{{'general.projectStatus' | translate }}:
+                                {{item.status}} </p>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+
+                    <!-- Back -->
+                    <div class="fuse-widget-back mat-elevation-z2">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="cut-text"><a routerLink="/projects/manage/{{item.id}}"
+                                    matTooltip="{{item.name}}">{{item.name}}</a></div>
+
+                            <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                                aria-label="Flip widget">
+                                <mat-icon class="s-16">close</mat-icon>
+                            </button>
+                        </div>
+                        <div>
+                            <mat-list role="list">
+                                <mat-list-item role="listitem">{{'general.lastTaskChecked' | translate}}:
+                                    {{item.lastTaskChecked}}</mat-list-item>
+                                <mat-list-item role="listitem">{{ 'general.budget' | translate }}:
+                                    {{ item.budget | currency:''}}</mat-list-item>
+                                <mat-list-item role="listitem">{{ 'general.spent' | translate }}:
+                                    {{ item.spend | currency:''}}</mat-list-item>
+                                <mat-list-item role="listitem">{{item.endDateLabel}}: {{item.dateString | date}}
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p class="project-{{item.statusColor}}">{{'general.projectStatus' | translate }}:
+                                        {{item.status}} </p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p class="m-0 px-16 w-100-p"><progress class="progress-bar-{{item.status}}"
+                                            max="100" value="{{item.advance}}"></progress></p>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+                    </div>
+                    <!-- / Back -->
+                </fuse-widget>
+            </div>
+        </div>
+
+        <h1 class="mat-headline text-center m-8">{{ 'general.lastCampains' | translate }}</h1>
+
+        <div class="row">
+            <div class="col-xs-12 col-lg-4 col-md-4 col-sm-12" *ngFor="let item of marketingList">
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}">
+                    <!-- Front -->
+                    <div class="fuse-widget-front mat-elevation-z2">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="cut-text"><a routerLink="/marketing/manage/{{item.id}}"
+                                    matTooltip="{{item.name}}">{{item.name}}</a></div>
+
+                            <button mat-icon-button fuseWidgetToggle aria-label="more">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="pt-8 pb-16" fxLayout="column" fxLayoutAlign="center center">
+                            <a routerLink="/projects/manage/{{item.id}}">
+                                <img width="250" src="{{item.pictureUrl}}" alt="{{item.name}}"
+                                    onerror="this.src = 'assets/images/default/200/campaigns.png';">
+                            </a>
+                            <p class="marketing-{{item.statusColor}}">{{'general.status' | translate }}:
+                                {{item.status}} </p>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+
+                    <!-- Back -->
+                    <div class="fuse-widget-back mat-elevation-z2">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="cut-text"><a routerLink="/marketing/manage/{{item.id}}"
+                                    matTooltip="{{item.name}}">{{item.name}}</a></div>
+
+                            <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                                aria-label="Flip widget">
+                                <mat-icon class="s-16">close</mat-icon>
+                            </button>
+                        </div>
+                        <div>
+                            <mat-list role="list">
+                                <mat-list-item role="listitem">{{'general.lastTaskChecked' | translate}}:
+                                    {{item.lastTaskChecked}}</mat-list-item>
+                                <mat-list-item role="listitem">{{ 'general.budget' | translate }}:
+                                    {{ item.budget | currency:''}}</mat-list-item>
+                                <mat-list-item role="listitem">{{ 'general.spent' | translate }}:
+                                    {{ item.spend | currency:''}}</mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p class="marketing-{{item.statusColor}}">{{'general.status' | translate }}:
+                                        {{item.status}} </p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p class="m-0 px-16 w-100-p"><progress
+                                            class="marketing-progress-bar-{{item.status}}" max="100"
+                                            value="{{item.advance}}"></progress></p>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+                    </div>
+                    <!-- / Back -->
+                </fuse-widget>
+            </div>
+        </div>
+
+        <h1 class="mat-headline text-center m-8">{{ 'general.lastContracts' | translate }}</h1>
+
+        <div class="row">
+            <div class="col-xs-12 col-lg-4 col-md-4 col-sm-12" *ngFor="let item of contractList">
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}">
+                    <!-- Front -->
+                    <div class="fuse-widget-front mat-elevation-z2">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="cut-text"><a routerLink="/contracts/manage/{{item.id}}"
+                                    matTooltip="{{item.name}}">{{item.name}}</a></div>
+
+                            <button mat-icon-button fuseWidgetToggle aria-label="more">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="pt-8 pb-16" fxLayout="column" fxLayoutAlign="center center">
+                            <a routerLink="/projects/manage/{{item.id}}">
+                                <img width="250" src="{{item.pictureUrl}}" alt="{{item.name}}"
+                                    onerror="this.src = 'assets/images/default/200/contracts.jpg';">
+                            </a>
+                            <p class="contract-{{item.statusColor}}">{{'general.status' | translate }}:
+                                {{item.status}} </p>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+
+                    <!-- Back -->
+                    <div class="fuse-widget-back mat-elevation-z2">
+                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="cut-text"><a routerLink="/contracts/manage/{{item.id}}"
+                                    matTooltip="{{item.name}}">{{item.name}}</a></div>
+
+                            <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                                aria-label="Flip widget">
+                                <mat-icon class="s-16">close</mat-icon>
+                            </button>
+                        </div>
+                        <div>
+                            <mat-list role="list">
+                                <mat-list-item role="listitem">{{'general.lastTaskChecked' | translate}}:
+                                    {{item.lastTaskChecked}}</mat-list-item>
+                                <mat-list-item role="listitem">{{ 'general.budget' | translate }}:
+                                    {{ item.budget | currency:''}}</mat-list-item>
+                                <mat-list-item role="listitem">{{ 'general.spent' | translate }}:
+                                    {{ item.spend | currency:''}}</mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p class="contract-{{item.statusColor}}">{{'general.status' | translate }}:
+                                        {{item.status}} </p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p class="m-0 px-16 w-100-p"><progress class="contract-progress-bar-{{item.status}}"
+                                            max="100" value="{{item.advance}}"></progress></p>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+                    </div>
+                    <!-- / Back -->
+                </fuse-widget>
+            </div>
+        </div>
+
+        <h1 class="mat-headline text-center">{{ 'general.startCenterBarTitle' | translate }}</h1>
+
+        <div class="row">
+            <div class="col-xs-12 col-lg-4 col-md-4 col-sm-12">
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="px-16 py-8 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="h3">{{'general.projects' | translate }}</div>
+                            <mat-form-field>
+                                <mat-select class="simplified" aria-label="change range">
+                                    <mat-option [value]="2019">2019</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="h-300">
+                            <ngx-charts-bar-vertical [scheme]="projectBar.colorScheme" [results]="projectBar.data"
+                                [gradient]="projectBar.gradient" [xAxis]="projectBar.showXAxis"
+                                [yAxis]="projectBar.showYAxis" [legend]="projectBar.showLegend"
+                                [showXAxisLabel]="projectBar.showXAxisLabel" [roundEdges]="projectBar.roundEdges"
+                                [showYAxisLabel]="projectBar.showYAxisLabel" [xAxisLabel]="projectBar.xAxisLabel"
+                                [yAxisLabel]="projectBar.yAxisLabel" (select)="projectBar.onSelect($event, 'projects')">
+                                <ng-template #tooltipTemplate let-model="model">
+                                    {{ model.name }} :<br /> {{ model.value }} {{'general.project'|translate}}(s)
+                                </ng-template>
+                            </ngx-charts-bar-vertical>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+                </fuse-widget>
+            </div>
+            <div class="col-xs-12 col-lg-4 col-md-4 col-sm-12">
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="px-16 py-8 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="h3">{{'general.marketing' | translate }}</div>
+                            <mat-form-field>
+                                <mat-select class="simplified" aria-label="change range">
+                                    <mat-option [value]="2019">2019
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="h-300">
+                            <ngx-charts-bar-vertical [scheme]="marketingBar.colorScheme" [results]="marketingBar.data"
+                                [gradient]="marketingBar.gradient" [xAxis]="marketingBar.showXAxis"
+                                [yAxis]="marketingBar.showYAxis" [legend]="marketingBar.showLegend"
+                                [showXAxisLabel]="marketingBar.showXAxisLabel" [roundEdges]="marketingBar.roundEdges"
+                                [showYAxisLabel]="marketingBar.showYAxisLabel" [xAxisLabel]="marketingBar.xAxisLabel"
+                                [yAxisLabel]="marketingBar.yAxisLabel"
+                                (select)="marketingBar.onSelect($event, 'marketing')">
+                            </ngx-charts-bar-vertical>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+
+                </fuse-widget>
+            </div>
+            <div class="col-xs-12 col-lg-4 col-md-4 col-sm-12">
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="px-16 py-8 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="h3">{{'general.contract' | translate }}</div>
+                            <mat-form-field>
+                                <mat-select class="simplified" aria-label="change range">
+                                    <mat-option [value]="2019">2019
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="h-300">
+                            <ngx-charts-bar-vertical [scheme]="contractBar.colorScheme" [results]="contractBar.data"
+                                [gradient]="contractBar.gradient" [xAxis]="contractBar.showXAxis"
+                                [yAxis]="contractBar.showYAxis" [legend]="contractBar.showLegend"
+                                [showXAxisLabel]="contractBar.showXAxisLabel" [roundEdges]="contractBar.roundEdges"
+                                [showYAxisLabel]="contractBar.showYAxisLabel" [xAxisLabel]="contractBar.xAxisLabel"
+                                [yAxisLabel]="contractBar.yAxisLabel"
+                                (select)="contractBar.onSelect($event, 'contracts')">
+                            </ngx-charts-bar-vertical>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+                </fuse-widget>
+            </div>
+        </div>
+
+        <h1 class="mat-headline text-center m-8">{{ 'general.startCenterPieTitle' | translate }}</h1>
+
+        <div class="row">
+            <div class="col-xs-12 col-lg-4 col-md-4 col-sm-12">
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="px-16 py-8 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="h3">{{'general.projects' | translate }}</div>
+                            <mat-form-field>
+                                <mat-select class="simplified" aria-label="change range">
+                                    <mat-option [value]="2019">2019
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="h-300">
+                            <ngx-charts-pie-chart [scheme]="projectPie.scheme" [results]="projectPie.data"
+                                [legend]="projectPie.showLegend" [explodeSlices]="projectPie.explodeSlices"
+                                [labels]="projectPie.labels" [doughnut]="projectPie.doughnut"
+                                [gradient]="projectPie.gradient" (select)="projectPie.onSelect($event, 'projects')">
+                                <ng-template #tooltipTemplate let-model="model">
+                                    <p class="tooltip-p">{{ model.name }}</p>
+                                    <strong>{{ model.value | number:'1.0-2' }}%</strong>
+                                </ng-template>
+                            </ngx-charts-pie-chart>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+                </fuse-widget>
+            </div>
+            <div class="col-xs-12 col-lg-4 col-md-4 col-sm-12">
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="px-16 py-8 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="h3">{{'general.marketing' | translate }}</div>
+                            <mat-form-field>
+                                <mat-select class="simplified" aria-label="change range">
+                                    <mat-option [value]="2019">2019
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="h-300">
+                            <ngx-charts-pie-chart [scheme]="marketingPie.scheme" [results]="marketingPie.data"
+                                [legend]="marketingPie.showLegend" [explodeSlices]="marketingPie.explodeSlices"
+                                [labels]="marketingPie.labels" [doughnut]="marketingPie.doughnut"
+                                [gradient]="marketingPie.gradient"
+                                (select)="marketingPie.onSelect($event, 'marketing')">
+                                <ng-template #tooltipTemplate let-model="model">
+                                    <p class="tooltip-p">{{ model.name }}</p>
+                                    <strong>{{ model.value | number:'1.0-2' }}%</strong>
+                                </ng-template>
+                            </ngx-charts-pie-chart>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+
+                </fuse-widget>
+            </div>
+            <div class="col-xs-12 col-lg-4 col-md-4 col-sm-12">
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget">
+                    <!-- Front -->
+                    <div class="fuse-widget-front">
+                        <div class="px-16 py-8 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="h3">{{'general.contract' | translate }}</div>
+                            <mat-form-field>
+                                <mat-select class="simplified" aria-label="change range">
+                                    <mat-option [value]="2019">2019
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="h-300">
+                            <ngx-charts-pie-chart [scheme]="contractPie.scheme" [results]="contractPie.data"
+                                [legend]="contractPie.showLegend" [explodeSlices]="contractPie.explodeSlices"
+                                [labels]="contractPie.labels" [doughnut]="contractPie.doughnut"
+                                [gradient]="contractPie.gradient" (select)="contractPie.onSelect($event, 'contracts')">
+                                <ng-template #tooltipTemplate let-model="model">
+                                    <p class="tooltip-p">{{ model.name }}</p>
+                                    <strong>{{ model.value | number:'1.0-2' }}%</strong>
+                                </ng-template>
+                            </ngx-charts-pie-chart>
+                        </div>
+                    </div>
+                    <!-- / Front -->
+                </fuse-widget>
+            </div>
+        </div>
+    </div>
+    <!-- / CONTENT -->
+</div>

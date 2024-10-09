@@ -1,0 +1,15 @@
+﻿<mat-dialog-content>
+
+    <image-cropper [imageChangedEvent]="imageChangedEvent"
+                   [maintainAspectRatio]="true"
+                   [aspectRatio]="1 / 1"
+                   [resizeToWidth]="200"
+                   format="jpg"
+                   imageQuality="10"
+                   (imageCropped)="imageCropped($event)"
+                   (imageLoaded)="imageLoaded()"></image-cropper>
+    <!--(loadImageFailed)="loadImageFailed()"-->
+
+
+    <button mat-flat-button (click)="onNoClick();" class="btn-register" color="primary"><i class="fas fa-cut"></i> Cortar</button>
+</mat-dialog-content>

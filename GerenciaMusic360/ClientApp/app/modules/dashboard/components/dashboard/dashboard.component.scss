@@ -1,0 +1,118 @@
+﻿.project-Started {
+    color: #006064;
+    font-weight: bold;
+}
+
+.project-Waiting {
+    color: #f9a825;
+    font-weight: bold;
+}
+
+.project-InProgress {
+    color: #1e88e5;
+    font-weight: bold;
+}
+
+.project-Completed {
+    color: #388e3c;
+    font-weight: bold;
+}
+
+.project-Canceled {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.project-Default {
+    color: #1e90ff;
+    font-weight: bold;
+}
+
+.project-All {
+    color: #1e2129;
+    font-weight: bold;
+}
+
+.marketing-Active {
+    color: #81c784;
+    font-weight: bold;
+}
+
+.marketing-Inactive {
+    color: #ffb74d;
+    font-weight: bold;
+}
+
+.marketing-Cancelled {
+    color: #e57373;
+    font-weight: bold;
+}
+
+.marketing-Finalized {
+    color: #4fc3f7;
+    font-weight: bold;
+}
+
+.contract-Created {
+    color: #4dd0e1;
+    font-weight: bold;
+}
+
+.contract-Send {
+    color: #e6ee9c;
+    font-weight: bold;
+}
+
+.contract-ReceivedbyGM360 {
+    color: #fff59d;
+    font-weight: bold;
+}
+
+.contract-SignedbyGM360 {
+    color: #4db6ac;
+    font-weight: bold;
+}
+
+.contract-Cancelled {
+    color: #e57373;
+    font-weight: bold;
+}
+
+.tooltip-p {
+    margin: 2px 0 0 1px;
+    padding: 0;
+}
+
+progress {
+    -webkit-appearance: none;
+    width: 100%;
+    margin: 3px;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #e7e7e7;
+    border: 0;
+    height: 15px;
+    display: block;
+}
+
+img.background{
+    filter: blur(5px);
+    width: 250px;
+    height: 250px;
+    left: 35%;
+    position: relative;
+}
+
+img.cover{
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+ul{
+    list-style: none;
+    text-align: left;
+    padding: 0;
+}
+

@@ -1,0 +1,15 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>{{title}}</mat-card-title>
+  </mat-card-header>
+ 
+  <mat-card-content>
+    <p style="text-align:center"> <img src="{{imageUrl}}" onerror="this.src='assets/images/logos/360-circle.png';" style="max-height:500px" alt="preview"></p>
+    <p>{{caption}}</p>
+  </mat-card-content>
+  <mat-card-actions class="text-right">
+    <button mat-stroked-button color="primary" type="button" (click)="closeDialog()">
+      <mat-icon>close</mat-icon> {{ 'general.cancel' | translate }}
+    </button>
+  </mat-card-actions>
+</mat-card>

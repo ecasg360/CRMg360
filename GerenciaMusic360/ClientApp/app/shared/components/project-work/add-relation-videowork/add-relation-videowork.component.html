@@ -1,0 +1,134 @@
+<div mat-dialog-title>
+  <table>
+    <tr>
+      <td>
+          {{ 'general.selectWork' | translate }}
+      </td>
+      <td class="end-xs">
+        <!-- <mat-icon aria-hidden="false">file_copy</mat-icon> -->
+      </td>
+    </tr>
+  </table>
+</div>
+
+<mat-dialog-content>
+  <div class="p-4 w-100-p">
+    <hr>    
+    <mat-checkbox [(ngModel)]="isNewWork">{{ 'general.newWork' | translate }}
+    </mat-checkbox>
+    <br>
+    <ng-template [ngIf]="!isNewWork" [ngIfElse]="newWork">
+
+      <input matInput (keyup)="applyFilter($event.target.value)" class="w-100-p" placeholder="filtrar Works">
+      <br>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
+          <!-- ID Column -->
+          <!-- <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+            </ng-container> -->
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.itemName}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="ISRC">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ISRC </mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.ISRC}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="producerRemix">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Producer & Remix </mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.personProducerName + ' - ' + row.personRemixName}}
+            </mat-cell>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="work">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  {{ 'general.description' | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-mini-fab color="accent" (click)="relationVideoToWork()">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>  -->
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+    </ng-template>
+
+    <ng-template #newWork>
+      <br>
+      <form [formGroup]="form">
+        <div class="row">
+          <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.work' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+            <input type="text" formControlName="name" placeholder="Nombre de la Obra" aria-label="text" matInput>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-checkbox formControlName="isInternal"> IsInternal </mat-checkbox>
+        </div>
+
+        <!-- <div class="row">
+            <mat-form-field appearance="outline" class="w-100-p">
+              <mat-label>{{ 'general.composer' | translate }}</mat-label>
+              <input type="text" formControlName="composerName" placeholder="Compositor" aria-label="Number" matInput
+                [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                (optionSelected)="onSelectionChanged($event)">
+                <mat-option *ngFor="let option of compositorFiltered | async" [value]="option">
+                  <small>{{option.viewValue}}</small>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <br>
+          <ng-template [ngIf]="!this.f.composerName.valid">
+            <app-person-form (formReady)="bindExternalForm('generalData', $event)"></app-person-form>
+          </ng-template> -->
+
+        <!-- <button mat-flat-button color="accent" (click)="closedExternalWork()">
+            <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+          </button>&nbsp; -->
+
+        <button mat-flat-button color="accent" (click)="setWork()">
+          <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+        </button>
+      </form>
+    </ng-template>
+  </div>
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="w-40-p text-right">
+    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+  </div>
+  <div class="w-60-p text-right">
+    <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+      <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+    </button>&nbsp;
+    <button mat-flat-button color="primary" (click)="set()">
+      <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+    </button> &nbsp;
+  </div>
+</mat-dialog-actions>

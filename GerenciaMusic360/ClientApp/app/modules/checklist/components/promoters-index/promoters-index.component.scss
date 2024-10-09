@@ -1,0 +1,85 @@
+.mat-table {
+    width: 100%;
+}
+
+.mat-column-name {
+    padding-right: 5px;
+    text-align: left;
+    font-size: small;
+}
+
+.mat-column-lastname {
+    padding-right: 5px;
+    text-align: left;
+    font-size: small;
+}
+
+.mat-column-phone {
+    padding-right: 5px;
+    text-align: center;
+    font-size: small;
+}
+
+.mat-column-email {
+    padding-right: 5px;
+    text-align: left;
+    font-size: small;
+}
+
+.mat-column-terms {
+    padding-right: 5px;
+    text-align: left;
+    font-size: small;
+    text-overflow: ellipsis;
+    width: 100px;
+    max-height: 80px;
+}
+
+.mat-column-terms:hover {
+    z-index: 10;
+    height: 100px;
+    overflow-y: auto;
+}
+
+.mat-column-contactType {
+    padding-right: 5px;
+    text-align: center;
+    font-size: small;
+}
+
+.mat-column-deal {
+    padding-right: 5px;
+    text-align: center;
+    font-size: small;
+}
+
+.mat-column-dateContact {
+    padding-right: 5px;
+    text-align: left;
+    font-size: small;
+}
+
+.mat-column-by {
+    padding-right: 5px;
+    text-align: left;
+    font-size: small;
+}
+
+.mat-column-action {
+    padding-right: 5px;
+    text-align: center;
+    font-size: small;
+}
+
+
+.mat-sort-header-button {
+    font-size: small !important;
+}
+
+.mat-icon-checklist {
+    margin-right: 2px;
+}
+
+.pointer {
+    cursor: pointer;
+}

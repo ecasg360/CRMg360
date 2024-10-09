@@ -1,0 +1,39 @@
+  label{
+      padding: 20px;
+  }
+
+  [type="file"] {
+    font-family: Muli, Helvetica Neue, Arial, sans-serif;
+    padding: 20px;
+  }
+
+  [type="file"]:hover {
+    cursor: pointer;
+  }
+
+  button.clean{
+    background: none;
+    border: none;
+    padding: 5px;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: .5s ease all;
+  }
+
+  button.clean:hover{
+    background-color: #044a9f;
+    color: white;
+  }
+
+  label.message{
+    font-style: italic;
+    font-weight: bold;
+    font-size: 12px;
+    position: relative;
+    top: -10px;
+    color: #044a9f;
+    text-align: center;
+    margin: 0 auto;
+  }
+  

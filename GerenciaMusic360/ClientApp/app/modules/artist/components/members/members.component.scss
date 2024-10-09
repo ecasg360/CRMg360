@@ -1,0 +1,24 @@
+/*.imagedropshadow {
+    padding: 5px;
+    border: solid 1px #EFEFEF;
+}
+
+a:hover img.imagedropshadow {
+    border: solid 1px #CCC;
+    -moz-box-shadow: 1px 1px 5px #999;
+    -webkit-box-shadow: 1px 1px 5px #999;
+    box-shadow: 1px 1px 5px #999;
+}*/
+
+.boxShadown {
+    transition: box-shadow .3s;
+    margin: 50px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    float: left;
+}
+
+.boxShadown:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+}

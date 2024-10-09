@@ -1,0 +1,35 @@
+<h3 mat-dialog-title>{{ 'artist.title' | translate }} - {{itemName.toUpperCase()}}</h3>
+
+<form [formGroup]="dataArtistForm">
+  <mat-dialog-content>
+    <div class="row">
+      <input formControlName="id" type="hidden">
+      <input formControlName="workId" type="hidden">
+      <div class="col-xs-8">
+        <!-- Artist List -->
+        <mat-form-field appearance="outline" class="w-100-p">
+          <mat-label>{{ 'artist.artist' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+          <mat-select formControlName="artistId" placeholder="{{ 'artist.form.artist' | translate }}">
+            <mat-option *ngFor="let item of artists" [value]="item.value">
+              {{item.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="w-40-p text-right">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="w-60-p text-right">
+      <button mat-stroked-button color="primary" [disabled]="isWorking" type="button" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!dataArtistForm.valid || isWorking" (click)="saveArtist()">
+        <mat-icon>save</mat-icon> {{action}}
+      </button> &nbsp;
+    </div>
+  </mat-dialog-actions>
+</form>

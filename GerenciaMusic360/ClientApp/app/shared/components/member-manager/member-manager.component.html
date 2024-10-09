@@ -1,0 +1,49 @@
+<div class="m-24 p-4">
+    <button mat-fab color="primary" class="my-4" (click)="showModalForm()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+<div class="row around-xs">
+    <div class="fuse-card boxShadown col-xs-12 col-sm-8 col-md-6 col-lg-4 p-4" *ngFor="let item of membersList">
+        <div class="p-4">
+            <div class="row center-xs">
+                <div class="col-xs-12 center">
+                    <img id="{{item.id}}" class="rounded image-lg" src="{{item.pictureUrl}}" alt="{{item.name}}"
+                        onerror="this.src='assets/images/avatars/defaultProfile3.jpg'" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12 titleMember ">
+                            {{item.name}} {{item.lastName}} {{item.secondLastName}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 subTitleMember p-4">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <strong>{{'general.birthdate' | translate}}:</strong>&nbsp;{{ item.birthDateString | date }}
+                        <strong>{{'general.email' | translate}}:</strong>&nbsp;{{ item.email }}
+                        <strong>{{'general.officePhone' | translate}}:</strong>&nbsp;{{ item.officePhone }}
+                        <strong>{{'general.cellPhone' | translate}}:</strong>&nbsp;{{ item.cellPhone }}
+                        <strong>{{'general.initDate' | translate}}:</strong>&nbsp;{{ item.startDateJoinedString | date }}
+                        <strong>{{'general.endDate' | translate}}:</strong>&nbsp;{{ item.endDateJoinedString | date }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button mat-button (click)="showModalForm(item.id)">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-button (click)="confirmDelete(item.id, item.name)">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

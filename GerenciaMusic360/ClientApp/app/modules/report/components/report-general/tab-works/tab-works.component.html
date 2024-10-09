@@ -1,0 +1,226 @@
+<form [formGroup]="dataWorkFilter">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+              <!-- Filter -->
+                <div class="col-xs-10" id="formFilter">
+                    <div class="row">
+                        <!-- NAME FIELD FILTER -->
+                        <div class="col-xs-3">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.work.name' | translate }}</mat-label>
+                              <input matInput type="text" placeholder="{{ 'report.work.form.name' | translate }}"
+                                  formControlName="name">
+                          </mat-form-field>
+                        </div>
+
+                        <!-- DESCRIPTION FIELD FILTER -->
+                        <div class="col-xs-3">
+                          <mat-form-field appearance="outline">
+                              <mat-label>{{ 'report.work.description' | translate }}</mat-label>
+                              <input matInput type="text" placeholder="{{ 'report.work.form.description' | translate }}"
+                                  formControlName="description">
+                          </mat-form-field>
+                        </div>
+
+                        <!-- MUSICAL GENRE LIST FILTER -->
+                      <div class="col-xs-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'report.work.genreMusical' | translate }}</mat-label>
+                            <mat-select placeholder="{{ 'report.work.form.selectGenreMusical' | translate }}"
+                                formControlName="genreMusicalId">
+                                <mat-option *ngFor="let genreMusical of listGenresMusicals" [value]="genreMusical.value">
+                                    {{genreMusical.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <!-- AMOUNT REVENUE FIELD FILTER -->
+                      <div class="col-xs-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'report.work.amountRevenue' | translate }}</mat-label>
+                            <input matInput type="number" placeholder="{{ 'report.work.form.amountRevenue' | translate }}"
+                                formControlName="amountRevenue">
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <!-- RATING FIELD FILTER -->
+                      <div class="col-xs-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'report.work.rating' | translate }}</mat-label>
+                            <input matInput type="number" placeholder="{{ 'report.work.form.rating' | translate }}"
+                                formControlName="rating">
+                        </mat-form-field>
+                      </div>
+
+                      <!-- REGISTER NUM FIELD FILTER -->
+                      <div class="col-xs-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'report.work.registerNum' | translate }}</mat-label>
+                            <input matInput type="number" placeholder="{{ 'report.work.form.registerNum' | translate }}"
+                                formControlName="registerNum">
+                        </mat-form-field>
+                      </div>
+
+                      <!-- REGISTER DATE FIELD FILTER -->
+                      <div class="col-xs-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'report.work.registerDate' | translate }}</mat-label>
+                            <input matInput [matDatepicker]="registerDate"
+                                placeholder="{{ 'report.general.form.selectDate' | translate }}"
+                                formControlName="registerDate">
+                            <mat-datepicker-toggle matSuffix [for]="registerDate"></mat-datepicker-toggle>
+                            <mat-datepicker #registerDate></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+
+                      <!-- LICENSE NUM FIELD FILTER -->
+                      <div class="col-xs-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'report.work.licenseNum' | translate }}</mat-label>
+                            <input matInput type="number" placeholder="{{ 'report.work.form.licenseNum' | translate }}"
+                                formControlName="licenseNum">
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <!-- CERTIFIED WORK CHECK FILTER -->
+                      <div class="col-xs-3" style="padding: 10px;">
+                            <mat-checkbox formControlName="certifiedWork">{{ 'report.work.certifiedWork' | translate }}
+                            </mat-checkbox>
+                      </div>
+
+                      <!-- REGISTERED WORK CHECK FILTER -->
+                      <div class="col-xs-3" style="padding: 10px;">
+                          <mat-checkbox formControlName="registeredWork">{{ 'report.work.registeredWork' | translate }}
+                          </mat-checkbox>
+                      </div>
+
+                    </div>
+                </div>
+              <!-- Button Generate -->
+                <div class="col-xs-2" id="buttonFilter">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button mat-flat-button color="primary" [disabled]="isWorking"
+                                (click)="searchByFilter()">
+                                <mat-icon>search</mat-icon> {{ 'report.applyFilter' | translate }}
+                            </button>
+                        </div>
+                        <br>
+                        <div class="col-xs-12">
+                          <button mat-flat-button color="primary" [disabled]="isWorking"
+                              (click)="searchAll()" style="margin-top: 15px;">
+                              <mat-icon>search</mat-icon> {{ 'report.showAll' | translate }}
+                          </button>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-12">
+                    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row" *ngIf="isDataAvailable">
+  <div class="col-xs-3">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+    </mat-form-field>
+  </div>
+  <div class="col-xs-3" *ngIf="isDataAvailable">
+      <button mat-flat-button color="primary" [disabled]="isWorking"
+      (click)="downloadReportProjects()" matTooltip="{{'general.downloadReport'|translate}}">
+          <mat-icon>cloud_download</mat-icon> {{'general.downloadReport'|translate}}
+      </button>
+  </div>
+</div>
+<div class="row" *ngIf="isDataAvailable">
+  <table mat-table [dataSource]="dataSource" class="w-100-p" matSort>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'report.work.table.name' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.name}}
+      </mat-cell>
+    </ng-container>
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'report.work.table.description' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.description}}
+      </mat-cell>
+    </ng-container>
+    <!-- Amount Revenue Column -->
+    <ng-container matColumnDef="amountRevenue">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.work.table.amountRevenue' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.amountRevenue}}
+      </mat-cell>
+    </ng-container>
+    <!-- Rating Column -->
+    <ng-container matColumnDef="rating">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.work.table.rating' | translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.rating}}
+      </mat-cell>
+    </ng-container>
+    <!-- Register Num Column -->
+    <ng-container matColumnDef="registerNum">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.work.table.registerNum' | translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> 
+        {{row.registerNum}} 
+      </mat-cell>
+    </ng-container>
+    <!-- Register Date Column -->
+    <ng-container matColumnDef="registerDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.work.table.registerDate' | translate }} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.registerDate | date}} </mat-cell>
+      </ng-container>
+    <!-- Genre Musical Column -->
+    <ng-container matColumnDef="genreMusical">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.work.table.genreMusical' | translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.musicalGenre}} </mat-cell>
+    </ng-container>
+    <!-- License Num Column -->
+    <ng-container matColumnDef="licenseNum">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'report.work.table.licenseNum' | translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.licenseNum}} </mat-cell>
+    </ng-container>
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'general.action' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+
+        <mat-icon class="cursor-pointer s-32 mr-4 blue-900-fg"
+          matTooltip="{{'general.downloadLabelCopy'|translate}}" (click)="downloadReport(row.id)">cloud_download
+        </mat-icon>
+
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+  <div *ngIf="!dataSource.data">
+    <h1 class="m-8 mat-display-1 text-center">{{ 'general.errors.noData' | translate }}</h1>
+  </div>
+</div>
+

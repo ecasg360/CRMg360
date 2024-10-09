@@ -1,0 +1,51 @@
+<h3 mat-dialog-title>{{'eventsArtist.title'|translate}}</h3>
+<br>
+<br>
+<div class="row listArtist" *ngIf="showList">
+    <div class="col-xs-12">
+      <!-- Artist List -->
+      <mat-form-field appearance="outline" class="w-100-p">
+        <mat-label>{{'eventsArtist.artist'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+        <mat-select placeholder="{{'eventsArtist.messages.selectArtist'|translate}}" (selectionChange)="onSelectedEvents($event)">
+          <mat-option *ngFor="let item of artistList" [value]="item.value">
+            {{item.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+</div>
+<div class="row" *ngFor="let events of eventsSelect" style="border-bottom: 1px solid #cecece;">
+  <div class="col-xs-1">
+      <mat-checkbox class="w-40-p" [checked]="events.checked"
+        (change)="checkedEvent($event, events)">
+      </mat-checkbox>
+  </div>
+  <div class="col-xs-11" style="padding-top: 4px;">
+    <div class="row">
+      <div class="col-xs-4">
+        <strong>{{'eventsArtist.eventDate'|translate}}:</strong>  {{events.event.eventDate.split('T')[0]}}
+      </div>
+      <div class="col-xs-4">
+        <strong>{{'eventsArtist.totalBudget'|translate}}:</strong>  {{events.event.totalBudget}}
+      </div>
+      <div class="col-xs-4">
+        <strong>{{'eventsArtist.location'|translate}}:</strong>  {{events.event.location !== null ? events.event.location : "N/A"}}
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+<div class="row">
+    <div class="w-40-p text-right">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+</div>
+<div class="row center" style="padding-top: 20px; float: right;">
+    <button color="accent" class="mat-raised-button mat-accent" (click)="downloadReportBudget()" [disabled]="eventsSelect.length > 0 ? false : true">
+        <span class="mat-button-wrapper">
+            <mat-icon class="cursor-pointer" matTooltip="{{'general.downloadBudgetTemplate'|translate}}" >
+                cloud_download
+              </mat-icon>&nbsp;{{'eventsArtist.downloadReport'|translate}}
+        </span>
+      </button>
+</div>

@@ -1,0 +1,46 @@
+<div>
+  <h1 mat-dialog-title>{{'general.touring' | translate}}</h1>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <input type="text" placeholder="{{'general.description' | translate}}" aria-label="description" matInput
+        [formControl]="descriptionFC" [matAutocomplete]="auto" (keyup.enter)="enter()">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteOptionSelected($event)">
+        <mat-option *ngFor="let option of filteredOptions | async" [id]="option.id" [value]="option.name">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <br />
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.description'|translate}} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.actions' | translate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="delete(row)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+  </div>
+  <div mat-dialog-actions class="row">
+    <div class="col-xs-4">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-8 text-right">
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="save()">
+        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

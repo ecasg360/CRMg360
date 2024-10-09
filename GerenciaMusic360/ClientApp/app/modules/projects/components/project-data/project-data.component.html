@@ -1,0 +1,195 @@
+<div class="row" [hidden]="!showProjectType">
+    <div class="col-xs-3 my-16 cursor-pointer" *ngFor="let projectType of projectTypeList"
+        (click)="selectProjectType(projectType.id)">
+        <mat-card>
+            <img mat-card-image class="imgproject" src="{{projectType.pictureUrl}}" alt="{{projectType.name}}"
+                onerror="this.src='assets/images/backgrounds/dark-material-bg.jpg'">
+            <mat-card-actions>
+                <p>{{ 'general.' + projectType.name | translate }}</p>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+<div [formGroup]="dataProjectForm" [hidden]="showProjectType">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+            <app-upload-image [image]="project.pictureUrl" [rounded]="false" errorImage="assets/images/Projects.jpg"
+                (selectImage)="selectImage($event)">
+            </app-upload-image>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+            <div class="row">
+                <div class="col-xs-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span>
+                        </mat-label>
+                        <input matInput type="text" placeholder="{{ 'formField.messages.enterName' | translate }}"
+                            formControlName="name">
+                        <mat-error *ngIf="f.name?.errors?.required">
+                            {{ 'validations.errors.nameRequired' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'general.description' | translate }}</mat-label>
+                        <textarea matInput placeholder="{{ 'formField.messages.enterDescription' | translate }}"
+                            formControlName="description" rows="4"></textarea>
+                        <mat-error *ngIf="f.description?.errors?.pattern">
+                            {{ 'validations.errors.invalidDescription' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                    <div *ngIf="showUpcCode">
+                        <mat-form-field appearance="outline">
+                            <mat-label>UPC Code</mat-label>
+                            <input matInput type="text"
+                                placeholder="{{ 'formField.messages.enterDescription' | translate }}"
+                                formControlName="upcCode">
+                            <mat-error *ngIf="f.upcCode?.errors?.required">
+                                {{ 'validations.errors.fieldRequired' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.artist' | translate }}&nbsp;<span class="red-required">*</span>
+                </mat-label>
+                <input type="text" placeholder="{{ 'general.artist' | translate }}" matInput
+                    formControlName="artistName" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="automCompleteSelected($event)">
+                    <mat-option *ngFor="let artist of artistFiltered | async" [id]="artist.id"
+                        [value]="artist.name + ' ' + artist.lastName">
+                        {{artist.name + " " + artist.lastName}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f.artistId?.errors?.required">
+                    {{ 'validations.errors.artistRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-xs-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ endDateLabel }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput [matDatepicker]="pickerEndDate" (dateChange)="dateChangeEvent('end',$event)"
+                    placeholder="{{ 'formField.messages.selectDate' | translate }}" formControlName="endDate">
+                <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEndDate></mat-datepicker>
+                <mat-error *ngIf="f.endDate?.errors?.required">
+                    {{ 'validations.errors.dateRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row" *ngIf="addMultipleArtist">
+        <div class="col-xs-12">
+            <mat-form-field appearance="outline">
+                <mat-chip-list #chipList aria-label="Members selection">
+                    <mat-chip *ngFor="let user of selectedUsersList" [selectable]="selectable" [removable]="removable"
+                        (removed)="remove(user.id)">
+                        {{user.name + ' ' + user.lastName}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="{{'general.guestArtists' | translate}}" #usersInput [formControl]="userCtrl"
+                        [matAutocomplete]="autoArtists" (keyup.enter)="enter($event)" [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur">
+                </mat-chip-list>
+                <mat-autocomplete #autoArtists="matAutocomplete" (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name + ' ' + user.lastName"
+                        [id]="user.id">
+                        {{user.name + ' ' + user.lastName}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.currency' | translate }}&nbsp;<span class="red-required">*</span>
+                </mat-label>
+                <mat-select placeholder="{{ 'formField.messages.selectCurrencies' | translate }}"
+                    formControlName="currencyId">
+                    <mat-option *ngFor="let item of currenciesList" [value]="item.value">
+                        {{item.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-xs-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ budgetLabel }}</mat-label>
+                <input matInput type="number" placeholder="{{ 'formField.messages.enterAmount' | translate }}"
+                    formControlName="totalBudget">
+                <mat-error *ngIf="f.totalBudget?.errors?.pattern">
+                    {{ 'validations.errors.incorrectFormat' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div *ngIf="project.projectTypeId == reportTypeEnum.event || project.projectTypeId == reportTypeEnum.artistSale">
+        <div class="row">
+            <h3 class="title text-center">{{ 'general.date' | translate }}</h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'projectEvents.venue' | translate }}</mat-label>
+                    <input matInput formControlName="venue">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+                <!-- Location List -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'projectEvents.location' | translate }}&nbsp;<span class="red-required">*</span>
+                    </mat-label>
+                    <input type="text" placeholder="{{ 'projectEvents.location' | translate }}" matInput
+                        [formControl]="locationFC" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteOptionSelected($event)">
+                        <mat-option *ngFor="let option of filteredOptions | async" [id]="option.value"
+                            [value]="option.viewValue">
+                            {{option.viewValue}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="f.locationId?.errors?.required">
+                        {{ 'validations.errors.categoryRequired' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row between-xs" *ngIf="project.projectTypeId == reportTypeEnum.artistSale">
+            <div class="col-xs-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'projectEvents.deposit' | translate }}</mat-label>
+                    <input matInput type="number" formControlName="deposit">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'projectEvents.depositDate' | translate }}</mat-label>
+                    <input matInput [matDatepicker]="pickerDepositDate" formControlName="depositDate">
+                    <mat-datepicker-toggle matSuffix [for]="pickerDepositDate"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerDepositDate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-xs-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'projectEvents.lastPayment' | translate }}</mat-label>
+                    <input matInput type="number" formControlName="lastPayment">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'projectEvents.lastPaymentDate' | translate }}</mat-label>
+                    <input matInput [matDatepicker]="pickerLastPaymentDate" formControlName="lastPaymentDate">
+                    <mat-datepicker-toggle matSuffix [for]="pickerLastPaymentDate"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerLastPaymentDate></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

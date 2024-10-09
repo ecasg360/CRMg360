@@ -1,0 +1,59 @@
+<form [formGroup]="dataProjectFilter">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="row">
+        <!-- Filter -->
+        <div class="col-xs-10" id="formFilter">
+          <div class="row">
+            <div class="col-xs-6">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'report.general.artist' | translate }}</mat-label>
+                <mat-select
+                  placeholder="{{ 'report.general.form.selectArtists' | translate }}"
+                  formControlName="artistId"
+                  (selectionChange)="getCampaigns()"
+                >
+                    <mat-option *ngFor="let artist of listArtists" [value]="artist.value">
+                        {{artist.viewValue}}
+                    </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'report.general.campaigns' | translate }}</mat-label>
+                <mat-select placeholder="{{ 'report.general.form.selectSingle' | translate }}"
+                    formControlName="singleId">
+                    <mat-option *ngFor="let single of listSingles" [value]="single.value">
+                        {{single.viewValue}}
+                    </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <!-- Button Generate -->
+        <div class="col-xs-2" id="buttonFilter">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button
+                      mat-flat-button
+                      color="primary"
+                      [disabled]="isWorking"
+                      (click)="searchByFilter()"
+                    >
+                        <mat-icon>search</mat-icon> {{ 'report.general.applyFilter' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-xs-12">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

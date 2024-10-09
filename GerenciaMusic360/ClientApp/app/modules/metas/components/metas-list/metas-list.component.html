@@ -1,0 +1,180 @@
+<div class="page-layout carded fullwidth">
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h3>{{'general.metas'|translate}}</h3>
+    </div>
+    <div class="w-50-p text-right pr-8">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.metas' | translate }}</span>
+    </div>
+  </div>
+  <div class="content  m-24 p-4 mat-card">
+    <div class="row">
+      <div class="col-xs-12" *ngIf="!showChart">
+        <div class="mb-4" style="float: right;">
+          <button
+            mat-mini-fab
+            color="primary"
+            (click)="toggleChart()"
+          >
+            <mat-icon>bar_chart</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-xs-12" *ngIf="showChart">
+        <div class="mb-4" style="float: right;">
+          <button
+            mat-mini-fab
+            color="primary"
+            (click)="toggleChart()"
+          >
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row m-4">
+      <div class="col-xs-12 col-md-6">
+        <div [formGroup]="metasForm">
+          <mat-form-field appearance="outline">
+            <mat-label>{{'general.date'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+            <input
+              matInput
+              [matDatepicker]="datepicker"
+              [matDatepickerFilter]="myFilter"
+              (dateChange)="dateChangeEvent($event)"
+              placeholder="{{ 'formField.messages.selectDate' | translate }}"
+              formControlName="theDate"
+            >
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker></mat-datepicker>
+            <mat-error *ngIf="f.theDate?.errors?.required">
+                {{ 'validations.errors.dateRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-3 metric">
+        <div>Metas totales: {{metasTotal}}</div>
+        Measurables: {{metasCompleted}} / {{metasMeasurables}}
+      </div>
+      <div class="col-xs-6 col-md-3 metric">
+        Avance: {{((metasCompleted * 100) / metasMeasurables).toFixed(2)}} %
+      </div>
+    </div>
+    <div class="row" *ngIf="!showChart">
+      <div class="col-xs-12">
+        <div class="card">
+          <div class="user-info" *ngFor="let meta of metas">
+            <div class="row">
+              <div class="user-picture">
+                <img
+                  src="{{meta?.userPicture}}"
+                  width="50"
+                  height="50"
+                  class="img-rounded cursor-pointer"
+                  alt="picture"
+                  onerror="this.src='assets/images/avatars/defaultProfile4.jpg';"
+                />
+              </div>
+              <div class="user-name">
+                <h3>{{meta.userName}}</h3>
+              </div>
+              <div class="user-metas">
+                <h3>Metas: {{meta.metas.length}}</h3>
+                <h3>Measurables: {{meta.completed}} / {{meta.measurables}}</h3>
+              </div>
+              <div class="actions">
+                  <button mat-mini-fab
+                          color="primary"
+                          (click)="addRecord(meta)"
+                          style="margin-left: 1rem;"
+                          *ngIf="perm.Metas && perm.Metas.Post && meta.metas.length == 0">
+                      <mat-icon>add</mat-icon>
+                  </button>
+                  <button mat-mini-fab
+                          color="primary"
+                          (click)="addRecord(meta)"
+                          style="margin-left: 1rem;"
+                          *ngIf="perm.Metas && perm.Metas.Post && meta.metas.length > 0">
+                      <mat-icon>visibility</mat-icon>
+                  </button>
+                  <button mat-mini-fab
+                          color="primary"
+                          (click)="showList(meta)"
+                          style="margin-left: 1rem;"
+                          *ngIf="meta.metas.length > 0 && !meta.show">
+                      <mat-icon>expand_more</mat-icon>
+                  </button>
+                  <button mat-mini-fab
+                          color="primary"
+                          (click)="showList(meta)"
+                          style="margin-left: 1rem;"
+                          *ngIf="meta.metas.length > 0 && meta.show">
+                      <mat-icon>expand_less</mat-icon>
+                  </button>
+                  <button mat-mini-fab
+                          color="primary"
+                          (click)="addDayliReport(meta)"
+                          style="margin-left: 1rem;"
+                          *ngIf="perm.Metas">
+                      <mat-icon>assignment</mat-icon>
+                  </button>
+              </div>
+            </div>
+            <div *ngIf="meta.show">
+              <div class="row" *ngFor="let row of meta?.metas">
+                <div class="meta-description">
+                  <div class="column-description">
+                    <div style="width: 60%;">
+                      {{row.goalDescription}}
+                    </div>
+                    <div style="width: 20%;">
+                      {{row.isMeasurable == 1 ? 'Measurable' : 'No Measurable'}}
+                    </div>
+                    <div style="width: 20%;" *ngIf="row.isMeasurable == 1">
+                      <mat-icon *ngIf="row.isCompleted == 1" class="green-icon">check_circle</mat-icon>
+                      <mat-icon *ngIf="row.isCompleted == 0" class="red-icon">warning</mat-icon>
+                    </div>
+                  </div>
+                  <div class="column-icon">
+                    <button
+                      mat-mini-fab
+                      color="secondary"
+                      (click)="reply(row)"
+                      style="margin-left: 1rem;"
+                      *ngIf="profile.userId == meta.userId"
+                    >
+                      <mat-icon>reply</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style="overflow-x: auto; margin: 2rem;"
+    *ngIf="showChart && multi.length > 0"
+  >
+    <ngx-charts-bar-horizontal-2d
+      [view]="view"
+      [scheme]="colorScheme"
+      [schemeType]="schemeType"
+      [results]="multi"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [legendPosition]="legendPosition"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+    >
+    </ngx-charts-bar-horizontal-2d>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { Component, Optional, Inject } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { allLang } from '@i18n/allLang';
+var AddAddressComponent = /** @class */ (function () {
+    function AddAddressComponent(translate, _fuseTranslationLoaderService, fb, actionData, dialogRef) {
+        this.translate = translate;
+        this._fuseTranslationLoaderService = _fuseTranslationLoaderService;
+        this.fb = fb;
+        this.actionData = actionData;
+        this.dialogRef = dialogRef;
+        this.fromComponent = false;
+        this.id = 0;
+        this.isWorking = true;
+        this.data = {};
+        this.isArtist = false;
+    }
+    AddAddressComponent.prototype.ngOnInit = function () {
+        var _a;
+        (_a = this._fuseTranslationLoaderService).loadTranslations.apply(_a, allLang);
+        this.id = this.actionData.id;
+        this.fromComponent = this.actionData.fromComponent;
+        this.data = this.actionData.model;
+        this.isArtist = this.actionData.isArtist;
+        if (this.id == 0) {
+            this.data = {};
+            this.titleAction = this.translate.instant('general.save');
+            this.action = this.translate.instant('general.save');
+        }
+        else {
+            this.titleAction = this.translate.instant('general.edit');
+            this.action = this.translate.instant('general.edit');
+            this.data = (this.actionData.model) ? this.actionData.model : {};
+        }
+        this.isWorking = false;
+        this.addressForm = this.fb.group({});
+    };
+    AddAddressComponent.prototype.bindExternalForm = function (name, form) {
+        this.addressForm.setControl(name, form);
+    };
+    Object.defineProperty(AddAddressComponent.prototype, "f", {
+        get: function () { return this.addressForm.controls; },
+        enumerable: false,
+        configurable: true
+    });
+    AddAddressComponent.prototype.setAddress = function () {
+        this.isWorking = true;
+        if (!this.addressForm.invalid) {
+            this.isWorking = true;
+            this.data = this.addressForm.value.address;
+            this.data.id = this.id;
+            this.dialogRef.close(this.data);
+        }
+        this.isWorking = false;
+    };
+    AddAddressComponent.prototype.onNoClick = function (status) {
+        if (status === void 0) { status = false; }
+        this.dialogRef.close(undefined);
+    };
+    AddAddressComponent = __decorate([
+        Component({
+            selector: 'app-add-address',
+            templateUrl: './add-address.component.html',
+            styleUrls: ['./add-address.component.scss']
+        }),
+        __param(3, Optional()),
+        __param(3, Inject(MAT_DIALOG_DATA)),
+        __metadata("design:paramtypes", [TranslateService,
+            FuseTranslationLoaderService,
+            FormBuilder, Object, MatDialogRef])
+    ], AddAddressComponent);
+    return AddAddressComponent;
+}());
+export { AddAddressComponent };
+//# sourceMappingURL=add-address.component.js.map

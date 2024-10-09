@@ -1,0 +1,92 @@
+/* DRAGGABLE*/
+
+.task-box-list {
+    width: 100%;
+    max-width: 100%;
+    border: solid 1px #ccc;
+    min-height: 40px;
+    display: block;
+    background: white;
+    overflow: hidden;
+}
+
+.task-box {
+    padding: 3px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    background: white;
+    font-size: 14px;
+    /*display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;*/
+    box-sizing: border-box;
+}
+
+.task-box-item {
+    cursor: move;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.task-box-item:last-child {
+    border: none;
+}
+
+.task-box-list.cdk-drop-list-dragging .task-box-item:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.task-box-custom-placeholder {
+    background: #ccc;
+    border: dotted 3px #999;
+    min-height: 60px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* END DRAGGABLE*/
+
+/*CHART*/
+.donut-container {
+    width: 40px;
+    height: 40px;
+    float: left;
+    -webkit-border-radius: 75px;
+    -moz-border-radius: 75px;
+    border-radius: 75px;
+    margin-right: 12px;
+}
+
+.donut-inner {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: 5px;
+    left: 5px;
+    background: #FFF;
+    -webkit-border-radius: 65px;
+    -moz-border-radius: 65px;
+    border-radius: 65px;
+}
+
+.donut-label {
+    line-height: 28px;
+    text-align: center;
+    font-size: 11px;
+}
+
+/* END CHART*/

@@ -1,0 +1,249 @@
+<div class="page-layout carded fullwidth">
+    <!-- HEADER -->
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h4>{{ 'general.projects' | translate }}</h4>
+        </div>
+        <div class="custom-breadcrum">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <a (click)="goBack($event)" class="fuse-white-fg cursor-pointer">{{ 'general.projects' | translate }}</a> /
+            <span class="secondary-text">{{ 'general.management' | translate }}</span>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content">
+        <mat-tab-group>
+            <!-- tab information -->
+            <mat-tab
+                class="tab-body"
+                label="{{'general.general' | translate}}"
+                *ngIf="perm.Project.Get"
+            >
+                <div class="p-20" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <div class="row between-lg between-md">
+                        <div class="col-xs-12 col-lg-6 col-md-6 col-sm-12 p-8">
+                            <!-- general information -->
+                            <mat-card class="mb-12" [formGroup]="addProjectForm">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">{{ 'general.generalInformation' | translate }}</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <app-project-data (formReady)="bindExternalForm('generalData',$event)"
+                                        [project]="project" [showProjectType]="false" [projectId]="projectId"
+                                        [projectType]="projectTypeId"></app-project-data>
+                                </mat-card-content>
+                                <mat-card-actions class="row">
+                                    <div class="col-xs-4">
+                                        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                                    </div>
+                                    <div class="col-xs-8 text-right">
+                                        <button mat-flat-button color="primary" [disabled]="isWorking"
+                                            (click)="goBack($event)">
+                                            <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                                        </button>&nbsp;
+                                        <button
+                                            color="accent"
+                                            class="mat-raised-button mat-accent addProject"
+                                            (click)="update()"
+                                            [disabled]="isWorking || !addProjectForm.valid"
+                                            *ngIf="perm.Project.Post"
+                                        >
+                                            <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+                                        </button>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+                            <!-- / general information -->
+                        </div>
+                        <div class="col-xs-12 col-lg-6 col-md-6 col-sm-12 p-8">
+                            <!-- contacts -->
+                            <mat-card [@animate]="{value:'*',params:{x:'50px'}}" class="fix-overflow px-12 mb-12">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">{{ 'general.contacts' | translate }}</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <app-project-contact [projectId]="projectId"></app-project-contact>
+                                </mat-card-content>
+                            </mat-card>
+                            <!-- / contacts -->
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- / tab information -->
+
+            <!-- tab works -->
+            <mat-tab
+                *ngIf="projectTypeId != 5 && projectTypeId != 6"
+                class="tab-body"
+                label="Assets"
+            >
+                <mat-card [@animate]="{value:'*',params:{y:'100%'}}">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <h3 class="h3">Assets</h3>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <app-project-work [projectId]="projectId" [project]="project"></app-project-work>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+            <!-- /tab works -->
+
+            <!-- tab labelCopy -->
+            <mat-tab
+                class="tab-body"
+                *ngIf="projectTypeId != 5 && projectTypeId != 6 && perm.LabelCopy.Get"
+                label="{{'general.labelCopy' | translate}}"
+            >
+                <!-- label copy -->
+                <mat-card [@animate]="{value:'*',params:{x:'50px'}}" class="m-12 fix-overflow">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <h3 class="h3">
+                                {{'general.labelCopy' | translate}}&nbsp;
+                                <mat-icon class="cursor-pointer" mat-icon-button
+                                    matTooltip="{{'general.downloadLabelCopy'|translate}}"
+                                    (click)="downloadLabelCopy(project.id,project.name)">cloud_download</mat-icon>
+                            </h3>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <app-project-label-copy
+                            [project]="project"
+                            [perm]="perm.LabelCopy"
+                        ></app-project-label-copy>
+                    </mat-card-content>
+                </mat-card>
+                <!-- / label copy -->
+            </mat-tab>
+            <!-- /tab labelCopy -->
+
+            <!-- tab tasks -->
+            <mat-tab
+                class="tab-body"
+                label="{{'general.tasks' | translate}}"
+                *ngIf="perm.ProjectTask.Get"
+            >
+                <div class="p-12 fix-overflow" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <div class="row between-lg between-md">
+                        <div class="col-xs-12 col-lg-8 col-sm-12 col-md-8">
+                            <!-- tasks -->
+                            <div class="m-0 p-0 fix-overflow" [@animate]="{value:'*',params:{x:'50px'}}">
+                                <app-project-task
+                                    [project]="project"
+                                    [perm]="perm.ProjectTask"
+                                ></app-project-task>
+                            </div>
+                            <!-- / tasks -->
+                        </div>
+
+                        <div class="col-xs-12 col-lg-4 col-sm-12 col-md-4">
+                            <mat-card [@animate]="{value:'*',params:{x:'50px'}}" class="fix-overflow mb-12">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">{{ 'general.activities' | translate }}</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <app-project-activities [projectId]="project.id"></app-project-activities>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- /tab task -->
+
+            <!-- tab budget and travel -->
+            <mat-tab
+                label="{{tabBudgetLabel}}"
+                *ngIf="perm.ProjectBudget.Get"
+            >
+                <div class="p-20" *fuseIfOnDom [@animateStagger]="{value:'50'}" >
+                    <div class="row">
+                        <div class="col-xs-12 p-8">
+                            <!-- budget -->
+                            <mat-card [@animate]="{value:'*',params:{x:'50px'}}" class="fix-overflow px-12 mb-12">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">{{ budgetLabel }}</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <app-project-budget
+                                        [project]="project"
+                                        [perm]="perm.ProjectBudget"
+                                    ></app-project-budget>
+                                </mat-card-content>
+                            </mat-card>
+                            <!-- / budget -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 p-8">
+                            <!-- travel -->
+                            <mat-card [@animate]="{value:'*',params:{y:'100%'}}">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">{{ 'travelLogistics.title' | translate }}</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <app-report [projectTypeId]="project.projectTypeId" [artistId]="project.artistId" [projectId]='project.id'>
+                                    </app-report>
+                                    <hr>
+                                    <app-travel-logistic
+                                        [projectTypeId]="project.projectTypeId"
+                                        [projectId]='project.id'
+                                        [perm]="perm.ProjectTravelLogistics" 
+                                    ></app-travel-logistic>
+                                </mat-card-content>
+                            </mat-card>
+                            <!-- / travel -->
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- /budget and travel -->
+
+            <!-- buyers -->
+            <mat-tab *ngIf="projectTypeId === 6" label=" {{'general.buyers' | translate}}">
+                <div class="p-20" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <div class="row">
+                        <div class="col-xs-12 p-8">
+                            <mat-card [@animate]="{value:'*',params:{y:'100%'}}">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <h3 class="h3">{{ 'general.buyers' | translate }}</h3>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <app-project-buyer [projectId]="projectId">
+                                    </app-project-buyer>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-- /buyers -->
+
+            <!-- calendar -->
+            <mat-tab label="{{'general.calendar' | translate}}">
+                <div class="px-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+                    <app-calendar-manager [create]="false" [moduleId]="project.id" [eventType]="eventType.project">
+                    </app-calendar-manager>
+                </div>
+            </mat-tab>
+            <!-- / calendar -->
+        </mat-tab-group>
+    </div>
+    <!-- / CONTENT -->
+</div>

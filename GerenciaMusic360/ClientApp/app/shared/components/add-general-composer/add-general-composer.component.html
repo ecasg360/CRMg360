@@ -1,0 +1,117 @@
+<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+               {{title}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false" class="cursor-pointer" (click)="dialogRef.close(null)">close</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<form [formGroup]="addComposerForm" class="p-4 w-100-p">
+    <div class="row">
+        <div class="col-xs-12">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <app-upload-image errorImage="assets/images/avatars/defaultProfile4.jpg"
+                                  [image]="pictureURL" (selectImage)="selectImage($event)">
+                </app-upload-image>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'general.name'|translate}}(s)&nbsp;<span class="red-required">*</span></mat-label>
+                            <input matInput placeholder="{{'general.name'|translate}}(s)" formControlName="name">
+                            <mat-error *ngIf="f.name?.errors?.required">
+                                {{'general.required'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xs-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'general.lastName'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                            <input matInput placeholder="{{'general.lastName'|translate}}" formControlName="lastName">
+                            <mat-error *ngIf="f.lastName?.errors?.required">
+                                {{'general.required'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'general.email'|translate}}</mat-label>
+                    <input matInput placeholder="{{'general.email'|translate}}" formControlName="email">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'general.officePhone'|translate}}</mat-label>
+                    <input matInput placeholder="{{'general.officePhone'|translate}}" formControlName="officePhone">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'general.cellPhone'|translate}}</mat-label>
+                    <input matInput placeholder="Ingresa Teléfono Celular" formControlName="cellPhone">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <!-- Association List -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'general.association' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <mat-select formControlName="associationId"
+                                placeholder="{{ 'formField.messages.selectAssociation'  | translate }}">
+                        <mat-option *ngFor="let item of associations" [value]="item.value">
+                            {{item.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <!-- Editor List -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'general.editor' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <mat-select formControlName="editorId"
+                                placeholder="{{ 'formField.messages.selectEditor'  | translate }}">
+                        <mat-option *ngFor="let item of editors" [value]="item.value">
+                            {{item.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <!-- IPI Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>IPI</mat-label>
+                    <input type="text" formControlName="IPI" placeholder="IPI" aria-label="text" matInput>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="row">
+        <div class="col-xs-4">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="col-xs-8 text-right">
+            <button mat-stroked-button color="primary" type="button" (click)="dialogRef.close(null)">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" [disabled]="isWorking" (click)="save()">
+                <mat-icon>save</mat-icon> {{'general.save' | translate}}
+            </button> &nbsp;
+        </div>
+    </mat-dialog-actions>
+</form>

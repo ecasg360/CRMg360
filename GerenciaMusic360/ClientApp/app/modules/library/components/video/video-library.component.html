@@ -1,0 +1,21 @@
+﻿<div class="page-layout carded fullwidth">
+
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h4>{{ 'general.videoLibrary' | translate }}</h4>
+        </div>
+        <div class="custom-breadcrum">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <a routerLink="/library/video" class="fuse-white-fg">{{ 'general.videoLibrary' | translate }}</a>
+        </div>
+    </div>
+
+    <div class="content  m-24 p-12 mat-card">
+        <div class="row">
+            <div class="col-xs-12">
+                <app-video-library-manager></app-video-library-manager>
+            </div>
+        </div>
+    </div>
+
+</div>

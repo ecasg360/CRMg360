@@ -1,0 +1,125 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'settings.field.title' | translate }}</h4>
+    </div>
+    <div class="w-50-p text-right pr-8">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'settings.field.title' | translate }}</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content p-4 mat-card">
+      <div class="row">
+          <div class="col-xs-2">
+              <button mat-flat-button color="primary" *ngIf="perm.Field.Post" class="my-16 mx-8" (click)="showModalForm()">
+                  <mat-icon>add</mat-icon>&nbsp;{{ 'general.new' | translate }}
+              </button>
+          </div>
+          <div class="col-xs-10">
+              <mat-form-field appearance="outline" class="w-100-p m-4" *ngIf="isDataAvailable">
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+              </mat-form-field>
+          </div>
+      </div>      
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" class="w-100-p" matSort>
+              <ng-container matColumnDef="fieldTypeName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'settings.field.fieldType' | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.fieldTypeName}} </mat-cell>
+            </ng-container>
+              <ng-container matColumnDef="text">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'settings.field.text' | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.text}} </mat-cell>
+            </ng-container>
+              <ng-container matColumnDef="valueDefault">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      {{ 'settings.field.valueDefault' | translate }}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.valueDefault}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="moduleId">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> moduleId </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.moduleId}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="moduleName">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      {{ 'settings.field.module' | translate }}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.moduleName}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="moduleTypeId">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> ModuleTypeId </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.moduleTypeId}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="moduleTypeName">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      {{ 'settings.field.moduleType' | translate }}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.moduleTypeName}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="dimension">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      {{ 'settings.field.dimension' | translate }}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.dimension}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="position">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      {{ 'settings.field.position' | translate }}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.position}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="required">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      {{ 'general.required' | translate }}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.required}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="marker">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'settings.field.marker' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.marker}} </mat-cell>
+                </ng-container>
+              <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'general.status' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-slide-toggle [checked]="row.statusRecordId==1"
+                                        (change)="updateStatus(row.id, row.statusRecordId)">
+                        </mat-slide-toggle>
+                    </mat-cell>
+                </ng-container>
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'general.actions' | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <button mat-icon-button color="primary" *ngIf="perm.Field.Put" (click)="showModalForm(row)">
+                        <mat-icon>create</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" *ngIf="perm.Field.Delete" (click)="confirmDelete(row.id, row.name)">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+          <div *ngIf="!isDataAvailable">
+              <h1 class="m-8 mat-display-1 text-center">{{ 'general.errors.noData' | translate }}</h1>
+          </div>
+      </div>
+  </div>
+  <!-- / CONTENT -->
+</div>

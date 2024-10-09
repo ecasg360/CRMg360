@@ -1,0 +1,11 @@
+mat-dialog-content{
+    padding-top: 20px;
+}
+
+h5{
+    margin: 0;
+    position: relative;
+    top: -15px;
+    text-align: center;
+    color: #f44336;
+}

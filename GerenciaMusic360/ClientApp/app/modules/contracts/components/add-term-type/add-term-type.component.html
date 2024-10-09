@@ -1,0 +1,53 @@
+<div mat-dialog-title>{{ 'general.addTermType' | translate }}</div>
+<div class="p-8" [formGroup]="form">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <input type="text" placeholder="{{'general.name' | translate}}" matInput [formControl]="termTypeFC"
+        [matAutocomplete]="auto" (keyup.enter)="enter()">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteOptionSelected($event)">
+        <mat-option *ngFor="let option of filteredOptions | async" [id]="option.value" [value]="option.viewValue">
+          {{option.viewValue}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <div class="mt-4 mb-8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.name'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.viewValue}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.actions' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="deleteTermTypeTable(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+    <mat-error *ngIf="f.termType?.errors?.required">
+      {{ 'validations.errors.fieldRequired' | translate }}
+    </mat-error>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="row">
+    <div class="col-xs-6">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-6 text-right">
+      <button mat-flat-button class="accent" [disabled]="isWorking" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button class="accent" [disabled]="!form.valid || isWorking" (click)="set()">
+        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

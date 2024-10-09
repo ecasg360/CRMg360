@@ -1,0 +1,83 @@
+<div [formGroup]="personDocumentForm" class="h-100-p">
+    <h3 mat-dialog-title>{{titleAction}}</h3>
+    <mat-dialog-content>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{ 'general.documentType' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <mat-select placeholder="{{ 'formField.messages.selectDocumentType'  | translate }}"
+                            formControlName="personDocumentTypeId">
+                    <mat-option *ngFor="let documentType of documentTypes" [value]="documentType.value">
+                        {{documentType.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.personDocumentTypeId?.errors?.required">
+                    {{ 'validations.errors.documentTypeRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{ 'general.country' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <mat-select placeholder="{{ 'formField.messages.enterCountry' | translate }}"
+                            formControlName="countryId">
+                    <mat-option *ngFor="let country of countries" [value]="country.value">
+                        {{country.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.countryId?.errors?.required">
+                    {{ 'validations.errors.countryRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{ 'general.documentNumber' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterDocumentNumber' | translate }}"
+                       formControlName="number">
+                <mat-error *ngIf="f.number?.errors?.required">
+                    {{ 'validations.errors.numberRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.issueDate' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput [matDatepicker]="pickerPassport2"
+                       placeholder="{{ 'general.issueDate' | translate }}"
+                       formControlName="emisionDateString">
+                <mat-datepicker-toggle matSuffix [for]="pickerPassport2"></mat-datepicker-toggle>
+                <mat-datepicker #pickerPassport2></mat-datepicker>
+                <mat-error *ngIf="f.emisionDateString?.errors?.required">
+                    {{ 'validations.errors.emisionDateRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.expirationDate' | translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput [matDatepicker]="pickerPassport"
+                       placeholder="{{ 'formField.messages.selectExpirationDate' | translate }}"
+                       formControlName="expiredDateString">
+                <mat-datepicker-toggle matSuffix [for]="pickerPassport"></mat-datepicker-toggle>
+                <mat-datepicker #pickerPassport></mat-datepicker>
+                <mat-error *ngIf="f.expiredDateString?.errors?.required">
+                    {{ 'validations.errors.expiredDateRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{ 'general.legalName' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{ 'general.legalName' | translate }}"
+                       formControlName="legalName">
+                <mat-error *ngIf="f.legalName?.errors?.required">
+                    {{ 'validations.errors.nameRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+        <div class="row end-xs">
+                <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                    <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                </button>&nbsp;
+                <button mat-flat-button color="primary" [disabled]="!personDocumentForm.valid" (click)="setDocument()">
+                    {{action}}&nbsp;<mat-icon>save</mat-icon>
+                </button>&nbsp;
+        </div>
+
+</div>

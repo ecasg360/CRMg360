@@ -1,0 +1,32 @@
+<h3 mat-dialog-title> Agregar las preferencias del tipo {{name}}</h3>
+<form [formGroup]="addPreferenceSubtypeForm">
+    <mat-dialog-content>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-12">
+                <mat-label>{{ 'general.PreferenceSubType' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <mat-select placeholder="{{ 'formField.messages.selectPreferenceSubType' | translate }}"
+                            formControlName="subTypeId" multiple>
+                    <mat-option *ngFor="let item of preferencesTypes" [value]="item.value">
+                        {{item.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.notificationIds?.errors?.required">
+                    {{ 'validations.errors.notificationIds' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions class="end-xs">
+        <div class="row">
+            <div class="col-xs-12">
+                <button mat-stroked-button color="primary" type="button" (click)="onNoClick();">
+                    <i class="fas fa-ban fa-lg"></i> Cancelar
+                </button>
+                <button mat-flat-button color="primary" type="submit" (click)="setPersonPreference();">
+                    <i class="fas fa-save fa-lg"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</form>

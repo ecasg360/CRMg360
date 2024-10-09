@@ -1,0 +1,42 @@
+.event-calendar-wrap {
+    max-height: 300px;
+    overflow: scroll;
+}
+
+.date-box {
+    border: 1px solid #000000;
+}
+
+.sub-header {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#cedce7+0,596a72+100;Grey+3D+%231 */
+    background: #044a9f;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, #044a9f 0%, #fff 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #044a9f 0%, #fff 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to top, #044a9f 0%, #fff 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#044a9f', endColorstr='#fff', GradientType=0);
+    /* IE6-9 */
+    position: relative;
+}
+
+.sub-header h1 {
+    margin: 35px 0 25px 30px;
+    color: #000;
+}
+
+.sub-header-img {
+    width: 300px;
+    position: absolute;
+    left: 65%;
+    top: -5px;
+    z-index: 1;
+}
+
+.content-dates {
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden
+}

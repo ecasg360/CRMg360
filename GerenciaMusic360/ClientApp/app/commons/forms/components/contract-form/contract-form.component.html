@@ -1,0 +1,137 @@
+  <div [formGroup]="contractForm" class="p-4 w-100-p">
+    <div class="row">
+      <div class="col-xs-6">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'general.owner' | translate }}</mat-label>
+          <input matInput type="text" placeholder="{{ 'formField.messages.enterOwner' | translate }}"
+            formControlName="localCompanyName" readonly="true" required>
+          <mat-error *ngIf="f.owner?.errors?.required">
+            {{ 'validations.errors.ownerRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-6">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'general.name' | translate }}</mat-label>
+          <input matInput type="text" placeholder="{{ 'formField.messages.enterContractName' | translate }}"
+            formControlName="name" required>
+          <mat-error *ngIf="f.name?.errors?.required">
+            {{ 'validations.errors.contractNameRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ initDateLabel }}
+          </mat-label>
+          <input matInput [matDatepicker]="pickerInitialDate" [max]="endDate"
+            (dateChange)="dateChangeEvent('start', $event)" placeholder="{{ initDateLabel }}"
+            formControlName="startDate" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerInitialDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerInitialDate></mat-datepicker>
+          <mat-error *ngIf="f.initialDate?.errors?.required">
+            {{ 'validations.errors.fieldRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-6">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ endDateLabel }}</mat-label>
+          <input matInput [matDatepicker]="pickerEndDate" [min]="initDate" (dateChange)="dateChangeEvent('end',$event)"
+            placeholder="{{ endDateLabel }}" formControlName="endDate" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEndDate></mat-datepicker>
+          <mat-error *ngIf="f.endDate?.errors?.required">
+            {{ 'validations.errors.fieldRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'general.description' | translate }}</mat-label>
+          <input>
+          <textarea matInput placeholder="{{ 'formField.messages.enterDescription' | translate }}"
+            formControlName="description" rows="5"></textarea>
+          <mat-error *ngIf="f.description?.errors?.required">
+            {{ 'validations.errors.descriptionRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
+        <mat-form-field appearance="outline">
+          <input type="text" placeholder="{{'general.projects' | translate}}" aria-label="projects" matInput
+            [formControl]="projectFC" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="auSelected($event)"
+            (closed)="auClosed('project')">
+            <mat-option *ngFor="let option of filteredOptions | async" [id]="option.value" [value]="option.viewValue">
+              {{option.viewValue}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
+        <mat-form-field appearance="outline">
+          <input type="text" placeholder="{{'general.tasks' | translate}}" aria-label="task" matInput
+            [formControl]="projectTaskFC" [matAutocomplete]="autoTask">
+          <mat-autocomplete #autoTask="matAutocomplete" (optionSelected)="auSelectedTask($event)"
+            (closed)="auClosed('task')">
+            <mat-option *ngFor="let option of filteredOptionsTask | async" [id]="option.value"
+              [value]="option.viewValue">
+              {{option.viewValue}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <mat-checkbox (change)="checkedHasAmount($event)" formControlName="hasAmount">
+          {{ 'general.hasAmount' | translate }}
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="row mt-8" [hidden]="!showHasAmountOptions">
+      <div class="col-xs-4">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'general.currency' | translate }}</mat-label>
+          <mat-select placeholder="{{ 'formField.messages.selectCurrency' | translate }}" formControlName="currencyId">
+            <mat-option *ngFor="let item of currencies" [value]="item.value">
+              {{item.viewValue}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f.currencyId?.errors?.required">
+            {{ 'validations.errors.currencyRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-4">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'general.amount' | translate }}</mat-label>
+          <input matInput type="text" placeholder="{{ 'formField.messages.enterAmount' | translate }}"
+            formControlName="amount">
+          <mat-error *ngIf="f.amount?.errors?.required">
+            {{ 'validations.errors.amountRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-4">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'general.time' | translate }}</mat-label>
+          <mat-select placeholder="{{ 'formField.messages.selectTime' | translate }}" formControlName="timeId">
+            <mat-option *ngFor="let item of times" [value]="item.value">
+              {{item.viewValue}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f.timeId?.errors?.required">
+            {{ 'validations.errors.timeRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,90 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'general.contracts' | translate }}</h4>
+    </div>
+    <div class="custom-breadcrum">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.contracts' | translate }}</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content m-12">
+    <div class="row mb-12">
+      <div class="col-xs-8 col-sm-3 col-md-6 col-lg-3">
+        <button color="accent" class="mat-raised-button mat-accent" *ngIf="perm.Contract.Post" (click)="openModal()">
+          <span class="mat-button-wrapper">
+            <mat-icon>add</mat-icon>&nbsp;{{ 'general.CreateNewContract' | translate }}
+          </span>
+        </button>
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-6 col-lg-2">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-12 col-lg-7">
+        <mat-form-field appearance="outline">
+          <input matInput #searchInput (keyup)="applyFilter($event.target.value)"
+            placeholder="{{ 'general.search' | translate }}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" *ngFor="let item of filteredContracts">
+        <mat-card class="mb-16 mx-0">
+          <mat-card-header class="custom-card-header">
+            <p class="cut-text text-center mx-0 my-4 w-100-p">
+              <a class="card-link" routerLink="/contracts/manage/{{item.id}}"
+                matTooltip="{{item.name}}">{{item.name}}</a> <br />
+              <small>{{item.contractType ? item.contractType.name : '~'}}</small>
+            </p>
+          </mat-card-header>
+          <img mat-card-image class="image-card" src="assets/images/contract-type/preview.jpg" width="100"
+            alt="{{item.name}}">
+          <mat-card-content>
+            <ul class="panel-list">
+              <li class="mt-4 pt-4 text-center"><small>{{item.localCompany ? item.localCompany.name : '~'}}</small></li>
+              <li class="mt-4 pt-4"><strong>
+                  <mat-icon class="s-16">calendar_today</mat-icon>&nbsp;{{ 'general.startDate' | translate }}:
+                </strong>
+                {{item.startDate | date}}</li>
+              <li class="mt-4 pt-4"><strong>
+                  <mat-icon class="s-16">calendar_today</mat-icon>&nbsp;{{ 'general.endDate' | translate }}:
+                </strong>
+                {{item.endDate | date}}</li>
+            </ul>
+          </mat-card-content>
+          <mat-card-actions class="actionCard">
+            <div class="row">
+              <div class="col-xs-3">
+                <button mat-button *ngIf="item.projectId > 0" matTooltip="{{'general.previewProject'|translate}}"
+                  (click)="showProjectDetail(item.projectId)">
+                  <mat-icon>description</mat-icon>
+                </button>
+              </div>
+              <div class="col-xs-3">
+                <button mat-button matTooltip="{{ 'general.download' | translate }}" (click)="downloadFile(item.id)">
+                  <mat-icon>cloud_download</mat-icon>
+                </button>
+              </div>
+              <div class="col-xs-3">
+                <button mat-button matTooltip="{{'general.edit'|translate}}" *ngIf="perm.Contract.Put" routerLink="manage/{{item.id}}">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <div class="col-xs-3">
+                <button mat-button matTooltip="{{'general.delete'|translate}}" *ngIf="perm.Contract.Delete"
+                  (click)="confirmDelete(item.id, item.name)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <!-- / CONTENT -->
+</div>

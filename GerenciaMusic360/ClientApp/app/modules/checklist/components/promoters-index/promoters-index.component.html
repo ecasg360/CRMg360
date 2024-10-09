@@ -1,0 +1,107 @@
+<div class="page-layout carded fullwidth">
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h3>{{'general.checklist'|translate}}</h3>
+    </div>
+    <div class="w-50-p text-right pr-8">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.checklist' | translate }}</span>
+    </div>
+  </div>
+  <div class="content  m-24 p-4 mat-card">
+
+    <div class="row">
+      <div class="col-xs-9 col-md-2 col-sm-3 col-lg-2">
+        <button mat-flat-button color="primary" class="my-16 mx-8" *ngIf="perm.Checklist.Post" (click)="openModal(null)">
+          <mat-icon>add</mat-icon>&nbsp;{{ 'general.add' | translate }}
+        </button>
+      </div>
+      <div class="col-xs-3 col-md-1 col-sm-1 col-lg-1">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      </div>
+      <div class="col-xs-12 col-md-8 col-sm-8 col-lg-9">
+        <mat-form-field appearance="outline" class="w-100-p m-4">
+          <mat-label>{{'general.search'|translate}}</mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'general.search'|translate}}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource" matSort class="w-100-p" class="mat-table">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.name'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="lastname">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.lastName'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.lastname}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.phone'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.phone}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.email'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="terms">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.terms'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.terms}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="contactType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.contactType'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.contactType}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="deal">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.deal'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{(row.deal == 0) ? 'N' : 'Y'}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dateContact">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.date'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.dateContact | date:'MM-dd-yyyy'}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="by">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.by'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.by}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.actions' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-icon
+              *ngIf="perm.Checklist.Get"
+              (click)="openView(row)"
+              class="pointer mat-icon-checklist"
+            >visibility</mat-icon>
+            <mat-icon
+              *ngIf="perm.Checklist.Put"
+              (click)="openModal(row)"
+              class="pointer mat-icon-checklist"
+            >create</mat-icon>
+            <mat-icon
+              *ngIf="perm.Checklist.Delete"
+              (click)="confirmDelete(row.id, row.name)"
+              class="pointer"
+            >delete_outline</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

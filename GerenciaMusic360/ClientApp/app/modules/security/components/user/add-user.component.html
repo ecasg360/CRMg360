@@ -1,0 +1,170 @@
+﻿<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{'general.add'|translate}} {{'general.user'|translate}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false">perm_identity</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<form class="p-4 w-100-p" [formGroup]="addUserForm">
+    <div mat-dialog-content>
+        <br />
+        <div class="row">
+            <div class="col-xs-6 p-8">
+                <img class="avatar img-responsive" [src]="croppedImage" />
+            </div>
+            <div class="col-xs-6 p-8">
+                <button mat-mini-fab color="primary" type="button"
+                        onclick="document.getElementById('fileToUpload').click()">
+                    <mat-icon>cloud_upload</mat-icon>
+                </button> <span *ngIf="croppedImage?.length == 0"> {{'general.uploadimage'|translate}}</span>
+                <input id="fileToUpload" (change)="fileChangeEvent($event);" type="file"
+                       style="display:none;">
+                <button *ngIf="croppedImage?.length > 0" mat-mini-fab (click)="removeImage();" color="warn">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-12 p-8">
+                <mat-label>{{'general.name'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="Ingresa Nombre(s)" formControlName="name" required>
+                <mat-error *ngIf="f.name?.errors?.required">
+                    {{'general.required'|translate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.lastName'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{'general.lastName'|translate}}" formControlName="lastName" required>
+                <mat-error *ngIf="f.lastName?.errors?.required">
+                    {{'validations.errors'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.secondLastName'|translate}}</mat-label>
+                <input matInput placeholder="{{'general.secondLastName'|translate}}" formControlName="secondLastName">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.phone'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{'general.phone'|translate}}" formControlName="phoneOne">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.birthdate'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="{{'general.birthdate'|translate}}"
+                       formControlName="birthdate" [value]="birthdate" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="f.birthdate?.errors?.required">
+                    {{'general.'}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.genre'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <mat-select placeholder="{{'general.genre'|translate}}" formControlName="gender" required>
+                    <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                        {{gender.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.gender?.errors?.required">
+                    {{'general.required'|translate}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.departament'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <mat-select placeholder="{{'general.departament'|translate}}" formControlName="departmentId" required>
+                    <mat-option *ngFor="let item of departments" [value]="item.value">
+                        {{item.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.departmentId?.errors?.required">
+                    {{'general.required'|translate}}
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.role'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <mat-select placeholder="{{'general.role'|translate}}" formControlName="roleId" required>
+                    <mat-option *ngFor="let role of roles" [value]="role.value">
+                        {{role.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.roleId?.errors?.required">
+                    {{'general.required'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.email'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{'general.email'|translate}}" formControlName="email" required>
+                <mat-error *ngIf="f.email?.errors?.required">
+                    {{'general.required'|translate}}
+                </mat-error>
+                <mat-error *ngIf="f.email?.errors?.email">
+                    {{'validations.errors.incorrectFormat'|translate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row" *ngIf="(this.id==0)">
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.password'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="{{'general.password'|translate}}" type="password" formControlName="password"
+                       required>
+                <mat-error *ngIf="f.password?.errors?.required">
+                    {{'general.required'|translate}}
+                </mat-error>
+                <mat-error *ngIf="f.password?.hasError('minlength')">
+                    {{'general.validations.errors.fieldMinLength'|translate}}
+                </mat-error>
+                <mat-error *ngIf="f.password?.hasError('maxLength')">
+                    {{'general.validations.errors.fieldMaxLength'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-xs-6 p-8">
+                <mat-label>{{'general.confirmpassword'|translate}}</mat-label>
+                <input matInput placeholder="Confirma Contraseña" type="password"
+                       formControlName="confirmPassword" required>
+                <mat-error *ngIf="addUserForm.hasError('notSame')">
+                    {{'general.passwordnoequal'|translate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <mat-dialog-actions class="pull-right">
+        <div class="w-40-p text-right">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="w-60-p text-right">
+            <button mat-stroked-button color="primary" type="button" (click)="onNoClick();">
+                <mat-icon>cancel</mat-icon> {{'general.cancel'|translate}}
+            </button>&nbsp;
+            <button *ngIf="actionBtn=='create'" mat-flat-button color="primary" type="submit"
+                    (click)="setUser();">
+                <mat-icon>save</mat-icon> {{'general.save'|translate}}
+            </button>&nbsp;
+
+            <button *ngIf="actionBtn=='update'" mat-flat-button color="primary" type="submit"
+                    (click)="updateUser(id);">
+                <mat-icon>save</mat-icon> {{'general.save'|translate}}
+            </button>&nbsp;
+        </div>
+    </mat-dialog-actions>
+</form>
+
+
+

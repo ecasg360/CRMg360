@@ -1,0 +1,79 @@
+<div [formGroup]="formStreamPlaylist">
+  <mat-dialog-content>
+    <div class="social-container mb-12">
+      <table class="table">
+        <tr>
+          <td class="social-item m-4" *ngFor="let item of socialNetworksList">
+            <img
+              src="{{item.pictureUrl}}"
+              height="60"
+              width="60"
+              class="{{item.id == activeSocial ? 'mat-elevation-z4 m-4': ''}}"
+              matTooltip="{{item.name}}"
+              (click)="addSocialNetwork(item)"
+              alt="{{item.name}}"
+              onerror="this.src='assets/images/socialMedia.png';"
+            >
+          </td>
+        </tr>
+      </table>
+      <mat-error *ngIf="f.social?.errors?.required">
+        {{ 'validations.errors.fieldRequired' | translate }}
+      </mat-error>
+    </div>
+    <mat-form-field appearance="outline">
+      <input type="text" placeholder="{{'general.playlist' | translate}}" matInput [formControl]="playlistFC"
+        [matAutocomplete]="auto" (keyup.enter)="enter()">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteOptionSelected($event)">
+        <mat-option *ngFor="let option of filteredOptions | async" [id]="option.value" [value]="option.viewValue">
+          {{option.viewValue}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="activeSocial == 0">
+        {{ 'validations.errors.selectSocialNetwork' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <div class="mt-4 mb-8">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="social">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.socialNetwork'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.socialNetworkName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="playlist">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.playlist'|translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.playlistName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.actions' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="deletePlaylistTable(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+    <mat-error *ngIf="f.playlists?.errors?.required">
+      {{ 'validations.errors.fieldRequired' | translate }}
+    </mat-error>
+  </mat-dialog-content>
+  <mat-dialog-actions class="row">
+    <div class="col-xs-6">&nbsp;</div>
+    <div class="col-xs-6 text-right">
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!formStreamPlaylist.valid || isWorking" (click)="save()">
+        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

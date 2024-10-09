@@ -1,0 +1,90 @@
+﻿<div class="page-layout carded fullwidth">
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h3>{{ 'general.composers' | translate }}</h3>
+        </div>
+        <div class="w-50-p text-right pr-8">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <span class="secondary-text">{{ 'general.composer' | translate }}</span>
+        </div>
+    </div>
+    <div class="content  m-24 p-4 mat-card">
+        <div class="row">
+            <div class="col-xs-2">
+                <button
+                    mat-flat-button
+                    color="primary"
+                    class="my-16 mx-8"
+                    (click)="openModal(null)"
+                    *ngIf="permisions.Composer.Post"
+                >
+                    <mat-icon>add</mat-icon>&nbsp;{{ 'general.new' | translate }}
+                </button>
+            </div>
+            <div class="col-xs-2">
+                <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+            </div>
+            <div class="col-xs-8">
+                <mat-form-field appearance="outline" class="w-100-p mr-4">
+                    <mat-label>{{ 'general.search' | translate }}</mat-label>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+                </mat-form-field>
+            </div>
+        </div>  
+ 
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="w-100-p" matSort>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.name' | translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name}} {{row.lastName}} {{row.secondLastName}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.email' | translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="phone">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.phone' | translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.phoneOne}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.status' | translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-slide-toggle [color]="accent" [checked]="row.statusRecordId == 1"
+                                          (change)="updateStatus(row.id, row.statusRecordId)">
+                        </mat-slide-toggle>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.actions'|translate}} </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button
+                            mat-icon-button
+                            color="primary"
+                            (click)="openModal(row)"
+                            *ngIf="permisions.Composer.Put"
+                        >
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button
+                            mat-icon-button
+                            color="primary"
+                            (click)="confirmDelete(row.id, row.name)"
+                            *ngIf="permisions.Composer.Delete"
+                        >
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>
+        </div>
+    </div>
+</div>

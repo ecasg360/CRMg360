@@ -1,0 +1,54 @@
+<div class="page-layout carded fullwidth">
+    <div class="content  m-24 p-4 mat-card">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+
+        <mat-form-field appearance="outline" class="w-100-p m-4">
+            <mat-label> {{ 'general.search' | translate }}</mat-label>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.preferenceTypeId}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.PreferenceType' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.preferenceTypeName}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="subPreference">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.PreferenceSubType' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-chip-list aria-label="Fish selection">
+                            <mat-chip class="chip-notification" *ngFor="let item of row.preferences"
+                                color="primary"
+                                (removed)="confirmDelete(item)" selected>
+                                {{item.name}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="add">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.add' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-icon-button color="primary" (click)="addPersonPreference(row)">
+                            <mat-icon aria-hidden="false">add</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

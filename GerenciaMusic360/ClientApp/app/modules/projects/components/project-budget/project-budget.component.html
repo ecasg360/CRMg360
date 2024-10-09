@@ -1,0 +1,88 @@
+<div class="row m-4">
+    <div class="col-xs-4">
+        <button
+            mat-mini-fab
+            color="primary"
+            [disabled]="isWorking"
+            (click)="showModalBudget()"
+            *ngIf="perm.Post"
+        >
+            <mat-icon>add</mat-icon>
+        </button> &nbsp;
+        <button
+            mat-mini-fab
+            color="primary"
+            [disabled]="isWorking"
+            *ngIf="projectBudgetList.length > 0 && perm.Download"
+            (click)="downloadFile()"
+        >
+            <mat-icon>cloud_download</mat-icon>
+        </button>
+    </div>
+    <div class="col-xs-3">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-5">
+        <p class="text-right m-0 p-0">{{ 'general.totalBudget' | translate }}:
+            <strong>{{project.totalBudget | currency:''}}</strong>
+        </p>
+        <p class="text-right m-0 p-0">{{ 'general.totalSpent' | translate }}:
+            <strong class="{{project.totalBudget < totalSpent ? 'red-900-fg' : ''}}">{{totalSpent | currency:''}}</strong>
+        </p>
+    </div>
+</div>
+<div>
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let budget of projectBudgetList">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{budget.category.name}}
+                </mat-panel-title>
+                <mat-panel-description class="row end-xs">
+                    <table>
+                        <tr>
+                            <td><strong>{{'general.budget' | translate}}: </strong> {{budget.budget | currency:''}}</td>
+                            <td><strong>{{'general.spent' | translate}}: </strong> {{budget.spent | currency:''}}</td>
+                            <td>
+                                <p class="{{budget.saldo > budget.budget || budget.saldo < 0 ? 'red-900-fg': ''}}">
+                                    <strong>Saldo: </strong>
+                                    {{budget.saldo | currency:''}}</p>
+                            </td>
+                            <td>
+                                <mat-icon class="cursor-pointer" *ngIf="!isWorking" (click)="showModalDetail(budget)">
+                                    add</mat-icon>&nbsp;
+                                <mat-icon class="cursor-pointer" *ngIf="!isWorking" (click)="showModalBudget(budget)">
+                                    edit</mat-icon>&nbsp;
+                                <mat-icon class="cursor-pointer" *ngIf="!isWorking" (click)="deleteBudget(budget)">
+                                    cancel</mat-icon>
+                            </td>
+                        </tr>
+                    </table>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="row end-xs">
+                <div class="col-xs-12 ">
+                    <table *ngIf="budget.projectBudgetDetail.length > 0">
+                        <thead>
+                            <tr>
+                                <th>{{'general.description'|translate}}</th>
+                                <th style="text-align:right;">{{'general.spent'|translate}}</th>
+                                <th></th>
+                            </tr>
+                            <tr *ngFor="let detail of budget.projectBudgetDetail">
+                                <td style="text-align:left;">{{detail.category.name}}</td>
+                                <td style="text-align:right;">{{detail.spent | currency:''}}</td>
+                                <td>
+                                    <mat-icon class="cursor-pointer" *ngIf="!isWorking"
+                                        (click)="showModalDetail(budget, detail)">edit</mat-icon>
+                                    <mat-icon class="cursor-pointer" *ngIf="!isWorking"
+                                        (click)="deleteBudgetDetail(detail)">delete</mat-icon>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,298 @@
+﻿<div class="page-layout carded fullwidth">
+    <!-- HEADER -->
+    <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-50-p">
+            <h4>{{ 'general.artists' | translate }}</h4>
+        </div>
+        <div class="custom-breadcrum">
+            <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+            <span class="secondary-text">{{ 'general.artists' | translate }}</span>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <ng-template *ngIf="artistDetail;then detailArtistTemplate; else artistsTemplate;">
+    </ng-template>
+    <ng-template #artistsTemplate>
+        <div class="content  p-8">
+            <div class="row m-8">
+                <div class="col-mx-3">
+                    <button color="accent" class="mat-raised-button mat-accent" (click)="openModal()">
+                        <span class="mat-button-wrapper">
+                            <mat-icon>add</mat-icon>&nbsp;{{ 'general.createNewArtist' | translate }}
+                        </span>
+                    </button>
+                </div>
+                <div class="col-xs-2">
+                    <button mat-button (click)="changeView()"> <mat-icon>{{viewIcon}}</mat-icon> {{viewLabel}}</button>
+                </div>
+                <div class="col-xs-7">
+                    <mat-form-field appearance="outline">
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+                      </mat-form-field>
+                </div>
+            </div>
+            <div class="row" *ngIf="!isTable">
+                <div class="col-xs-12 col-lg-3 col-md-6 col-sm-12 mb-12" *ngFor="let artist of artistsFiltered">
+                    <mat-card animated fadeIn>
+                        <mat-card-header>
+                            <mat-card-title class="cursor-pointer" (click)="getArtist(artist.id)">{{artist.aliasName == null ? '~' : artist.aliasName}}</mat-card-title>
+                        </mat-card-header>
+                        <div class="img-content">
+                            <img src="{{artist.pictureUrl}}" alt="{{artist.name}}" onerror="this.src='assets/images/avatars/defaultProfile4.jpg';"
+                                 (click)="getArtist(artist.id)">
+                        </div>
+                        <mat-card-content>
+                            <p class="cursor-pointer" (click)="getArtist(artist.id)">{{artist.name}} {{artist.lastName}}</p>
+                            <div class="desc">
+                                <mat-slide-toggle [color]="accent" [checked]="artist.statusRecordId==1"
+                                                  (change)="updateStatus(artist.id, artist.statusRecordId)">
+                                </mat-slide-toggle>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <button mat-button matTooltip="{{'general.detail'|translate}}" (click)="getArtist(artist.id)">
+                                        <mat-icon>account_box</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="col-xs-4">
+                                    <button mat-button matTooltip="{{'general.edit'|translate}}" (click)="openModal(artist.id)">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="col-xs-4">
+                                    <button mat-button matTooltip="{{'general.delete'|translate}}" (click)="confirmDelete(artist.id, artist.name)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 mat-elevation-z8"  *ngIf="isTable">
+                    <table mat-table [dataSource]="dataSource" matSort class="w-100-p mr-4"  animated fadeIn>
+                    <ng-container matColumnDef="picture">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.picture' | translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> <img src="{{row.pictureUrl}}" alt="{{row.name}}" onerror="this.src='assets/images/avatars/defaultProfile4.jpg';"
+                        (click)="getArtist(artist.id)" width="30"> </mat-cell>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="name">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.ProjectType' | translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.name}} {{row.lastName}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="artistName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.ProjectType' | translate}} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.aliasName}}</mat-cell>
+                      </ng-container>
+            
+                    <ng-container matColumnDef="status">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.status'| translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let row">
+                          <mat-slide-toggle [color]="accent" [checked]="row.statusRecordId==1"
+                                            (change)="updateStatus(artist.id, row.statusRecordId)">
+                        </mat-slide-toggle>
+                        </mat-cell>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="action">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.actions' | translate }}
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let row">
+
+                        <button mat-button matTooltip="{{'general.detail'|translate}}" (click)="getArtist(row.id)">
+                            <mat-icon>account_box</mat-icon>
+                        </button>
+
+                        <button mat-button matTooltip="{{'general.edit'|translate}}" (click)="openModal(row.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+
+                        <button mat-button matTooltip="{{'general.delete'|translate}}" (click)="confirmDelete(row.id, artist.name)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                      </mat-cell>
+                    </ng-container>
+            
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #detailArtistTemplate>
+        <div class="content  m-24 ">
+            <div [className]="albumDetail ? 'fadeInUp animated' : 'fadeInDown  animated'">
+                <div class="row ">
+                    <div class="col-xs-12 col-sm-8 col-md-5 col-lg-1">
+                        <button mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="openDetail()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-5 col-lg-11">
+                    </div>
+                </div>
+                <div class="row center-xs">
+                    <div class="col-xs-12 col-sm-8 col-md-5 col-lg-12 headerDetail">
+                        <div class="headerDetailContent">
+                            <div class="row center-xs">
+                                <div class="avatar cursor-pointer">
+                                    <img class="img-detailphoto" src="{{artist.pictureUrl}}"
+                                         onerror="this.src='assets/images/avatars/defaultProfile5.jpg';">
+                                </div>
+                            </div>
+                            <div class="row center-xs">
+                                <div class="col-xs-12 col-sm-8 col-md-5 col-lg-3 headerArtistName">
+                                    {{artist.aliasName===null?artist.name:artist.aliasName}}
+                                </div>
+                            </div>
+                            <div class="row center-xs">
+                                <div class="col-xs-12 col-sm-8 col-md-5 col-lg-4 headerAboutArtistName">
+                                    {{artist.biography===null?artist.biography:artist.biography.substring(0,100)}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row center-xs">
+                    <div class="col-xs-12 col-sm-8 col-md-5 col-lg-12 socialMedia">&nbsp;</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <mat-card class="m-0">
+                                    <mat-card-header>
+                                        <mat-card-title>{{'general.socialNetwork' | translate}}</mat-card-title>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <div class="row center-xs">
+                                            <div class="col-xs-3 mb-4" *ngFor="let social of socialsMedia">
+                                                <a href="{{social.link}}" target="_blank">
+                                                    <img style="max-width:60px" src="{{social.pictureUrl}}"
+                                                         onerror="this.src='assets/images/socialMedia.png';" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-7 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8 col-md-5 col-lg-12">
+                                <mat-card class="m-0">
+                                    <mat-card-header>
+                                        <mat-card-title>{{'general.team' | translate}}</mat-card-title>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <div fxLayout="row wrap" fxLayout.lt-sm="column">
+                                            <div fxFlex="50" *ngFor="let member of artistMembers">
+                                                <fuse-widget class="widget">
+                                                    <!-- Front -->
+                                                    <div class="fuse-widget-front">
+                                                        <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                                                            <div>{{ member.name}} {{member.lastName}}</div>
+
+                                                            <button mat-icon-button fuseWidgetToggle aria-label="more">
+                                                                <mat-icon>edit</mat-icon>
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="pt-8 pb-32" fxLayout="column">
+                                                            <img src="{{member.pictureUrl}}" class="img-quadrata center-block"
+                                                                 onerror="this.src='assets/images/avatars/memberdefault.jpg'">
+                                                            {{'general.StartDateJoined' | translate}} {{member.startDateJoinedString | date}}
+                                                        </div>
+                                                    </div>
+                                                    <!-- / Front -->
+                                                    <!-- Back -->
+                                                    <div class="fuse-widget-back p-16">
+                                                        <div class="row">
+                                                            <div class="col-xs-10">{{'general.generalData' | translate}}</div>
+                                                            <div class="col-xs-1">
+                                                            </div>
+                                                            <div class="col-xs-1">
+                                                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+                                                                    <mat-icon>close</mat-icon>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="pt-8 pb-28 px-12" fxLayout="column">
+                                                            <mat-list>
+                                                                <mat-list-item>{{member.email}}</mat-list-item>
+                                                                <mat-list-item>{{member.cellPhone}}</mat-list-item>
+                                                                <mat-list-item>{{member.biography}}</mat-list-item>
+                                                            </mat-list>
+                                                        </div>
+                                                    </div>
+                                                    <!-- / Back -->
+                                                </fuse-widget>
+                                            </div>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row start-xs">
+                    <div class="col-xs-12 col-sm-5 col-md-6 col-lg-6">
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let album of albumsWorks">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <strong>
+                                            {{album.name}}
+                                        </strong>
+                                    </mat-panel-title>
+                                    <mat-panel-description></mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-md-5 col-lg-2">
+                                        <img src="{{album.pictureUrl}}"
+                                             onerror="this.src='assets/images/albums/albumdefault.png'"
+                                             class="img-album">
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8 col-md-5 col-lg-10">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-8 col-md-5 col-lg-10">
+                                                {{album.releaseDateString}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-8 col-md-5 col-lg-10">
+                                                {{album.name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-md-5 col-lg-12">
+                                        <ol>
+                                            <li *ngFor="let work of album.works">
+                                                <strong>
+                                                    {{artist.aliasName===null?artist.name:artist.aliasName}}
+                                                </strong>
+                                                <br />
+                                                {{work.name}}
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

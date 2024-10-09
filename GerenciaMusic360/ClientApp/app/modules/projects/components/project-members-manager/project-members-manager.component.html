@@ -1,0 +1,26 @@
+<div class="row mb-4" *ngIf="!listMode">
+    <div class="col-xs-12">
+        <mat-form-field>
+            <input type="text" placeholder="{{'formField.messages.selectMember' | translate}}" matInput
+                [formControl]="membersCtrl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autoCompleteOptionSelected($event)">
+                <mat-option *ngFor="let option of filteredOptions | async" [id]="option.id" [value]="option.name">
+                    {{option.name}} {{option.lastName}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+</div>
+<mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+<div class="w-100-p center-xs">
+    <span class="member-wrap" *ngFor="let item of selectedMembersList">
+        <img class="img-rounded image-lg" src="{{item.pictureUrl}}" alt="avatar" (click)="showModalForm(item.id)"
+            onerror="this.src='assets/images/avatars/defaultProfile5.jpg'" /><br>
+        {{item.name}} {{item.lastName}}<br>
+        <small>{{item.rolName}}</small><br>
+        <mat-icon *ngIf="!listMode" (click)="confirmDelete(item.id, item.name)" class="cursor-pointer">
+            delete
+        </mat-icon>&nbsp;
+        <mat-icon *ngIf="!listMode" (click)="showModalForm('edit', item)" class="cursor-pointer">edit</mat-icon>
+    </span>
+</div>

@@ -1,0 +1,29 @@
+<form [formGroup]="memberDataForm">
+  <h1 mat-dialog-title>{{ member.name }}</h1>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" class="w-100-p">
+        <mat-label>{{ member.name }}&nbsp;<span class="red-required">*</span></mat-label>
+      <mat-select formControlName="projectRol" placeholder="{{ 'formField.messages.selectProjectRol' | translate }}">
+        <mat-option *ngFor="let item of projectRolesList" [value]="item.value">
+          {{item.viewValue}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.projectRol?.errors?.required">
+        {{ 'validations.errors.selecRolRequired' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="row">
+    <div class="col-xs-6">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-6 text-right">
+      <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!memberDataForm.valid || isWorking" (click)="addMember()">
+        <mat-icon>save</mat-icon> {{ 'general.save' | translate }}
+      </button>
+    </div>
+  </div>
+</form>

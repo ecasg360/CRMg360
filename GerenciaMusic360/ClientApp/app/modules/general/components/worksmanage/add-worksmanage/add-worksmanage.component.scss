@@ -1,0 +1,25 @@
+table.composers{
+    padding: 20px 50px;
+    table-layout: fixed;
+
+    thead{
+        tr{
+            th{
+                text-align: center !important;
+                background: #3c4252;
+                color: white;
+                padding: 5px;
+            }
+        }
+    }
+
+    tbody{
+        tr{
+            
+            td{
+                border-bottom: #e0e0e0 solid 1px;
+                text-align: center;
+            }
+        }
+    }
+}

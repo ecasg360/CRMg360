@@ -1,0 +1,48 @@
+<div class="page-layout carded fullwidth">
+    <div id="dvTitle" class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+        <h4>{{ 'artist.admin.title' | translate }}</h4>
+    </div>
+    <div id="dvContent" class="content  m-24 p-4 mat-card">
+        <button mat-flat-button color="primary" *ngIf="perm.ArtistMember.Post" (click)="addGroup();"><i class="fas fa-plus"></i> Nuevo</button>
+        <mat-form-field class="w-100-p m-4">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        </mat-form-field>
+        <div class="w-100-p">
+            <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="edit">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Editar </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-icon-button color="primary" *ngIf="perm.ArtistMember.Put" (click)="updateGroup(row.id);">
+                            <i class="fas fa-pencil-alt fa-lg"></i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Eliminar </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-icon-button color="primary" *ngIf="perm.ArtistMember.Delete" (click)="confirmDelete(row.id);">
+                            <i class="fas fa-trash fa-lg"></i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

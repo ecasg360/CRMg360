@@ -1,0 +1,61 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'general.marketing' | translate }}</h4>
+    </div>
+    <div class="custom-breadcrum">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <a routerLink="/marketing" class="fuse-white-fg">{{ 'general.marketing' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.management' | translate }}</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content mat-card">
+    <mat-tab-group>
+      <!-- tab information -->
+      <mat-tab label="{{ 'general.generalData' | translate }}">
+        <div class="tab-body p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+          <app-artist-form [artist]="artist"></app-artist-form>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.travelData' | translate }}">
+        <div class="tab-body p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+          <app-person-document-manager [personId]="artist.id"></app-person-document-manager>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.address' | translate }} ESR">
+        <div class="tab-body p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+          <app-address-manager [personId]="artist.id"></app-address-manager>
+        </div>
+      </mat-tab>
+
+      <mat-tab *ngIf="!isBuyer" label="{{ 'general.team' | translate }}">
+        <div class="tab-body p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+          <app-member-manager [personId]="artist.id"></app-member-manager>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="{{'general.albums' | translate}}">
+        <div class="tab-body p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+          <app-album-manager [personId]="artist.id"></app-album-manager>
+        </div>
+      </mat-tab>
+
+      <mat-tab *ngIf="!isBuyer" label="{{'general.Preferences' | translate}}">
+        <div class="tab-body p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+          <app-preference-manager [personId]="artist.id"></app-preference-manager>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.socialNetwork' | translate }}">
+        <div class="tab-body p-4" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+          <app-social-network-manager [personId]="artist.id"></app-social-network-manager>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <!-- / CONTENT -->

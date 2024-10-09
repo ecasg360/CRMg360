@@ -1,0 +1,37 @@
+.collaborators{
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+mat-spinner{
+    margin: 0 auto;
+}
+
+.collaborator{
+    margin-bottom: 15px;
+}
+
+.collaborator ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.collaborator ul li{
+    padding: 10px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.collaborator img.collaborator-image{
+    width: 48px;
+    height: 48px;
+    border-radius: 50px;
+}
+
+.collaborator button{
+    width: 100%;
+    margin: 0 !important;
+    height: 48px;
+}

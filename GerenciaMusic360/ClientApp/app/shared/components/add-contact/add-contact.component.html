@@ -1,0 +1,55 @@
+<div [formGroup]="contactForm">
+    <div mat-dialog-title>
+        <div class="row">
+            <div class="col-xs-10">{{ 'settings.contact.title' | translate }}</div>
+            <div class="col-xs-2">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">people</mat-icon>
+            </div>
+        </div>
+    </div>
+
+    <div mat-dialog-content>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12 xs-end">
+                <app-person-form class="persontop" (formReady)="bindExternalForm('generalData',$event)"
+                    [image]="pictureUrl" [person]="person" [isContact]="true">
+                </app-person-form>
+            </div>
+        </div>
+        <div class="personbottom">
+            <div class="row" *ngIf="showSelectType">
+                <mat-form-field appearance="outline" class="col-xs-4 p-8">
+                    <mat-label>{{ 'general.personType' | translate }}&nbsp;<span class="red-required">*</span>
+                    </mat-label>
+                    <input placeholder="{{'general.personType' | translate}}" matInput [formControl]="personTypeFC"
+                        [matAutocomplete]="auto" (keyup.enter)="enter()">
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteOptionSelected($event)">
+                        <mat-option *ngFor="let option of filteredOptions | async" [id]="option.value"
+                            [value]="option.viewValue">
+                            {{option.viewValue}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="f.typeId?.errors?.required">
+                        {{ 'validations.errors.typeRequired' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row end-xs">
+                <div class="col-xs-2">
+                    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+                </div>
+                <div class="col-xs-10">
+                    <button mat-stroked-button color="primary" [disabled]="isWorking" type=" button"
+                        (click)="onNoClick()">
+                        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+                    </button>&nbsp;
+                    <button mat-flat-button color="primary" [disabled]="isWorking || !contactForm.valid"
+                        (click)="setContact()">
+                        {{action}}&nbsp;<mat-icon>save</mat-icon>
+                    </button> &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

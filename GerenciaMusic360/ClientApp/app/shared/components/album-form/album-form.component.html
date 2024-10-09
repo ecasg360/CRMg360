@@ -1,0 +1,65 @@
+<form [formGroup]="albumForm" class="container">
+    <h3 mat-dialog-title>{{action}} album</h3>
+    <div class="row center-xs">
+        <div class="col-xs-12 col-sm-8 col-xs-9">
+            <app-upload-image [image]="pictureURL" onerror="this.src='assets/images/backgrounds/dark-material-bg.jpg'"
+                              (selectImage)="selectImage($event)"></app-upload-image>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-10  col-lg-9">
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-10  col-lg-12 p-4">
+                    <mat-label>{{'general.name'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{'general.name'|translate}}"  formControlName="name">
+                    <mat-error *ngIf="f.name?.errors?.required">
+                        {{'general.required'|translate}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-xs-12 col-sm-8 col-md-10  col-lg-12 p-4">
+                    <mat-label>{{'general.releasedate'|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="{{'general.releasedate'|translate}}"
+                           formControlName="releaseDateString">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="f.releaseDateString?.errors?.required">
+                        {{'general.required'|translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <br />
+            <div class="row">
+                <mat-form-field class="col-xs-12 col-sm-8 col-md-10  col-lg-12 example-full-width">
+                    <input matInput  appearance="outline" placeholder="{{'general.select'|translate}} {{'general.sings'|translate}}" aria-label="Canciones" [matAutocomplete]="auto"
+                           [formControl]="workCtrl">
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedWork($event)">
+                        <mat-option *ngFor="let work of filteredWorks | async" [value]="work.name" [id]="work.id">
+                            <img class="example-option-img table-image img-rounded" aria-hidden [src]="pictureurl"
+                                  onerror="this.src='assets/images/backgrounds/dark-material-bg.jpg'" height="15">
+                            <span>{{work.name}}</span> |
+                            <small>{{work.createdDateString}}</small>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <mat-chip-list  aria-label="Color selection" class="col-xs-12">
+            <mat-chip *ngFor="let chip of userWorkList" [selectable]="true" [removable]="true"
+                      (removed)="removeChip(chip)">
+                {{chip.name}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+    <div class="row mt-4">
+        <div class="col-xs-12">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+            <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" [disabled]="!albumForm.valid" (click)="setAlbum()">
+                {{'general.save'|translate}}&nbsp;<mat-icon>save</mat-icon>
+            </button> &nbsp;
+        </div>
+    </div>
+</form>

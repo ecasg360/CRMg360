@@ -1,0 +1,69 @@
+<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{action}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false">apps</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<form class="p-4 w-100-p" [formGroup]="form">
+    <mat-dialog-content>
+        <hr>
+        <div class="w-50-p m-x-auto">
+            <app-upload-image (selectImage)="selectImage($event)" [image]="croppedImage" errorImage="assets/images/logos/360-circle.png"></app-upload-image>
+        </div>
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+            <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}" formControlName="name">
+            <mat-error *ngIf="f.name?.errors?.required">
+                {{ 'validations.errors.nameRequired' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.description' | translate }}</mat-label>
+            <input type="text" matInput placeholder="{{ 'formField.messages.enterDescription' | translate }}"
+                   formControlName="description">
+        </mat-form-field>
+        <!--<mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.key' | translate }}</mat-label>
+            <input type="text" matInput placeholder="{{ 'formField.messages.enterKey' | translate }}" formControlName="key">
+        </mat-form-field>-->
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>{{ 'general.module' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+            <mat-select formControlName="moduleId" 
+                        placeholder="{{ 'formField.messages.selectModule'  | translate }}">
+                <mat-option *ngFor="let item of modules" [value]="item.value">
+                    {{item.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <ng-template [ngIf]="f.moduleId.value === 1">
+            <mat-form-field appearance="outline" class="w-100-p">
+                <mat-label>{{ 'general.projectType' | translate }}</mat-label>
+                <mat-select formControlName="projectTypeId" required
+                            placeholder="{{ 'formField.messages.selectProjectType'  | translate }}">
+                    <mat-option *ngFor="let item of projectTypes" [value]="item.value">
+                        {{item.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-template>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="w-40-p text-right">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="w-60-p text-right">
+            <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="set()">
+                <mat-icon>save</mat-icon> {{action}}
+            </button> &nbsp;
+        </div>
+    </mat-dialog-actions>
+</form>

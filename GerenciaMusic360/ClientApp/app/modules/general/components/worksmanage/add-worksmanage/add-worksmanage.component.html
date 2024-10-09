@@ -1,0 +1,221 @@
+<h3 mat-dialog-title>{{'general.compositions'|translate}}</h3>
+<form [formGroup]="form" class="p-4 w-100-p">
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- Name Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'work.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                    <input matInput placeholder="{{ 'work.form.name' | translate }}" formControlName="name">
+                    <mat-error *ngIf="f.name?.errors?.required">
+                        {{ 'work.validations.name' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <!-- Description Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>Song Id</mat-label>
+                    <input matInput placeholder="Song Id" formControlName="songId">
+                    <mat-error *ngIf="f.songId?.errors?.maxLength">
+                        {{ 'work.songId.songId' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+                <!-- Description Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>A.K.A</mat-label>
+                    <input matInput placeholder="A.K.A" formControlName="aka">
+                    <mat-error *ngIf="f.aka?.errors?.maxLength">
+                        {{ 'work.validations.aka' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- Description Field -->
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>{{ 'work.description' | translate }}</mat-label>
+                    <textarea matInput placeholder="{{ 'work.form.description' | translate }}" rows="4"
+                              formControlName="description"></textarea>
+                    <mat-error *ngIf="f.description?.errors?.maxLength">
+                        {{ 'work.validations.description' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+                <!-- isExternal Check -->
+                <mat-checkbox class="w-100-p mt-4" formControlName="isExternal">
+                    {{ 'general.GM360Control' | translate }}
+                </mat-checkbox>
+                 <!-- isExternal Check -->
+                 <mat-checkbox class="w-100-p mt-4" formControlName="ldvRelease">
+                    {{ 'general.LDV' | translate }}
+                </mat-checkbox>
+            </div>
+
+            <div class="col-xs-12 col-md-3">
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>Admin %</mat-label>
+                    <input matInput placeholder="adminPercentage" type="number" formControlName="adminPercentage">
+                    <mat-error *ngIf="f.adminPercentage?.errors?.maxLength">
+                        {{ 'work.validations.adminPercentage' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-xs-12 col-md-3">
+                <!-- Music Copyright Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'track.additionalInformation.musicCopyright' | translate }}</mat-label>
+                    <input matInput [matDatepicker]="pickerMusicCopyright" formControlName="musicCopyrightDate">
+                    <mat-datepicker-toggle matSuffix [for]="pickerMusicCopyright"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerMusicCopyright></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <!-- Sound Exchange Registration Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Copyright #</mat-label>
+                    <input matInput formControlName="copyrightNum">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <!-- Sound Exchange Registration Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Coedition</mat-label>
+                    <input matInput formControlName="coedition">
+                </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <!-- Sound Exchange Registration Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Territory Controlled</mat-label>
+                    <input matInput formControlName="territoryControlled">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Agreement Date</mat-label>
+                    <input matInput [matDatepicker]="pickerAggreementDate" formControlName="agreementDate">
+                    <mat-datepicker-toggle matSuffix [for]="pickerAggreementDate"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerAggreementDate></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row mt-8" *ngIf="!onlyView">
+            <div class="col-xs-12">
+                <button mat-flat-button color="primary" (click)="showComposer()">
+                    <mat-icon>add</mat-icon> {{'work.addComposer' | translate}}
+                </button>
+            </div>
+        </div>
+        <div class="row" *ngIf="selectedComposers.length > 0">
+            <table class="composers">
+                <thead>
+                    <tr>
+                        <th>{{ 'work.table.name' | translate }}</th>
+                        <th>{{ 'general.association' | translate }}</th>
+                        <th>{{ 'work.table.percentage' | translate }}</th>
+                        <th *ngIf="!onlyView">{{ 'work.table.actions' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of selectedComposers">
+                        <td>{{item?.composer?.name}}&nbsp;{{item?.composer?.lastName}}</td>
+                        <td>{{item?.association?.name}}</td>
+                        <td>{{item?.percentageRevenue}} %</td>
+                        <td>
+                            <!--<button mat-icon-button color="primary" (click)="showComposer(item, true);">
+                            <mat-icon>edit</mat-icon>
+                        </button>-->
+                            <button
+                                mat-icon-button
+                                color="primary"
+                                (click)="confirmDeleteComposer(item);"
+                                *ngIf="!onlyView"
+                            >
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row mt-8" *ngIf="!onlyView">
+            <div class="col-xs-12">
+                <button mat-flat-button color="primary" (click)="showPublisher()">
+                    <mat-icon>add</mat-icon> Add Publisher
+                </button>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="selectedPublisher.length > 0">
+            <table class="composers">
+                <thead>
+                    <tr>
+                        <th>{{ 'work.table.name' | translate }}</th>
+                        <th>{{ 'general.association' | translate }}</th>
+                        <th>{{ 'work.table.percentage' | translate }}</th>
+                        <th *ngIf="!onlyView">{{ 'work.table.actions' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of selectedPublisher">
+                        <td>{{item?.publisher?.name}}</td>
+                        <td>{{item?.association?.name}}</td>
+                        <td>{{item?.percentageRevenue}} %</td>
+                        <td>
+                            <!--<button mat-icon-button color="primary" (click)="showComposer(item, true);">
+                            <mat-icon>edit</mat-icon>
+                        </button>-->
+                            <button
+                                mat-icon-button
+                                color="primary"
+                                (click)="confirmDeletePublisher(item)"
+                                *ngIf="!onlyView"
+                            >
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions class="row">
+        <div class="col-xs-4">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="col-xs-8 text-right">
+            <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button
+                mat-flat-button
+                color="primary"
+                [disabled]="!form.valid"
+                (click)="save()"
+                *ngIf="!onlyView"
+            >
+                <mat-icon>save</mat-icon> {{'general.save' | translate}}
+            </button> &nbsp;
+        </div>
+    </mat-dialog-actions>
+</form>

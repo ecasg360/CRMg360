@@ -1,0 +1,159 @@
+<mat-spinner *ngIf="isWorking" diameter="30"></mat-spinner>
+<mat-accordion class="mt-8">
+  <div *ngFor="let configuration of configurationKeysIdeas">
+    <!-- conventionalMedia -->
+    <div *ngIf="configuration.keyIdeasTypeId == keysIdeasSection.conventionalMedia">
+      <mat-expansion-panel [disabled]="isWorking"
+        (opened)="openPanel(keysIdeasSection.conventionalMedia, configuration.keyIdeasTypeId, configuration.categoryId)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{'general.conventionalMediaCampaign' | translate}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="social-container">
+              <div class="social-item m-8" *ngFor="let item of conventionalList">
+                <img src="{{item.pictureUrl}}" height="80" width="80"
+                  onerror="this.src='assets/images/logos/360-circle.png';" matTooltip="{{item.socialNetwork}}"
+                  alt="{{item.socialNetwork}}"><br>
+                <small>{{item.socialNetwork}} <mat-icon class="cursor-pointer"
+                    (click)="delete(keysIdeasSection.conventionalMedia,item)">delete</mat-icon></small>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2 text-right">
+            <button mat-fab [disabled]="isWorking" (click)="showModal(keysIdeasSection.conventionalMedia, configuration.keyIdeasTypeId,
+              configuration.categoryId)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- / conventionalMedia -->
+
+    <!-- digital Platform -->
+    <div *ngIf="configuration.keyIdeasTypeId == keysIdeasSection.digitalPlatform">
+      <mat-expansion-panel [disabled]="isWorking" (opened)="openPanel(keysIdeasSection.digitalPlatform, configuration.keyIdeasTypeId,
+        configuration.categoryId)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{'general.digitalPlatformCampaign' | translate}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="social-container">
+              <div class="social-item m-8" *ngFor="let item of digitalPlatformList">
+                <img src="{{item.pictureUrl}}" height="80" width="80"
+                  onerror="this.src='assets/images/logos/360-circle.png';" matTooltip="{{item.socialNetwork}}"
+                  alt="{{item.socialNetwork}}"><br>
+                <p class="text-center m-0 p-0"><small>{{item.socialNetwork}}</small></p>
+              </div>
+            </div>
+            <table class="table table-bordered w-30-p" *ngIf="keyBudgets.length > 0">
+              <tr>
+                <th class="text-left">{{'general.objetive' | translate}}</th>
+                <th class="text-left">{{'general.percentage' | translate}}</th>
+                <th class="text-left">{{'general.socialNetwork' | translate}}</th>
+              </tr>
+              <tr *ngFor="let keyBudget of keyBudgets">
+                <td>{{keyBudget.target}}</td>
+                <td>
+                  <div class="donut-container blue-300-bg">
+                    <div class="donut-inner">
+                      <div class="donut-label">{{ keyBudget.percentageBudget }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {{getNetworkName(keyBudget.socialNetworkId)}}
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-xs-2 text-right">
+            <button mat-fab [disabled]="isWorking" (click)="showModal(keysIdeasSection.digitalPlatform, configuration.keyIdeasTypeId,
+              configuration.categoryId)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- / digital Platform -->
+
+    <!-- Social Media -->
+    <div *ngIf="configuration.keyIdeasTypeId == keysIdeasSection.socialMedia">
+      <mat-expansion-panel [disabled]="isWorking"
+        (opened)="openPanel(keysIdeasSection.socialMedia, configuration.keyIdeasTypeId, configuration.categoryId)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{'general.socialMedia' | translate}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="social-container">
+              <div class="social-item m-8" *ngFor="let item of socialMediaList">
+                <img src="{{item.pictureUrl}}" height="80" width="80"
+                  onerror="this.src='assets/images/logos/360-circle.png';" matTooltip="{{item.socialNetwork}}"
+                  alt="{{item.socialNetwork}}"><br>
+                <p class="text-center m-0 p-0"><small>{{item.socialNetwork}}</small></p>
+              </div>
+            </div>
+            <table class="table table-bordered w-30-p" *ngIf="keyBudgets.length > 0">
+              <tr>
+                <th class="text-left">{{'general.objetive' | translate}}</th>
+                <th class="text-left">{{'general.percentage' | translate}}</th>
+              </tr>
+              <tr *ngFor="let keyBudget of keyBudgets">
+                <td>{{keyBudget.target}}</td>
+                <td>
+                  <div class="donut-container blue-300-bg">
+                    <div class="donut-inner">
+                      <div class="donut-label">{{ keyBudget.percentageBudget }}</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-xs-2 text-right">
+            <button mat-fab [disabled]="isWorking" (click)="showModal(keysIdeasSection.socialMedia, configuration.keyIdeasTypeId,
+              configuration.categoryId)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- / Social Media -->
+
+    <!-- touring -->
+    <div *ngIf="configuration.keyIdeasTypeId == keysIdeasSection.touring">
+      <mat-expansion-panel [disabled]="isWorking" (opened)="openPanel(keysIdeasSection.touring, configuration.keyIdeasTypeId,
+        configuration.categoryId)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{'general.touring' | translate}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="social-container">
+              <div class="social-item m-8" *ngFor="let item of touringList">
+                <img src="assets/images/default/btn-airplane.png" height="80" width="80"
+                  onerror="this.src='/assets/images/Projects.jpg';" matTooltip="{{item.name}}" alt="{{item.name}}"
+                  (click)="showModal(keysIdeasSection.touring, configuration.keyIdeasTypeId,
+                  configuration.categoryId, item)"><br>
+                <small>{{item.name}} <mat-icon class="cursor-pointer" (click)="delete(keysIdeasSection.touring,item)">
+                    delete</mat-icon></small>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2 text-right">
+            <button mat-fab [disabled]="isWorking" (click)="showModal(keysIdeasSection.touring, configuration.keyIdeasTypeId,
+              configuration.categoryId)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <!-- / touring -->
+  </div>
+</mat-accordion>

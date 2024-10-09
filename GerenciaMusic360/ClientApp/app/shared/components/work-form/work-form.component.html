@@ -1,0 +1,99 @@
+<div [formGroup]="workForm">
+  <h3 mat-dialog-title class="mat-title text-center">{{action}}</h3>
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-xs-4">
+        <app-upload-image [image]="pictureUrl" (selectImage)="selectImage($event)">
+        </app-upload-image>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline" class="col-xs-12">
+          <mat-label>{{ 'general.name' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+          <input matInput placeholder="{{ 'formField.messages.enterName' | translate }}" formControlName="name">
+          <mat-error *ngIf="f.name?.errors?.required">
+            {{ 'validations.errors.nameRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-xs-12">
+          <mat-label>{{ 'general.description' | translate }}</mat-label>
+          <textarea matInput placeholder="{{ 'formField.messages.enterDescription' | translate }}" rows="5"
+            formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="col-xs-5 p-4">
+        <mat-label>Fecha de Creación&nbsp;<span class="red-required">*</span></mat-label>
+        <input matInput [matDatepicker]="createdDate" placeholder="Seleccione fecha de creación"
+          formControlName="createdDateString" required>
+        <mat-datepicker-toggle matSuffix [for]="createdDate"></mat-datepicker-toggle>
+        <mat-datepicker #createdDate></mat-datepicker>
+        <mat-error *ngIf="f.createdDateString?.errors?.required">
+          Indique la fecha de creación
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-xs-6 p-4">
+        <mat-label>Numero de licencia&nbsp;<span class="red-required">*</span></mat-label>
+        <input matInput placeholder="Ingres el número de licencia" formControlName="licenseNum">
+        <mat-error *ngIf="f.licenseNum?.errors?.required">
+          {{ 'validations.errors.licenseNum' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <mat-checkbox formControlName="registeredWork" (change)="checkRegisteredWork($event)">¿Esta Registrado?
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="isWorkRegistered">
+      <mat-form-field appearance="outline" class="col-xs-5 p-4">
+        <mat-label>Fecha de registro</mat-label>
+        <input matInput [matDatepicker]="registerDate" placeholder="Seleccione fecha de registro"
+          formControlName="registerDateString">
+        <mat-datepicker-toggle matSuffix [for]="registerDate"></mat-datepicker-toggle>
+        <mat-datepicker #registerDate></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-xs-6 p-4">
+        <mat-label>Numero de Registro</mat-label>
+        <input matInput placeholder="Ingrese el número de registro" formControlName="registerNum">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <mat-checkbox formControlName="certifiedWork" (change)="checkCertifiedWork($event)">¿Esta Certificado?
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="isWorkCertified">
+      <mat-form-field appearance="outline" class="col-xs-6 p-8">
+        <mat-label>Autoridad Certificadora</mat-label>
+        <mat-select placeholder="seleccione" formControlName="certificationAuthorityId">
+          <mat-option *ngFor="let certif of certificationAuthority" [value]="certif.value">
+            {{certif.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!--
+     -->
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="row">
+      <div class="col-xs-12">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+          <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+        </button>&nbsp;
+        <button mat-flat-button color="primary" [disabled]="!workForm.valid" (click)="setWork()">
+          {{action}}&nbsp;<mat-icon>save</mat-icon>
+        </button> &nbsp;
+      </div>
+    </div>
+
+  </mat-dialog-actions>
+</div>

@@ -1,0 +1,49 @@
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.deps.json
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Entities.dll
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Entities.pdb
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csprojAssemblyReference.cache
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.AssemblyInfoInputs.cache
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.AssemblyInfo.cs
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csproj.CoreCompileInputs.cache
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csproj.CopyComplete
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.deps.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Entities.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Entities.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csprojAssemblyReference.cache
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.AssemblyInfoInputs.cache
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.AssemblyInfo.cs
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csproj.CoreCompileInputs.cache
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csproj.CopyComplete
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.deps.json
+C:\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Entities.dll
+C:\repositorios\g360crm\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Entities.pdb
+C:\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csprojAssemblyReference.cache
+C:\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.AssemblyInfoInputs.cache
+C:\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.AssemblyInfo.cs
+C:\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csproj.CoreCompileInputs.cache
+C:\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csproj.CopyComplete
+C:\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\repositorios\g360crm\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.deps.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Entities.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\bin\Debug\netcoreapp2.1\GerenciaMusic360.Entities.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csproj.AssemblyReference.cache
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.AssemblyInfoInputs.cache
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.AssemblyInfo.cs
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csproj.CoreCompileInputs.cache
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.csproj.CopyComplete
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360.Common\obj\Debug\netcoreapp2.1\GerenciaMusic360.Common.pdb

@@ -1,0 +1,164 @@
+C:\Users\esram\Source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csprojAssemblyReference.cache
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\.filenesting.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\angular.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\appsettings.Development.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\appsettings.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\favicon\manifest.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\i18n\en-US.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\i18n\es-ES.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\icons\meteocons\selection.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tsconfig.app.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tsconfig.spec.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tslint.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\package-lock.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\package.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\tsconfig.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.deps.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.runtimeconfig.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.runtimeconfig.dev.json
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.dll
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.pdb
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Data.dll
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Entities.dll
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Repository.dll
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Services.dll
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Data.pdb
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Entities.pdb
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Services.pdb
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Repository.pdb
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.AssemblyInfoInputs.cache
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.AssemblyInfo.cs
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csproj.CoreCompileInputs.cache
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorAssemblyInfo.cache
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorAssemblyInfo.cs
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorTargetAssemblyInfo.cache
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csproj.CopyComplete
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.dll
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.pdb
+C:\Users\esram\source\Workspaces\GM360\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.genruntimeconfig.cache
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\.filenesting.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\angular.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\appsettings.Development.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\appsettings.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\favicon\manifest.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\i18n\en-US.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\i18n\es-ES.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\icons\meteocons\selection.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tsconfig.app.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tsconfig.spec.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tslint.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\package-lock.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\package.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\tsconfig.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.deps.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.runtimeconfig.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.runtimeconfig.dev.json
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Data.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Entities.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Repository.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Services.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Data.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Entities.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Services.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Repository.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csprojAssemblyReference.cache
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.AssemblyInfoInputs.cache
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.AssemblyInfo.cs
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csproj.CoreCompileInputs.cache
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorAssemblyInfo.cache
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorAssemblyInfo.cs
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorTargetAssemblyInfo.cache
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csproj.CopyComplete
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.dll
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.pdb
+C:\Users\esram\Documents\Weird fishes\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.genruntimeconfig.cache
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\.filenesting.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\angular.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\appsettings.Development.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\appsettings.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\favicon\manifest.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\i18n\en-US.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\i18n\es-ES.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\icons\meteocons\selection.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tsconfig.app.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tsconfig.spec.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tslint.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\package-lock.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\package.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\tsconfig.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.deps.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.runtimeconfig.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.runtimeconfig.dev.json
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.dll
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.pdb
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Data.dll
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Entities.dll
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Repository.dll
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Services.dll
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Data.pdb
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Entities.pdb
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Services.pdb
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\repositorios\g360crm\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Repository.pdb
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csprojAssemblyReference.cache
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.AssemblyInfoInputs.cache
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.AssemblyInfo.cs
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csproj.CoreCompileInputs.cache
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorAssemblyInfo.cache
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorAssemblyInfo.cs
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorTargetAssemblyInfo.cache
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csproj.CopyComplete
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.dll
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.pdb
+C:\repositorios\g360crm\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.genruntimeconfig.cache
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\.filenesting.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\appsettings.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\favicon\manifest.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\i18n\en-US.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\i18n\es-ES.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\assets\icons\meteocons\selection.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tsconfig.app.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tsconfig.spec.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\ClientApp\tslint.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\angular.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\appsettings.Development.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\package-lock.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\package.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\tsconfig.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.deps.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.runtimeconfig.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.runtimeconfig.dev.json
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Common.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Data.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Entities.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Repository.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Services.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Data.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Entities.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Services.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Common.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\bin\Release\netcoreapp2.1\GerenciaMusic360.Repository.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csproj.AssemblyReference.cache
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.AssemblyInfoInputs.cache
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.AssemblyInfo.cs
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.csproj.CoreCompileInputs.cache
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorAssemblyInfo.cache
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorAssemblyInfo.cs
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.RazorTargetAssemblyInfo.cache
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.dll
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.pdb
+C:\Users\marck\Desktop\WEIRDFISHES\crmg360wfs\GerenciaMusic360\obj\Release\netcoreapp2.1\GerenciaMusic360.genruntimeconfig.cache

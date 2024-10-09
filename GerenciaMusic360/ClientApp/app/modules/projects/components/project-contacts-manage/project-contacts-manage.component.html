@@ -1,0 +1,58 @@
+<div class="page-layout carded fullwidth">
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+      <div class="w-50-p">
+          <h3>{{'general.contact'|translate}}s</h3>
+      </div>
+      <div class="w-50-p text-right pr-8">
+          <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+          <span class="secondary-text">{{ 'general.contacttitle' | translate }}</span>
+      </div>
+  </div>
+  <div class="content m-20 mat-card">
+      <mat-form-field appearance="outline" class="w-100-p m-4">
+          <mat-label>{{'general.search'|translate}}</mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'general.search'|translate}}">
+      </mat-form-field>
+
+      <div class="mat-elevation-z8">
+          <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+          <table mat-table [dataSource]="dataSource" matSort class="m-8">
+              <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.name'|translate}} </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.name}} {{row.lastName}} {{row.secondLastName}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.email'|translate}} </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="officePhone">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.officePhone'|translate}} </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.officePhone}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="cellPhone">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.cellPhone'|translate}} </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.cellphone}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.actions' | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button color="primary" *ngIf="permisions.ProjectContact.Put" (click)="showModalForm(row)">
+                    <mat-icon>create</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </table>
+          
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+  </div>
+</div>
+

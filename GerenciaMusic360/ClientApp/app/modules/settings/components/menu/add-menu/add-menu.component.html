@@ -1,0 +1,97 @@
+<div [formGroup]="form">
+  <h3 mat-dialog-title class="mat-title text-center">{{titleAction}}</h3>
+  <mat-dialog-content>
+    <div class="row">
+      <mat-form-field appearance="outline" class="col-xs-12">
+        <mat-label>{{ 'general.title' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+        <input matInput placeholder="{{ 'formField.messages.enterTitle' | translate }}" formControlName="title"
+          required>
+        <mat-error *ngIf="f.title?.errors?.required">
+          {{ 'validations.errors.titleRequired' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-xs-12">
+        <mat-label>{{ 'general.translate' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+        <input matInput placeholder="{{ 'formField.messages.enterTranslate' | translate }}" formControlName="translate"
+          required>
+        <mat-error *ngIf="f.translate?.errors?.maxLength">
+          {{ 'validations.errors.translateRequired' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline" class="col-xs-12">
+        <mat-label>{{ 'general.icon' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+        <mat-select required formControlName="icon" placeholder="{{ 'formField.messages.selectIcon'  | translate }}">
+          <mat-option value="dashboard">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">dashboard</mat-icon>
+          </mat-option>
+          <!-- <mat-option value="collapsable">
+            Collapsable
+          </mat-option> -->
+        </mat-select>
+
+
+        <!-- <input matInput placeholder="{{ 'formField.messages.enterIcon' | translate }}" formControlName="icon" required>
+        <mat-error *ngIf="f.icon?.errors?.maxLength">
+          {{ 'validations.errors.iconRequired' | translate }}
+        </mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-xs-12">
+        <mat-label>{{ 'general.url' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+        <input matInput placeholder="{{ 'formField.messages.enterUrl' | translate }}" formControlName="url" required>
+        <mat-error *ngIf="f.url?.errors?.maxLength">
+          {{ 'validations.errors.urlRequired' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-xs-12">
+        <mat-label>{{ 'general.type' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+        <mat-select required formControlName="type" placeholder="{{ 'formField.messages.selectType'  | translate }}">
+          <mat-option value="item">
+            Item
+          </mat-option>
+          <mat-option value="collapsable">
+            Collapsable
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-xs-12">
+        <mat-label>{{ 'general.parent' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+        <mat-select required formControlName="parentId"
+          placeholder="{{ 'formField.messages.selectParentId'  | translate }}">
+          <mat-option *ngFor="let type of parents" [value]="type.value">
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="outline" class="col-xs-12">
+        <mat-label>{{ 'general.menuType' | translate }}</mat-label>
+        <mat-select required placeholder="{{ 'formField.messages.selectMenuType'  | translate }}">
+          <mat-option *ngFor="let type of menuTypes" [value]="type.value">
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
+
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="w-40-p text-right">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="w-60-p text-right">
+      <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+      </button>&nbsp;
+      <button mat-flat-button color="primary" [disabled]="!form.valid" (click)="set()">
+        <mat-icon>save</mat-icon> {{action}}
+      </button> &nbsp;
+    </div>
+
+  </mat-dialog-actions>
+</div>

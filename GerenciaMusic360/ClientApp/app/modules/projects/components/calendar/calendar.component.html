@@ -1,0 +1,19 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'general.calendar' | translate }}</h4>
+    </div>
+    <div class="w-50-p text-right pr-12">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.calendar' | translate }}</span>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content">
+    <app-calendar-manager [eventType]="eventType.all">
+    </app-calendar-manager>
+  </div>
+  <!-- / CONTENT -->
+</div>

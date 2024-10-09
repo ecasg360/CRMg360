@@ -1,0 +1,59 @@
+  <div class="row m-4">
+    <div class="col-xs-4">
+      <div class="mb-4">
+        <button mat-mini-fab color="primary" [disabled]="isWorking" (click)="addData('new')">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-2">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-6"></div>
+  </div>
+  <div class="">
+    <div class="task-box">
+      <div class="row">
+        <div class="col-xs-6">{{ 'general.tasks' | translate }}</div>
+        <div class="col-xs-2">{{ 'general.expirationDate' | translate }}</div>
+        <div class="col-xs-2">{{ 'general.completed' | translate }}</div>
+        <div class="col-xs-2">&nbsp;</div>
+      </div>
+    </div>
+    <div cdkDropList class="task-box-list" (cdkDropListDropped)="drop($event)">
+      <div class="task-box task-box-item" *ngFor="let plan of marketingPlans;trackBy:trackByFn"
+        [cdkDragDisabled]="plan.complete" cdkDrag>
+        <div class="task-box-custom-placeholder" *cdkDragPlaceholder></div>
+        <div class="row">
+          <div class="col-xs-6"  matTooltip="{{plan.notes}}">{{plan.name}}</div>
+          <div class="col-xs-2">{{plan.estimatedDateVerificationString | date}}</div>
+          <div class="col-xs-2">
+            <div class="donut-container" [ngClass]="plan.complete ? 'blue-300-bg' : 'primary-400-bg'">
+              <div class="donut-inner">
+                <div class="donut-label">{{ plan.complete ? '100%' : '0' }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <button mat-icon-button color="primary" *ngIf="plan.complete" matTooltip="{{'general.undo' | translate}}"
+              (click)="undoTask(plan)">
+              <mat-icon>undo</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" *ngIf="!plan.complete" matTooltip="{{'general.finalize' | translate}}"
+              (click)="markAsComplete(plan)">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="getComments(plan)">
+              <mat-icon>comment</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="addData('edit', plan)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </div>
+        <app-comments-manager [rowId]="plan.id" [moduleId]="moduleType.MarketingPlan"
+          [CommentType]="commentType.marketing" *ngIf="plan.comments">
+        </app-comments-manager>
+      </div>
+    </div>
+  </div>

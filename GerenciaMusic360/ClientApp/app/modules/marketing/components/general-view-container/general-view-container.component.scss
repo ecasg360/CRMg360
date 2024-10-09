@@ -1,0 +1,9 @@
+.playlist-container {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+}
+
+.playlist-container div {
+  float: left;
+}

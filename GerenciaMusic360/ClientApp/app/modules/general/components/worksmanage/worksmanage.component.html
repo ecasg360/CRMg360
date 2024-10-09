@@ -1,0 +1,102 @@
+<div class="page-layout carded fullwidth">
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+      <div class="w-50-p">
+          <h3>{{'general.compositions' | translate}}</h3>
+      </div>
+      <div class="w-50-p text-right pr-8">
+          <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+          <span class="secondary-text">{{ 'general.composition' | translate }}</span>
+      </div>
+  </div>
+  <div class="content  m-24 p-4 mat-card">
+      <div class="row">
+          <div class="col-xs-2">
+              <button
+                mat-flat-button
+                color="primary"
+                (click)="showWork()"
+                *ngIf="permisions.Work.Post"
+            >
+                  <mat-icon>add</mat-icon>&nbsp;{{ 'general.new' | translate }}
+              </button>
+          </div>
+          <div class="col-xs-2">
+            <button
+              mat-flat-button
+              color="accent"
+              (click)="downloadFile()"
+              *ngIf="permisions.Work.Post"
+          >
+                <mat-icon>cloud_download</mat-icon>&nbsp;{{ 'general.controlledList' | translate }}
+            </button>
+        </div>
+          <div class="col-xs-2">
+              <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+          </div>
+          <div class="col-xs-6">
+              <mat-form-field appearance="outline" class="w-100-p  mr-4">
+                  <mat-label>{{ 'general.search' | translate }}</mat-label>
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'general.search' | translate }}">
+              </mat-form-field>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-12">
+              <table mat-table [dataSource]="dataSource" class="w-100-p" matSort>
+                  <ng-container matColumnDef="name">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.name'|translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                  </ng-container>
+
+                  <ng-container matColumnDef="description">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.description'|translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.status'|translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let row">
+                          <mat-slide-toggle [color]="accent" [checked]="row.statusRecordId==1"
+                                            (change)="updateStatus(row.id, row.statusRecordId)">
+                          </mat-slide-toggle>
+                      </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="action">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'general.actions'|translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let row">
+                        <button
+                            mat-icon-button
+                            color="primary"
+                            (click)="seeDetails(row)"
+                            *ngIf="permisions.Work.Get"
+                        >
+                          <mat-icon>visibility</mat-icon>
+                        </button>
+                          <button
+                            mat-icon-button
+                            color="primary"
+                            (click)="showWork(row)"
+                            *ngIf="permisions.Work.Put"
+                        >
+                              <mat-icon>edit</mat-icon>
+                          </button>
+                          <button
+                            mat-icon-button
+                            color="primary"
+                            (click)="confirmDelete(row.id, row.name)"
+                            *ngIf="permisions.Work.Delete"
+                          >
+                              <mat-icon>delete</mat-icon>
+                          </button>
+                      </mat-cell>
+                  </ng-container>
+
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+          </div>
+      </div>
+  </div>
+</div>

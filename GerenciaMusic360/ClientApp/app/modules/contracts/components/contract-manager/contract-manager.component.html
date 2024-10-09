@@ -1,0 +1,57 @@
+<div class="page-layout carded fullwidth">
+  <!-- HEADER -->
+  <div class="header accent pl-24" fxLayout="row" fxLayoutAlign="start center">
+    <div class="w-50-p">
+      <h4>{{ 'general.contract' | translate }}</h4>
+    </div>
+    <div class="custom-breadcrum">
+      <a routerLink="/" class="fuse-white-fg">{{ 'general.startCenter' | translate }}</a> /
+      <a routerLink="/contracts" class="fuse-white-fg">{{ 'general.contract' | translate }}</a> /
+      <span class="secondary-text">{{ 'general.management' | translate }}</span>
+    </div>
+  </div>
+
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content m-8 py-8 px-12">
+    <mat-tab-group>
+      <!-- tab information -->
+      <mat-tab label="{{'general.general' | translate}}" *ngIf="perm.Contract">
+        <div class="tab-body page-layout simple fullwidth p-8">
+          <div class="row mb-12">
+            <div class="col-xs-6">
+              <app-contract-data [contractId]="contractId" [contract]="contract"></app-contract-data>
+            </div>
+
+            <div class="col-xs-6">
+              <app-status-contract-manager [contract]="contract"></app-status-contract-manager>
+              <mat-card>
+                <mat-card-header>
+                  <mat-card-title>{{ 'general.contractData' | translate }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="mt-12">
+                  <app-additional-field [moduleId]="2" [moduleTypeId]="contract.contractTypeId"
+                    [documentId]="contractId" (formReady)="additionalFields($event)">
+                  </app-additional-field>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab class="tab-body" label="{{'general.contractTerms' | translate}}" *ngIf="perm.ContractTerms">
+        <div class="tab-body page-layout simple fullwidth p-8">
+          <div class="row mb-12">
+            <div class="col-xs-12">
+              <mat-card class="fix-overflow">
+                <mat-card-content>
+                  <app-contract-terms-manager [contractId]="contractId"></app-contract-terms-manager>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>

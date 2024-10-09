@@ -1,0 +1,46 @@
+<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{action}} Musical Genre
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false">add_location</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<form [formGroup]="musicalGenreForm" class="p-4 w-100-p">
+    <mat-dialog-content>
+        <hr />
+        <div fxLayout="row wrap" class="w-100-p">
+            <mat-form-field appearance="outline" fxFlex="100" class="p-8">
+                <mat-label>{{"general.name"|translate}}&nbsp;<span class="red-required">*</span></mat-label>
+                <input matInput placeholder="Ingresa Nombre(s)" formControlName="name">
+                <mat-error *ngIf="f.name?.errors?.required">
+                    {{'general.nameRequired'| translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100" class="p-8">
+                <mat-label>{{"general.description"|translate}}</mat-label>
+                <textarea matInput placeholder="Add Description" rows="4"
+                          formControlName="description"></textarea>
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="w-40-p text-right">
+            <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+        </div>
+        <div class="w-60-p text-right">
+            <button mat-stroked-button color="primary" type="button" (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon> {{ 'general.cancel' | translate }}
+            </button>&nbsp;
+            <button mat-flat-button color="primary" [disabled]="!musicalGenreForm.valid"
+                    (click)="setMusicalGenre()">
+                <mat-icon>save</mat-icon> {{action}}
+            </button> &nbsp;
+        </div>
+    </mat-dialog-actions>
+</form>
+

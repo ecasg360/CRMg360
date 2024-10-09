@@ -1,0 +1,26 @@
+#formFilter{
+    padding: 0 20px;
+    border-right: 1px #e0e0e0 solid;
+}
+
+#sliderFilter{
+    padding: 0 20px;
+    border-right: 1px #e0e0e0 solid;
+}
+
+#buttonFilter{
+    text-align: center;
+    vertical-align: middle;
+}
+
+h4{
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+ng5-slider{
+    margin-bottom: 50px;
+}
+

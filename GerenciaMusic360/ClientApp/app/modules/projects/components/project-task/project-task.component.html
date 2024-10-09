@@ -1,0 +1,90 @@
+  <div class="row m-4">
+    <div class="col-xs-4">
+      <div class="mb-4">
+        <button
+          mat-mini-fab
+          color="primary"
+          *ngIf="isEdit && perm.Put"
+          [disabled]="isWorking"
+          (click)="addData('new')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+        <button
+          mat-mini-fab
+          color="primary"
+          *ngIf="!isEdit"
+          [disabled]="isWorking && perm.Post"
+          (click)="saveTask()"
+        >
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-2">
+      <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+    </div>
+    <div class="col-xs-6">
+      <!-- <mat-form-field class="w-100-p">
+        <input matInput (keyup)="applyFilter($event.target.value)" class="w-100-p"
+          placeholder="{{ 'general.filterTasks' | translate }}">
+      </mat-form-field> -->
+    </div>
+  </div>
+  <div class="">
+    <div class="task-box">
+      <div class="row">
+        <div class="col-xs-1">
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="isAllSelected"
+            [indeterminate]="!isAllSelected" [disabled]="isEdit">
+          </mat-checkbox>
+        </div>
+        <div class="col-xs-5">{{ 'general.tasks' | translate }}</div>
+        <div class="col-xs-2">{{ 'general.deadline' | translate }}</div>
+        <div class="col-xs-2">{{ 'general.status' | translate }}</div>
+        <div class="col-xs-2">&nbsp;</div>
+      </div>
+    </div>
+    <div cdkDropList class="task-box-list" (cdkDropListDropped)="drop($event)">
+      <div class="task-box task-box-item" *ngFor="let task of projectTasks;trackBy:trackByFn"
+        [cdkDragDisabled]="task.completed" cdkDrag>
+        <div class="task-box-custom-placeholder" *cdkDragPlaceholder></div>
+        <div class="row">
+          <div class="col-xs-1">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? ItemToggle($event,task) : null"
+              [checked]="task.checked" [disabled]="isEdit">
+            </mat-checkbox>
+          </div>
+          <div class="col-xs-4">{{task.templateTaskDocumentDetailName}}</div>
+          <div class="col-xs-2">{{task.estimatedDateVerficationString | date}}</div>
+          <div class="col-xs-2">
+            <div class="donut-container" matTooltip="{{task.notes}}" [ngClass]="task.completed ? 'blue-300-bg' : 'primary-400-bg'">
+              <div class="donut-inner">
+                <div class="donut-label">{{ task.completed ? '100%' : '0' }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <button mat-icon-button color="primary" *ngIf="task.completed && isEdit" matTooltip="{{'general.undo' | translate}}"
+              (click)="undoTask(task)">
+              <mat-icon>undo</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" *ngIf="!task.completed && isEdit" matTooltip="{{'general.finalize' | translate}}"
+              (click)="markAsComplete(task)">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" *ngIf="isEdit" matTooltip="{{'general.comments' | translate}}"
+              (click)="getComments(task)">
+              <mat-icon>comment</mat-icon>
+            </button>
+            <button mat-icon-button color="primary"  matTooltip="{{'general.edit' | translate}}" [disabled]="task.completed" (click)="addData('add', task)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </div>
+        <app-comments-manager [rowId]="task.id" [moduleId]="moduleType.ProjectTask" [CommentType]="commentType.task"
+          *ngIf="task.comments">
+        </app-comments-manager>
+      </div>
+    </div>
+  </div>

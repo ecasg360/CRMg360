@@ -1,0 +1,114 @@
+{
+    "mainLayout.title": "Titulo Principal",
+    "general": {
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "new": "Nuevo",
+        "search": "Buscar",
+        "name": "Nombre",
+        "phone": "Teléfono",
+        "status": "Estatus",
+        "create": "Crear",
+        "edit": "Editar",
+        "save": "Guardar",
+        "delete": "Eliminar",
+        "deleteQ": "¿Eliminar?",
+        "home": "Inicio",
+        "back": "Atrás",
+        "next": "Siguiente",
+        "uploadImage": "Subir imagen",
+        "language": "Idioma",
+        "errors": {
+            "serverError": "Ocurrio un error en el servidor"
+        },
+        "paginator": {
+            "itemsPerPageLabel": "Registros por página"
+        }
+    },
+    "auth": {
+        "logIn": {
+            "title": "Iniciar sesión",
+            "subTitle": "Inicia sesión con tu correo electrónico",
+            "messages": {
+                "default": "Has iniciado sesión correctamente",
+                "rememberMe": "Recuerdame",
+                "forgotPassword": "¿Olvidó su contraseña?",
+                "doNotHaveAnAccount": "¿No tienes una cuenta?"
+            },
+            "errors": {
+                "default": "El correo electrónico o la contraseña son incorrectos",
+                "requiredEmail": "Correo electrónico requerido",
+                "invalidEmail": "Correo electrónico invalido",
+                "requiredPassword": "Contraseña requerida",
+                "invalidMinLengthPassword": "La contraseña debe ser mayor o igual a {{minLength}} caracteres",
+                "invalidMaxLengthPassword": "La contraseña debe ser menor o igual a {{maxLength}} caracteres"
+            }
+        }
+    },
+    "artist": {
+        "admin": {
+            "title": "Artistas",
+            "artist": "Artista",
+            "generalData": "Datos generales",
+            "addArtist": "Agregar Artista",
+            "editArtist": "Editar Artista",
+            "enterId": "Ingresa Id",
+            "messages": {
+                "deleteQuestion": "¿Esta seguro que desea eliminar el artista id {{artistid}}?",
+                "deleteSuccess": "Se ha eliminado el artista correctamente",
+                "statusChanged": "Se ha cambiado el estatus del artista correctamente",
+                "addArtistSuccess": "Se agregó el artista correctamente"
+            },
+            "errors": {
+                "idRequired": "Id es requerido",
+                "nameRequired": "Nombre es requerido",
+                "lastNameRequired": "Apellido Paterno es requerido",
+                "birthdayRequired": "Fecha de nacimiento es requerida",
+                "genderRequired": "Género es requerido",
+                "artistTypeRequired": "Tipo de artista es requerido",
+                "musicalGenreRequired": "Género Musical es requerido",
+                "incorrectFormat": "Formato incorrecto"
+            }
+        },
+        "type": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        },
+        "musicalgenre": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        },
+        "trippreference": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        },
+        "group": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        },
+        "contactssponsor": {
+            "messages": {
+
+            },
+            "errors": {
+
+            }
+        }
+    }
+}

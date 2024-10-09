@@ -1,0 +1,168 @@
+<div [formGroup]="addressForm" *ngIf="!isArtist">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.country' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input type="text" placeholder="{{ 'general.country' | translate}}" matInput
+                       [formControl]="countryFC" [matAutocomplete]="autoCountry">
+                <mat-autocomplete #autoCountry="matAutocomplete" (optionSelected)="autocompleteCountrySelected($event)">
+                    <mat-option *ngFor="let option of filteredCountries | async" [id]="option.value"
+                                [value]="option.viewValue">
+                        {{option.viewValue}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f.countryId?.errors?.required">
+                    {{ 'validations.errors.fieldRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.state' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <input type="text" placeholder="{{ 'general.state' | translate}}" matInput
+                       [formControl]="statesFC" [matAutocomplete]="autoState">
+                <mat-autocomplete #autoState="matAutocomplete" (optionSelected)="autocompleteStateSelected($event)">
+                    <mat-option *ngFor="let option of filteredStates | async" [id]="option.value"
+                                [value]="option.viewValue">
+                        {{option.viewValue}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f.stateId?.errors?.required">
+                    {{ 'validations.errors.fieldRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.street' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterStreet' | translate }}"
+                       formControlName="street">
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.exteriorNumber' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterExteriorNumber' | translate }}"
+                       formControlName="exteriorNumber">
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.interiorNumber' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterInteriorNumber' | translate }}"
+                       formControlName="interiorNumber">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.colony' | translate }}/{{ 'general.neighborhood' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterNeighborhoodColony' | translate }}"
+                    formControlName="neighborhood">
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.county' | translate }}/{{ 'general.municipality' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterMunicipalityCounty' | translate }}"
+                    formControlName="municipality">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.postalCode' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterPostalCode' | translate }}"
+                    formControlName="postalCode">
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.addressType' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+                <mat-select placeholder="{{ 'formField.messages.selectAddressType' | translate }}"
+                    formControlName="addressTypeId">
+                    <mat-option *ngFor="let addressType of addressTypes" [value]="addressType.value">
+                        {{addressType.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.addressTypeId?.errors?.required">
+                    {{ 'validations.errors.addressTypeRequired' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.reference' | translate }}</mat-label>
+                <textarea matInput rows="4" placeholder="{{ 'formField.messages.enterReference' | translate }}"
+                    formControlName="reference"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+
+
+<div [formGroup]="addressForm" *ngIf="isArtist">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.addressLine1' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterNeighborhoodColony' | translate }}"
+                    formControlName="addressLine1">
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.addressLine2' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterNeighborhoodColony' | translate }}"
+                    formControlName="addressLine2">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.municipality' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterNeighborhoodColony' | translate }}"
+                    formControlName="municipality">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.state' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterNeighborhoodColony' | translate }}"
+                    formControlName="state">
+            </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'general.postalCode' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'formField.messages.enterNeighborhoodColony' | translate }}"
+                    formControlName="postalCode">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'general.country' | translate }}&nbsp;<span class="red-required">*</span></mat-label>
+            <input type="text" placeholder="{{ 'general.country' | translate}}" matInput
+                   [formControl]="countryFC" [matAutocomplete]="autoCountry">
+            <mat-autocomplete #autoCountry="matAutocomplete" (optionSelected)="autocompleteCountrySelected($event)">
+                <mat-option *ngFor="let option of filteredCountries | async" [id]="option.value"
+                            [value]="option.viewValue">
+                    {{option.viewValue}}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="f.countryId?.errors?.required">
+                {{ 'validations.errors.fieldRequired' | translate }}
+            </mat-error>
+        </mat-form-field>
+    </div>
+</div>

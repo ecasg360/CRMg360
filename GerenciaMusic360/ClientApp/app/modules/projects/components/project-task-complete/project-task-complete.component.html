@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>{{'general.comments' | translate}}</h2>
+<mat-dialog-content>
+  <mat-form-field class="w-100-p">
+    <mat-label>{{'general.comments' | translate}}</mat-label>
+    <textarea matInput placeholder="{{'general.comments' | translate}}" [(ngModel)]="model.notes"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+  <div mat-dialog-actions>
+    <div class="row w-100-p">
+      <div class="col-xs-4">
+        <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+      </div>
+      <div class="col-xs-8">
+        <button mat-flat-button color="primary" [disabled]="isWorking" (click)="onNoClick()">
+          <mat-icon>cancel</mat-icon>&nbsp;{{'general.cancel' | translate}}
+        </button>&nbsp;
+        <button mat-flat-button color="primary" (click)="setTaskData()"
+          [disabled]="isWorking">
+          {{'general.save' | translate}}&nbsp;<mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>

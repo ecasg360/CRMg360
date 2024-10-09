@@ -1,0 +1,39 @@
+quick-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
+    z-index: 99;
+
+    .mat-slide-toggle-content {
+        flex: 1;
+    }
+}
+
+.close-notification {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.close-notification:hover {
+    text-decoration: none !important;
+}
+
+.fuse-widget-front:hover {
+    cursor: pointer;
+    -webkit-transition: box-shadow .2s ease-in-out;
+    transition: box-shadow .2s ease-in-out;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2),
+        0 1px 1px 0 rgba(0, 0, 0, .14),
+        0 1px 3px 0 rgba(0, 0, 0, .12);
+
+    /* @include mat-elevation(12);*/
+}
+
+.notification-container {
+    max-height: 700px;
+    overflow: hidden;
+    overflow-y: auto;
+}

@@ -1,0 +1,541 @@
+<div mat-dialog-content class="p-12">
+    <mat-spinner *ngIf="isWorking" diameter="25"></mat-spinner>
+
+    <ng-template [ngIf]="projectType">
+        <h1 mat-dialog-title>{{projectType.name}}</h1>
+
+        <ng-template [ngIf]="projectType.id === 1">
+            <mat-tab-group>
+                <mat-tab label="List">
+                    <br>
+                    <mat-form-field class="w-100-p">
+                        <input matInput (keyup)="applyFilter($event.target.value)" class="w-100-p"
+                            placeholder="filter by album">
+                    </mat-form-field>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="description">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'general.artist' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.personRelationName}} </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Seleccion">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSourceSelect" matSort class="w-100-p">
+
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="description">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'general.description' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.delete' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button mat-icon-button color="primary">
+                                        <mat-icon (click)="confirmDelete(row.id)" class="cursor-pointer">delete
+                                        </mat-icon>&nbsp;
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsSelect"></mat-header-row>
+                            <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumnsSelect;">
+                            </mat-row>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </ng-template>
+
+        <!-- Single Release -->
+        <ng-template [ngIf]="projectType.id === 2">
+            <mat-tab-group>
+                <mat-tab label="List">
+                    <p>
+                        <mat-icon color="primary">info</mat-icon>
+                        Selecciona la composición y podrás editar la información en la pestaña "Selection"
+                    </p>
+                    <br>
+                    <mat-form-field class="w-100-p">
+                        <input matInput (keyup)="applyFilter($event.target.value)" class="w-100-p"
+                            placeholder="Filter by Songs">
+                    </mat-form-field>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <!-- <button mat-mini-fab color="accent" (click)="select(row)">
+                                        <mat-icon>add</mat-icon>
+                                    </button> -->
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="description">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'general.description' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Selection">
+                    <p>
+                        <mat-icon color="primary">info</mat-icon>
+                        Después de agregar o editar la información debe dar click en "Save" para guardar.
+                    </p>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSourceSelect" matSort class="w-100-p">
+
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="ISRC">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> ISRC </mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.isrc}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="producerRemix">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Producer & Remix </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    {{row.personProducerName + ' - ' + row.personRemixName}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.action' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button mat-icon-button color="primary" (click)="openDetails(row)">
+                                        <mat-icon class="cursor-pointer">edit
+                                        </mat-icon>&nbsp;
+                                    </button>
+                                    <button mat-icon-button color="primary">
+                                        <mat-icon (click)="confirmDelete(row.id)" class="cursor-pointer">delete
+                                        </mat-icon>&nbsp;
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsSelect"></mat-header-row>
+                            <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumnsSelect;">
+                            </mat-row>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </ng-template>
+
+        <ng-template [ngIf]="projectType.id === 3">
+            <mat-tab-group>
+                <mat-tab label="List">
+                    <br>
+                    <mat-form-field class="w-100-p">
+                        <input matInput (keyup)="applyFilter($event.target.value)" class="w-100-p"
+                            placeholder="filter Videos">
+                    </mat-form-field>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <!-- <ng-container matColumnDef="work">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'general.description' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button mat-mini-fab color="accent" (click)="relationVideoToWork()">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </mat-cell>
+                            </ng-container> -->
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Selection">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSourceSelect" matSort class="w-100-p">
+
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="work">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Work
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.workName}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="isrc">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> ISRC </mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.isrc}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="producerRemix">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'general.producerRemix' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.producerRemix}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.delete' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button mat-icon-button color="primary">
+                                        <mat-icon (click)="confirmDelete(row.id)" class="cursor-pointer">delete
+                                        </mat-icon>&nbsp;
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsVideoSelect"></mat-header-row>
+                            <mat-row class="row-notification"
+                                *matRowDef="let row; columns: displayedColumnsVideoSelect;">
+                            </mat-row>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </ng-template>
+
+        <ng-template [ngIf]="projectType.id === 4">
+            <mat-tab-group>
+                <mat-tab label="Lista">
+                    <br>
+                    <mat-form-field class="w-100-p">
+                        <input matInput (keyup)="applyFilter($event.target.value)" class="w-100-p"
+                            placeholder="filtrar Videos">
+                    </mat-form-field>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>                            
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </table>
+                        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+                    </div>
+                </mat-tab>
+                <mat-tab label="Selection">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSourceSelect" matSort class="w-100-p">
+
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="work">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Composition
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.workName}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="isrc">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> ISRC </mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.isrc}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="producerRemix">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'general.producerRemix' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.producerRemix}} </mat-cell>
+                            </ng-container>
+                           
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'general.delete' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button mat-icon-button color="primary">
+                                        <mat-icon (click)="confirmDelete(row.id)" class="cursor-pointer">delete
+                                        </mat-icon>&nbsp;
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsVideoSelect"></mat-header-row>
+                            <mat-row class="row-notification"
+                                *matRowDef="let row; columns: displayedColumnsVideoSelect;">
+                            </mat-row>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </ng-template>
+
+        <ng-template [ngIf]="projectType.id === 5">
+            <mat-tab-group>
+                <mat-tab label="Lista">
+                    <br>
+                    <mat-form-field class="w-100-p">
+                        <input matInput (keyup)="applyFilter($event.target.value)" class="w-100-p"
+                            placeholder="Filter by Songs">
+                    </mat-form-field>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" matSort class="w-100-p">
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>                                    
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="description">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'general.description' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </table>
+                        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+                    </div>
+                </mat-tab>
+                <mat-tab label="Selection">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSourceSelect" matSort class="w-100-p">
+
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> select </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox [checked]="row.select" (change)="select(row)"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    Name
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="isrc">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> ISRC </mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.isrc}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="producerRemix">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Producer & Remix </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    {{row.personProducerName + ' - ' + row.personRemixName}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'general.delete' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button mat-icon-button color="primary">
+                                        <mat-icon (click)="confirmDelete(row.id)" class="cursor-pointer">
+                                            delete
+                                        </mat-icon>&nbsp;
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsSelect"></mat-header-row>
+                            <mat-row class="row-notification" *matRowDef="let row; columns: displayedColumnsSelect;">
+                            </mat-row>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </ng-template>
+
+    </ng-template>
+    <br />
+        <div class="row end-xs">
+            <button mat-flat-button color="primary" (click)="onNoClick()">
+                {{'general.cancel'|translate}}&nbsp;<mat-icon>cancel</mat-icon>
+            </button>&nbsp;
+            <button mat-flat-button color="primary" (click)="setWorks()" [disabled]="worksSelected.length === 0">
+                {{'general.save'|translate}}&nbsp;<mat-icon>save</mat-icon>
+            </button>
+        </div>
+</div>

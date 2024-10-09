@@ -1,0 +1,44 @@
+﻿<div mat-dialog-title>
+    <table>
+        <tr>
+            <td>
+                {{ 'settings.roleNotification.title' | translate }} {{role}}
+            </td>
+            <td class="end-xs">
+                <mat-icon aria-hidden="false">notifications_none</mat-icon>
+            </td>
+        </tr>
+    </table>
+</div>
+<form [formGroup]="addRoleNotificationForm" class="p-4 w-100-p">
+    <mat-dialog-content>
+        <hr />
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-xs-12">
+                <mat-label>{{ 'general.notifications' | translate }}</mat-label>
+                <mat-select placeholder="{{ 'formField.messages.selectNotifications' | translate }}"
+                            formControlName="notificationIds" multiple>
+                    <mat-option *ngFor="let notification of notifications" [value]="notification.value">
+                        {{notification.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f.notificationIds?.errors?.required">
+                    {{ 'validations.errors.notificationIds' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions class="end-xs">
+        <div class="row">
+            <div class="col-xs-12">
+                <button mat-stroked-button color="primary" type="button" (click)="onNoClick();">
+                    <i class="fas fa-ban fa-lg"></i> Cancelar
+                </button>
+                <button mat-flat-button color="primary" type="submit" (click)="setRoleNotification();">
+                    <i class="fas fa-save fa-lg"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</form>
